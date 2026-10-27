@@ -100,6 +100,8 @@
 
   --shell-max: 1120px;
   --header-h: 64px;
+  /* height of the sticky header, used to keep anchor targets clear of it */
+  --anchor-offset: 78px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -166,7 +168,7 @@
 html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
-  scroll-padding-top: calc(var(--header-h) + 12px);
+  scroll-padding-top: var(--anchor-offset);
 }
 
 body {
@@ -278,9 +280,9 @@ button {
 
 .site-header__inner {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
-  gap: var(--s-2) var(--s-4);
+  gap: var(--s-2) var(--s-3);
   min-height: var(--header-h);
   padding-block: var(--s-2);
 }
@@ -289,7 +291,7 @@ button {
   display: flex;
   align-items: center;
   gap: 0.65rem;
-  flex: 1 1 auto;
+  flex: 1 1 0;
   min-width: 0;
   margin-right: auto;
   padding-block: 0.15rem;
@@ -316,7 +318,9 @@ button {
   font-size: clamp(0.97rem, 0.94rem + 0.25vw, 1.08rem);
   font-weight: 700;
   letter-spacing: -0.01em;
-  overflow-wrap: anywhere;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .brand__tagline {
@@ -328,7 +332,7 @@ button {
 }
 
 .site-nav {
-  flex: 0 1 auto;
+  flex: 0 0 auto;
   min-width: 0;
 }
 
@@ -342,6 +346,7 @@ button {
 .site-nav__list a {
   display: inline-block;
   padding: 0.45rem 0.6rem;
+  white-space: nowrap;
   border-radius: var(--r-sm);
   font-size: var(--fs-sm);
   font-weight: 600;
@@ -358,7 +363,7 @@ button {
 .lang {
   display: flex;
   flex-wrap: wrap;
-  flex: 0 1 auto;
+  flex: 0 0 auto;
   min-width: 0;
   max-width: 100%;
   justify-content: center;
@@ -370,15 +375,20 @@ button {
 }
 
 .lang__btn {
-  padding: 0.34rem 0.58rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 32px;
+  padding: 0.32rem 0.46rem;
   max-width: 100%;
   border: 0;
   border-radius: var(--r-pill);
   background-color: transparent;
   color: var(--ink-mute);
-  font-size: var(--fs-xs);
+  font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.03em;
+  white-space: nowrap;
   cursor: pointer;
   transition: background-color 0.16s ease, color 0.16s ease;
 }
@@ -1173,6 +1183,15 @@ button {
 }
 
 @media (max-width: 900px) {
+  :root {
+    --anchor-offset: 108px;
+  }
+
+  .site-header__inner {
+    flex-wrap: wrap;
+    row-gap: 0.2rem;
+  }
+
   .site-nav {
     order: 3;
     flex-basis: 100%;
@@ -1215,6 +1234,10 @@ button {
 }
 
 @media (max-width: 639px) {
+  :root {
+    --anchor-offset: 100px;
+  }
+
   .grid {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -1224,20 +1247,33 @@ button {
     gap: var(--s-2);
   }
 
+  /* The tagline is already gone below 639px; the height came from the
+     switcher taking a whole row and the nav wrapping to a second line. Every
+     row below is trimmed so the three rows stay under 130px. */
   .brand__tagline {
     display: none;
   }
 
   .site-header__inner {
-    gap: 0.35rem var(--s-2);
+    gap: 0.25rem var(--s-2);
+    padding-block: 0.3rem;
   }
 
-  /* The switcher takes its own full-width row and its buttons wrap, so no
-     label is ever clipped and the header never scrolls sideways. */
+  .brand__mark {
+    width: 30px;
+    height: 30px;
+  }
+
+  .brand__name {
+    font-size: 0.92rem;
+  }
+
   .lang {
-    flex: 1 1 100%;
+    flex: 0 1 auto;
+    min-width: 0;
     max-width: 100%;
     justify-content: center;
+    padding: 0.12rem;
   }
 
   .lang__btn {
@@ -1245,9 +1281,47 @@ button {
     align-items: center;
     justify-content: center;
     min-height: 32px;
-    padding: 0.4rem 0.5rem;
+    padding: 0.28rem 0.34rem;
+    font-size: 0.66rem;
     letter-spacing: 0.01em;
     text-align: center;
+  }
+
+  /* The Malay labels are the longest; a smaller nav keeps that row on one
+     line while every translated label stays whole. */
+  .site-nav__list a {
+    padding: 0.34rem 0.44rem;
+    font-size: 0.78rem;
+  }
+
+  .site-nav__list {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+}
+
+/* Below 400px the Malay labels are the tightest fit in the project; the row
+   sizes are trimmed further so the nav stays on one line there too. */
+@media (max-width: 400px) {
+  /* Three header rows at 320px in Malay reach ~99px, so the anchor offset is
+     raised here only; wider phones keep the 100px offset and a larger gap. */
+  :root {
+    --anchor-offset: 110px;
+  }
+
+  .lang {
+    gap: 0.1rem;
+    padding: 0.08rem;
+  }
+
+  .lang__btn {
+    padding: 0.24rem 0.16rem;
+    font-size: 0.6rem;
+  }
+
+  .site-nav__list a {
+    padding: 0.3rem 0.34rem;
+    font-size: 0.72rem;
   }
 
   .hero__title {
