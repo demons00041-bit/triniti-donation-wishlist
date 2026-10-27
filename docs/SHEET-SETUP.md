@@ -37,7 +37,7 @@ Spaces after the commas are ignored when the page reads the sheet, and so is cap
 | `id` | A short label for the row that no other row uses, for example `item-012`. Any text. | 编号 | ID |
 | `name` | The item name the donor reads on the card, for example `Rice (10 kg bag)`. | 物品名称 | Nama barang |
 | `category` | One of exactly these words: `staples`, `food`, `hygiene`, `household`, `school`, `baby`, `medical`, `other`. It drives the category filter on the page. | 类别 | Kategori |
-| `unit` | The word shown after the number: `bag`, `tin`, `box`, `pack`, `bottle`, `set`. | 单位 | Unit |
+| `unit` | The word printed after the number, written as a plural: `bags`, `tins`, `boxes`, `packs`, `bottles`, `sets`. It appears exactly as you type it, so the plural keeps the English sentence reading correctly. | 单位 | Unit |
 | `quantity_needed` | How many the home needs in total. **Digits only.** | 需要数量 | Kuantiti diperlukan |
 | `quantity_fulfilled` | **How many have already been donated.** Digits only. This is the number you update most often. | 已捐赠数量 | Kuantiti telah diderma |
 | `urgent` | `yes` or `no`. `yes` shows a red urgent badge so donors see it first. The page also accepts `true`, `1`, `y`, `high`, `urgent`. | 紧急 | Segera |

@@ -76,7 +76,7 @@ Still their keyboard. Add one row at the very bottom of the sheet, and fill all 
 | id | `item-013` |
 | name | `Milk powder (1 kg)` |
 | category | `food` |
-| unit | `tin` |
+| unit | `tins` |
 | quantity_needed | `30` |
 | quantity_fulfilled | `0` |
 | urgent | `no` |
@@ -96,7 +96,7 @@ Two warnings while they type:
 
 Then say the two rules that prevent most mistakes:
 
-> Numbers go in number columns. Words go in the `unit` column.
+> Numbers go in number columns. Words go in the `unit` column, written as a plural: `tins`, not `tin`.
 >
 > Never delete the top row. The top row is the names of the columns, and the page uses those names to read the sheet.
 
@@ -124,7 +124,7 @@ Say:
 
 **Why:** the page can only count digits. `12 bags` is a word, and a word counts as 0.
 
-**The fix:** put plain digits in `quantity_needed` and `quantity_fulfilled` — `12` — and put the word in the `unit` column: `bag`. In Google Sheets, a real number sits on the right side of its cell and a text value sits on the left. A quick look at which side is a quick check.
+**The fix:** put plain digits in `quantity_needed` and `quantity_fulfilled` — `12` — and put the word in the `unit` column: `bags`. In Google Sheets, a real number sits on the right side of its cell and a text value sits on the left. A quick look at which side is a quick check.
 
 ### 2. Deleting the header row
 
