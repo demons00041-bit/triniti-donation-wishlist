@@ -363,7 +363,10 @@ button {
 .site-nav__list a {
   display: inline-block;
   padding: 0.45rem 0.6rem;
-  white-space: nowrap;
+  /* The label wraps rather than the type shrinking: a donor reading this on a
+     phone must not be handed 11px navigation to keep a row on one line. */
+  white-space: normal;
+  line-height: 1.15;
   border-radius: var(--r-sm);
   font-size: var(--fs-sm);
   font-weight: 600;
@@ -402,10 +405,13 @@ button {
   border-radius: var(--r-pill);
   background-color: transparent;
   color: var(--ink-mute);
-  font-size: 0.72rem;
+  /* 12px is the floor for every header control at every width; the label wraps
+     onto a second line instead of the type dropping below it. */
+  font-size: max(0.72rem, 12px);
   font-weight: 700;
   letter-spacing: 0.03em;
-  white-space: nowrap;
+  white-space: normal;
+  line-height: 1.15;
   cursor: pointer;
   transition: background-color 0.16s ease, color 0.16s ease;
 }
@@ -1219,8 +1225,10 @@ button {
     padding: 0.16rem;
   }
 
+  /* The 12px floor makes the three labels ~13px wider in total; the inline
+     padding gives that back so the row stays at 65px. */
   .lang__btn {
-    padding-inline: 0.36rem;
+    padding-inline: 0.2rem;
     letter-spacing: 0;
   }
 }
@@ -1249,11 +1257,17 @@ button {
     gap: 0 0.1rem;
   }
 
-  /* The switcher wraps its own buttons rather than taking a third row: at
-     640-760px the row is only a few pixels short, and a third row costs ~43px
-     of header height for nothing. */
+  /* The switcher never wraps into a second row of its own: a third header row
+     costs ~43px for nothing, and the space it would take is what pays for the
+     12px type floor. Its buttons shrink and wrap their labels instead. */
   .lang {
     flex: 0 1 auto;
+    flex-wrap: nowrap;
+  }
+
+  .lang__btn {
+    flex: 0 1 auto;
+    min-width: 0;
   }
 }
 
@@ -1277,8 +1291,14 @@ button {
 
   .lang__btn {
     padding-inline: 0.34rem;
-    font-size: 0.68rem;
+    font-size: max(0.68rem, 12px);
     letter-spacing: 0.01em;
+  }
+
+  /* The extra header row the 12px floor costs at 640-767px is paid for here
+     rather than out of the type. */
+  .site-header__inner {
+    padding-block: 0.3rem;
   }
 
   .stats__grid {
@@ -1351,16 +1371,16 @@ button {
     justify-content: center;
     min-height: 32px;
     padding: 0.28rem 0.34rem;
-    font-size: 0.66rem;
+    font-size: max(0.66rem, 12px);
     letter-spacing: 0.01em;
     text-align: center;
   }
 
-  /* The Malay labels are the longest; a smaller nav keeps that row on one
-     line while every translated label stays whole. */
+  /* The Malay labels are the longest; they wrap onto a second line before the
+     type is allowed below the floor. */
   .site-nav__list a {
     padding: 0.34rem 0.44rem;
-    font-size: 0.78rem;
+    font-size: max(0.78rem, 12px);
   }
 
   .site-nav__list {
@@ -1385,14 +1405,14 @@ button {
 
   .lang__btn {
     padding: 0.24rem 0.16rem;
-    font-size: 0.6rem;
+    font-size: max(0.6rem, 12px);
   }
 
   /* At 320-350px the Malay nav needs ~26px more than the row has at the sizes
-     above; 0.68rem keeps every translated label whole on one line. */
+     above; it takes it as a second line per label, not as smaller type. */
   .site-nav__list a {
     padding: 0.28rem 0.2rem;
-    font-size: 0.68rem;
+    font-size: max(0.68rem, 12px);
   }
 
   .hero__title {
