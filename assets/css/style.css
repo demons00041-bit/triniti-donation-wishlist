@@ -101,7 +101,7 @@
   --shell-max: 1120px;
   --header-h: 64px;
   /* height of the sticky header, used to keep anchor targets clear of it */
-  --anchor-offset: 78px;
+  --anchor-offset: 88px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -291,8 +291,11 @@ button {
   display: flex;
   align-items: center;
   gap: 0.65rem;
-  flex: 1 1 0;
-  min-width: 0;
+  /* Basis min-content: the row breaks only when even the longest word of the
+     name no longer fits beside the switcher, so a long tagline can never push
+     the switcher onto a row of its own. min-width stays auto, which is what
+     makes the name the floor the other two items have to fit around. */
+  flex: 1 1 min-content;
   margin-right: auto;
   padding-block: 0.15rem;
   color: var(--ink);
@@ -310,7 +313,9 @@ button {
   display: flex;
   flex-direction: column;
   gap: 0.12rem;
-  min-width: 0;
+  /* Takes whatever width the brand has left over so the tagline can use it;
+     min-width stays auto, so the name's longest word is still the hard floor. */
+  flex: 1 1 auto;
   line-height: 1.15;
 }
 
@@ -318,9 +323,15 @@ button {
   font-size: clamp(0.97rem, 0.94rem + 0.25vw, 1.08rem);
   font-weight: 700;
   letter-spacing: -0.01em;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  /* The organisation name is the page's trust anchor: it is never clipped and
+     never ellipsised. It wraps instead, but only down to about half of its full
+     width, so the worst case is two lines - never a squeezed sliver. This floor
+     is also what stops the brand from absorbing all of the row's shrinkage:
+     when the three header items no longer fit, the switcher and the nav give way
+     before the name does. 10.4em is the width at which "Rumah Kanak-Kanak"
+     still fits on one line at the smallest font this rule can resolve. */
+  line-height: 1.2;
+  min-width: 10.4em;
 }
 
 .brand__tagline {
@@ -329,6 +340,12 @@ button {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  /* First thing to give way. width 0 keeps a long translation out of the brand's
+     minimum width, and min-width 100% lets it use whatever width the brand has
+     left over - so it truncates here rather than squeezing the name. */
+  width: 0;
+  min-width: 100%;
+  max-width: 24em;
 }
 
 .site-nav {
@@ -1182,9 +1199,38 @@ button {
   }
 }
 
-@media (max-width: 900px) {
+/* From 1200px the shell is at its 1120px cap, so the row width is fixed; the
+   switcher and the nav are trimmed here so the three items fit side by side with
+   the organisation name still on one line. */
+@media (min-width: 1200px) {
+  .site-header__inner {
+    column-gap: 0.625rem;
+  }
+
+  .brand {
+    gap: 0.6rem;
+  }
+
+  .site-nav__list a {
+    padding-inline: 0.52rem;
+  }
+
+  .lang {
+    padding: 0.16rem;
+  }
+
+  .lang__btn {
+    padding-inline: 0.36rem;
+    letter-spacing: 0;
+  }
+}
+
+/* Up to 1199px the brand and the switcher share the first row and the nav takes
+   a row of its own: side by side the three items do not fit once the Malay
+   labels are in play, and the brand must never be the one that gives way. */
+@media (max-width: 1199px) {
   :root {
-    --anchor-offset: 108px;
+    --anchor-offset: 130px;
   }
 
   .site-header__inner {
@@ -1194,6 +1240,7 @@ button {
 
   .site-nav {
     order: 3;
+    flex: 0 1 auto;
     flex-basis: 100%;
     margin-top: -0.15rem;
   }
@@ -1202,6 +1249,15 @@ button {
     gap: 0 0.1rem;
   }
 
+  /* The switcher wraps its own buttons rather than taking a third row: at
+     640-760px the row is only a few pixels short, and a third row costs ~43px
+     of header height for nothing. */
+  .lang {
+    flex: 0 1 auto;
+  }
+}
+
+@media (max-width: 900px) {
   .steps {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1212,6 +1268,19 @@ button {
 }
 
 @media (max-width: 767px) {
+  /* Just above 639px the first row is a few pixels short of fitting the brand
+     beside the switcher; compacting the switcher keeps the header at two rows
+     instead of paying ~23px for a third one. */
+  .lang {
+    padding: 0.14rem;
+  }
+
+  .lang__btn {
+    padding-inline: 0.34rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.01em;
+  }
+
   .stats__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--s-4) var(--s-3);
@@ -1235,7 +1304,7 @@ button {
 
 @media (max-width: 639px) {
   :root {
-    --anchor-offset: 100px;
+    --anchor-offset: 132px;
   }
 
   .grid {
@@ -1247,9 +1316,9 @@ button {
     gap: var(--s-2);
   }
 
-  /* The tagline is already gone below 639px; the height came from the
-     switcher taking a whole row and the nav wrapping to a second line. Every
-     row below is trimmed so the three rows stay under 130px. */
+  /* The tagline is already gone below 639px; the height comes from the
+     switcher taking a whole row and the nav following on its own. Every row
+     below is trimmed so those rows stay under 130px. */
   .brand__tagline {
     display: none;
   }
@@ -1269,7 +1338,7 @@ button {
   }
 
   .lang {
-    flex: 0 1 auto;
+    flex: 0 0 auto;
     min-width: 0;
     max-width: 100%;
     justify-content: center;
@@ -1303,10 +1372,10 @@ button {
 /* Below 400px the Malay labels are the tightest fit in the project; the row
    sizes are trimmed further so the nav stays on one line there too. */
 @media (max-width: 400px) {
-  /* Three header rows at 320px in Malay reach ~99px, so the anchor offset is
-     raised here only; wider phones keep the 100px offset and a larger gap. */
+  /* The 320px header reaches ~111px here, so the offset is raised above the
+     132px used by the rest of the phone range to keep a visible gap. */
   :root {
-    --anchor-offset: 110px;
+    --anchor-offset: 145px;
   }
 
   .lang {
@@ -1319,9 +1388,11 @@ button {
     font-size: 0.6rem;
   }
 
+  /* At 320-350px the Malay nav needs ~26px more than the row has at the sizes
+     above; 0.68rem keeps every translated label whole on one line. */
   .site-nav__list a {
-    padding: 0.3rem 0.34rem;
-    font-size: 0.72rem;
+    padding: 0.28rem 0.2rem;
+    font-size: 0.68rem;
   }
 
   .hero__title {
