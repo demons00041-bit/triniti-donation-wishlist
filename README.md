@@ -4,7 +4,7 @@ A small static website that shows what **Rumah Kanak-Kanak Triniti**, a children
 
 It is built for two kinds of people. Donors get a clear, honest, fast list that still works on an old phone with a weak connection. Caretakers get a Google Sheet: they type numbers into a spreadsheet and the website updates itself. Nobody has to touch the code after handover.
 
-**Live site:** [TODO: live URL]
+**Live site:** <https://demons00041-bit.github.io/triniti-donation-wishlist/>
 
 ---
 
