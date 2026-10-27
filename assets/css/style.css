@@ -40,6 +40,11 @@
   --text-on-dark: #f6f8f5;
   --focus: #1f6b4a;
 
+  /* text-only greens: these carry link/label colour, never a background, so
+     the dark theme can lift them independently of the green surfaces below. */
+  --link: #175039;
+  --link-strong: #123f31;
+
   /* semantic accents */
   --accent-heading: #123f31;
   --header-bg: rgba(253, 251, 246, 0.92);
@@ -122,6 +127,9 @@
     --track: #22362d;
     --text-on-dark: #f2f7f3;
     --focus: #7fd4a8;
+
+    --link: #58c08d;
+    --link-strong: #7fd4a8;
 
     --green-600: #2e8a63;
     --green-500: #58c08d;
@@ -215,13 +223,13 @@ svg {
 }
 
 a {
-  color: var(--green-700);
+  color: var(--link);
   text-underline-offset: 0.18em;
   text-decoration-thickness: 0.06em;
 }
 
 a:hover {
-  color: var(--green-800);
+  color: var(--link-strong);
 }
 
 button {
@@ -306,7 +314,7 @@ button {
   flex: none;
   width: 36px;
   height: 36px;
-  color: var(--green-700);
+  color: var(--link);
 }
 
 .brand__text {
@@ -377,7 +385,7 @@ button {
 
 .site-nav__list a:hover {
   background-color: var(--sand-100);
-  color: var(--green-800);
+  color: var(--link-strong);
 }
 
 .lang {
@@ -418,7 +426,7 @@ button {
 
 .lang__btn:hover {
   background-color: var(--sand-100);
-  color: var(--green-800);
+  color: var(--link-strong);
 }
 
 .lang__btn[aria-pressed="true"],
@@ -462,14 +470,14 @@ button {
 
 .btn--ghost {
   background-color: transparent;
-  color: var(--green-800);
+  color: var(--link-strong);
   border-color: var(--line-strong);
 }
 
 .btn--ghost:hover {
   background-color: var(--sand-100);
   border-color: var(--green-600);
-  color: var(--green-800);
+  color: var(--link-strong);
 }
 
 .btn:active {
