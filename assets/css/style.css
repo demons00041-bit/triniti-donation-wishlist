@@ -357,7 +357,11 @@ button {
 
 .lang {
   display: flex;
-  flex: none;
+  flex-wrap: wrap;
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 100%;
+  justify-content: center;
   gap: 0.15rem;
   padding: 0.2rem;
   background-color: var(--surface);
@@ -367,6 +371,7 @@ button {
 
 .lang__btn {
   padding: 0.34rem 0.58rem;
+  max-width: 100%;
   border: 0;
   border-radius: var(--r-pill);
   background-color: transparent;
@@ -1227,8 +1232,22 @@ button {
     gap: 0.35rem var(--s-2);
   }
 
+  /* The switcher takes its own full-width row and its buttons wrap, so no
+     label is ever clipped and the header never scrolls sideways. */
+  .lang {
+    flex: 1 1 100%;
+    max-width: 100%;
+    justify-content: center;
+  }
+
   .lang__btn {
-    padding: 0.32rem 0.45rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 32px;
+    padding: 0.4rem 0.5rem;
+    letter-spacing: 0.01em;
+    text-align: center;
   }
 
   .hero__title {
