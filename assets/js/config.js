@@ -12,8 +12,8 @@
  *   whatsapp:"+60 12-345 6789"
  *   email:   "hello@example.org"
  *   hours:   "Mon-Sat, 9am-5pm"
- * Anything left as "" renders as a dash, and the note above the list tells the
- * visitor those details are still being confirmed. Nothing is invented.
+ * Anything left as "" renders as a muted dash, and the note under the contact
+ * list tells the visitor those details are still being confirmed.
  */
 window.WISHLIST_CONFIG = {
   sheetCsvUrl: "",
