@@ -1100,6 +1100,13 @@ button {
   overflow-wrap: anywhere;
 }
 
+/* a detail the home has not confirmed yet: an em dash, held at muted weight
+   so it never reads as a real value. The warning note below the list says why. */
+.contact__value.is-missing {
+  color: var(--ink-mute);
+  font-size: var(--fs-sm);
+}
+
 .contact__note {
   margin-top: var(--s-5);
   padding: 0.85rem 1rem;

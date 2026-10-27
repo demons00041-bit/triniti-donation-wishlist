@@ -106,7 +106,7 @@
     "contact.whatsapp": "WhatsApp",
     "contact.email": "Email",
     "contact.hours": "Visiting hours",
-    "contact.todoNote": "Some contact details are still placeholders and will be filled in by the home before this page is published.",
+    "contact.todoNote": "Some contact details are still being confirmed by the home. Please message us before visiting.",
 
     "footer.builtBy": "Built for Rumah Kanak-Kanak Triniti by volunteers.",
     "footer.lastUpdated": "Last updated",
@@ -203,7 +203,7 @@
     "contact.whatsapp": "WhatsApp",
     "contact.email": "电邮",
     "contact.hours": "探访时间",
-    "contact.todoNote": "部分联系资料目前仍是待填的占位内容，会在页面发布前由院里补上。",
+    "contact.todoNote": "部分联系资料仍在由院里确认。来访之前，请先给我们发个信息。",
 
     "footer.builtBy": "由义工为 Triniti 儿童之家制作。",
     "footer.lastUpdated": "最后更新",
@@ -300,7 +300,7 @@
     "contact.whatsapp": "WhatsApp",
     "contact.email": "E-mel",
     "contact.hours": "Waktu melawat",
-    "contact.todoNote": "Sesetengah butiran hubungan masih pemegang tempat dan akan dilengkapkan oleh pihak rumah sebelum halaman ini diterbitkan.",
+    "contact.todoNote": "Sesetengah butiran hubungan masih disahkan oleh pihak rumah. Sila hubungi kami sebelum melawat.",
 
     "footer.builtBy": "Dibina untuk Rumah Kanak-Kanak Triniti oleh sukarelawan.",
     "footer.lastUpdated": "Kemas kini terakhir",

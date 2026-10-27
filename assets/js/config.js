@@ -5,6 +5,15 @@
  * 2. Paste the published CSV link between the quotes of sheetCsvUrl.
  * 3. Save, commit, push. The live site picks it up within a minute.
  * Leave sheetCsvUrl empty and the site shows the bundled sample list instead.
+ *
+ * Contact details: fill in the real values as plain strings, for example
+ *   address: "No. 12, Jalan Contoh, 43300 Seri Kembangan, Selangor"
+ *   phone:   "+60 3-8945 1234"
+ *   whatsapp:"+60 12-345 6789"
+ *   email:   "hello@example.org"
+ *   hours:   "Mon-Sat, 9am-5pm"
+ * Anything left as "" renders as a dash, and the note above the list tells the
+ * visitor those details are still being confirmed. Nothing is invented.
  */
 window.WISHLIST_CONFIG = {
   sheetCsvUrl: "",
@@ -12,11 +21,11 @@ window.WISHLIST_CONFIG = {
   refreshSeconds: 300,
   org: {
     name: "Rumah Kanak-Kanak Triniti",
-    address: "[TODO: full postal address]",
-    phone: "[TODO: office phone number]",
-    whatsapp: "[TODO: WhatsApp number, e.g. +60 12-345 6789]",
-    email: "[TODO: contact email address]",
-    hours: "[TODO: visiting hours, e.g. Mon-Sat 9am-5pm]",
+    address: "",
+    phone: "",
+    whatsapp: "",
+    email: "",
+    hours: "",
     mapsUrl: ""
   }
 };

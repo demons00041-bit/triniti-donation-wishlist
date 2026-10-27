@@ -142,7 +142,7 @@ triniti-wishlist/
 
 ## Changing the words and the contact details
 
-- **Contact details** — address, phone, WhatsApp, email, opening hours — live in `window.WISHLIST_CONFIG.org` in `assets/js/config.js`. They ship as `[TODO: ...]` placeholders; replace them with the home's real details before the site is public.
+- **Contact details** — address, phone, WhatsApp, email, opening hours — live in `window.WISHLIST_CONFIG.org` in `assets/js/config.js`. They ship empty on purpose: an empty field renders as a muted em dash, and a warning note above the list says those details are still being confirmed. Fill in the real strings and the note disappears by itself. Nothing is invented.
 - **All other visible text** is in the `dict` object in `assets/js/i18n.js`, under three locales: `en`, `zh` and `ms`. The three sets use identical keys, so one change means three edits; a missing key falls back to printing the raw key name on the page.
 
 ---

@@ -114,7 +114,7 @@ window.WISHLIST_CONFIG = {
   sheetCsvUrl: "",
   defaultLocale: "en",
   refreshSeconds: 300,
-  org: { /* [TODO: ...] placeholders */ }
+  org: { address: "", phone: "", whatsapp: "", email: "", hours: "" }
 };
 ```
 
@@ -125,7 +125,7 @@ window.WISHLIST_CONFIG = {
   sheetCsvUrl: "https://docs.google.com/spreadsheets/d/e/2PACX-1vEXAMPLEfakeIDnotreal0000/pub?gid=0&single=true&output=csv",
   defaultLocale: "en",
   refreshSeconds: 300,
-  org: { /* [TODO: ...] placeholders */ }
+  org: { address: "", phone: "", whatsapp: "", email: "", hours: "" }
 };
 ```
 

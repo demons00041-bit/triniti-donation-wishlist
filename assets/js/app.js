@@ -299,6 +299,7 @@
   function applyOrg() {
     var org = CFG.org || {};
     var nodes = document.querySelectorAll("[data-config]");
+    var missing = 0;
     for (var i = 0; i < nodes.length; i += 1) {
       var path = nodes[i].getAttribute("data-config") || "";
       var parts = path.split(".");
@@ -308,13 +309,21 @@
       }
       if (typeof value === "string" && value.trim() !== "") {
         nodes[i].textContent = value;
+        nodes[i].classList.remove("is-missing");
         if (nodes[i].tagName === "A") {
           if (path === "org.email") { nodes[i].setAttribute("href", "mailto:" + value); }
           else if (path === "org.phone" || path === "org.whatsapp") { nodes[i].setAttribute("href", "tel:" + value.replace(/[^0-9+]/g, "")); }
         }
       } else {
-        nodes[i].textContent = t("contact.todoNote");
+        missing += 1;
+        nodes[i].textContent = "\u2014";
+        nodes[i].classList.add("is-missing");
       }
+    }
+    var note = document.querySelector(".contact__note");
+    if (note) {
+      note.hidden = missing === 0;
+      if (missing === 0) { note.textContent = ""; } else { note.textContent = t("contact.todoNote"); }
     }
   }
 
