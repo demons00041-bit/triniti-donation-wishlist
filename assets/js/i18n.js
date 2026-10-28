@@ -29,10 +29,11 @@
     "nav.wishlist": "Wishlist",
     "nav.howToDonate": "How to donate",
     "nav.contact": "Contact",
+    "nav.about": "About",
 
     "hero.eyebrow": "Donation wishlist",
     "hero.title": "What our children need right now",
-    "hero.subtitle": "These are the things we use every week at the home. Pick an item and we will show you how much is still needed and how to get it to us.",
+    "hero.subtitle": "Rumah Kanak-Kanak Triniti is a children's home in Petaling Jaya, Selangor. The caretakers keep this list themselves: each item below is something the children need now, with how much has already been given and how much is still missing.",
     "hero.ctaPrimary": "See the wishlist",
     "hero.ctaSecondary": "How to donate",
 
@@ -87,7 +88,7 @@
     "error.retry": "Try again",
 
     "donate.title": "How to donate",
-    "donate.intro": "Thank you for helping. You can send items to the home, or give money and we will buy them. Either way, please message us first so we know your parcel is coming and can record it against the list.",
+    "donate.intro": "Thank you for helping. You can send items to the home, or give money and the caretakers will buy them. Either way, please message us first: it lets them check the need is still there and record your gift against the list, so this page stays accurate for the next donor.",
     "donate.step1.title": "Choose an item",
     "donate.step1.body": "Pick something from the wishlist. Each item shows how much is still needed, so you can see where your help matters most.",
     "donate.step2.title": "Message us before you buy",
@@ -100,7 +101,7 @@
     "donate.money.body": "If money is easier, you can give cash and we will buy the item ourselves. Message us for the current bank details; we do not publish them on this page.",
 
     "contact.title": "Contact the home",
-    "contact.intro": "These details are provided by the home. Please message us before visiting or sending anything.",
+    "contact.intro": "These details are provided by the home. Please message before visiting or sending anything, so someone is there to receive it.",
     "contact.address": "Address",
     "contact.phone": "Phone",
     "contact.whatsapp": "WhatsApp",
@@ -108,7 +109,7 @@
     "contact.hours": "Visiting hours",
     "contact.todoNote": "Some contact details are still being confirmed by the home. Please message us before visiting.",
 
-    "footer.builtBy": "Built for Rumah Kanak-Kanak Triniti by volunteers.",
+    "footer.builtBy": "Built by eleven Computer Science undergraduates at Universiti Malaya for Rumah Kanak-Kanak Triniti, and handed over on 21 November 2026.",
     "footer.lastUpdated": "Last updated",
     "footer.langLabel": "Language",
 
@@ -116,6 +117,20 @@
     "lang.en": "English",
     "lang.zh": "Chinese (Simplified)",
     "lang.ms": "Malay",
+
+    "about.title": "About this project",
+    "about.intro": "This page was built by CodeSparks, a team of eleven Computer Science undergraduates at Universiti Malaya, as part of a Service Learning Malaysia (SULAM) project. It is the long-term half of what we are giving Rumah Kanak-Kanak Triniti: a tool the caretakers keep using after we have gone.",
+    "about.workshopTitle": "The other half: a workshop with no computers",
+    "about.workshopBody": "On the morning of 21 November we run a zero-device computational thinking workshop for the resident children, aged 7 to 16. Nothing gets plugged in. The children learn programming logic as a factory assembly line (gate, input, process, quality check, output), then draw, swap and debug each other's machine blueprints by hand. We chose this format because the children have no laptops or home Wi-Fi to practise on: a workshop that needs a computer stops working the moment we leave. Every child takes home their flowcharts and a laminated CodeSparks handbook, and the master worksheets stay with the home for the next group.",
+    "about.wishlistTitle": "Why a wishlist instead of a donation box",
+    "about.wishlistBody": "The home already received donations, but not always the things it was short of that month. The caretakers now type what they need into a Google Sheet and this page reads it directly: no coding, no web developer, no monthly bill. Donors can see the exact quantity still missing before buying anything, so nothing piles up unused while something urgent runs out.",
+    "about.course": "Course",
+    "about.partner": "Community partner",
+    "about.lecturer": "Lecturer",
+    "about.date": "Handover",
+    "about.dateValue": "Saturday, 21 November 2026",
+    "about.teamTitle": "The team",
+    "about.teamNote": "Eleven undergraduates from Universiti Malaya. SULAM WIX2001, Group 4.",
 
     "a11y.skip": "Skip to main content"
   };
@@ -126,10 +141,11 @@
     "nav.wishlist": "心愿单",
     "nav.howToDonate": "如何捐助",
     "nav.contact": "联系我们",
+    "nav.about": "关于",
 
     "hero.eyebrow": "物资心愿单",
     "hero.title": "孩子们现在需要什么",
-    "hero.subtitle": "这些都是院里每星期都会用到的物资。挑一样，我们会告诉你还缺多少，以及怎么送到我们这里。",
+    "hero.subtitle": "Triniti 儿童之家位于雪兰莪州八打灵再也。这份清单由院里的看护人自己维护：下面每一项都是孩子们现在需要的东西，并标明已经收到多少、还差多少。",
     "hero.ctaPrimary": "查看心愿单",
     "hero.ctaSecondary": "如何捐助",
 
@@ -184,7 +200,7 @@
     "error.retry": "再试一次",
 
     "donate.title": "如何捐助",
-    "donate.intro": "谢谢你的帮忙。你可以把物资寄到院里，也可以捐款由我们代买。无论哪一种，请先给我们发个信息，好让我们知道包裹会到，也在清单上登记。",
+    "donate.intro": "谢谢你的帮忙。你可以把物资寄到院里，也可以捐款让看护人代买。无论哪一种，请先给我们发个信息：这样他们能确认这项需求是否还在，并把你的捐助登记在清单上，下一位捐款人看到的就是准确的。",
     "donate.step1.title": "挑选物资",
     "donate.step1.body": "在心愿单上选一样。每一项都会显示还缺多少，你可以看看哪里最需要帮忙。",
     "donate.step2.title": "购买前先联系我们",
@@ -197,7 +213,7 @@
     "donate.money.body": "如果捐款比较方便，也可以给现金由我们代买。请向我们索取最新的银行账户资料；我们不会在这页面公开。",
 
     "contact.title": "联系院里",
-    "contact.intro": "以下资料由院里提供。来访或寄送物资之前，请先给我们发个信息。",
+    "contact.intro": "以下资料由院里提供。来访或寄送物资之前，请先发个信息，好让有人在场接收。",
     "contact.address": "地址",
     "contact.phone": "电话",
     "contact.whatsapp": "WhatsApp",
@@ -205,7 +221,7 @@
     "contact.hours": "探访时间",
     "contact.todoNote": "部分联系资料仍在由院里确认。来访之前，请先给我们发个信息。",
 
-    "footer.builtBy": "由义工为 Triniti 儿童之家制作。",
+    "footer.builtBy": "由马来亚大学十一位计算机科学本科生为 Triniti 儿童之家制作，并于 2026 年 11 月 21 日移交。",
     "footer.lastUpdated": "最后更新",
     "footer.langLabel": "语言",
 
@@ -213,6 +229,20 @@
     "lang.en": "英文",
     "lang.zh": "简体中文",
     "lang.ms": "马来文",
+
+    "about.title": "关于这个项目",
+    "about.intro": "这个页面由 CodeSparks 制作——马来亚大学十一位计算机科学本科生组成的团队，属于马来西亚服务学习计划（SULAM）项目的一部分。这是我们留给 Triniti 儿童之家的长期那一半：一个在我们离开之后，看护人仍然会继续使用的工具。",
+    "about.workshopTitle": "另一半：一场没有电脑的工作坊",
+    "about.workshopBody": "11 月 21 日上午，我们为院里 7 至 16 岁的孩子举办一场完全不用设备的计算思维工作坊。全程不插电。孩子们把编程逻辑理解成一条工厂流水线（闸门、输入、处理、质检、输出），然后手绘机器蓝图，互相交换，用红笔找出对方逻辑里的错误。我们选这个形式，是因为孩子们没有笔记本电脑，家里也没有 Wi-Fi 可以练习：需要电脑的工作坊，在我们离开的那一刻就停了。每个孩子会带走自己画的流程图和一本过胶的 CodeSparks 手册，母版学习单则留在院里，供下一批孩子使用。",
+    "about.wishlistTitle": "为什么是心愿单，而不是捐物箱",
+    "about.wishlistBody": "院里一直都收到捐助，但未必是那个月正好缺的东西。现在看护人把需要的物资打进 Google 表格，这个页面直接读取：不用写程序，不用请网站开发，也没有月费。捐款人在买之前就能看到确切还差多少，于是不会出现某样东西堆着用不完、另一样急需的却断了。",
+    "about.course": "科目",
+    "about.partner": "社区合作机构",
+    "about.lecturer": "讲师",
+    "about.date": "移交日期",
+    "about.dateValue": "2026 年 11 月 21 日（星期六）",
+    "about.teamTitle": "团队成员",
+    "about.teamNote": "马来亚大学十一位本科生。SULAM WIX2001，第 4 组。",
 
     "a11y.skip": "跳到主要内容"
   };
@@ -223,10 +253,11 @@
     "nav.wishlist": "Senarai keperluan",
     "nav.howToDonate": "Cara menderma",
     "nav.contact": "Hubungi kami",
+    "nav.about": "Tentang",
 
     "hero.eyebrow": "Senarai keperluan sumbangan",
     "hero.title": "Apa yang anak-anak kami perlukan sekarang",
-    "hero.subtitle": "Ini barangan yang kami gunakan setiap minggu di rumah ini. Pilih satu, dan kami akan tunjukkan berapa lagi yang diperlukan serta cara menghantarnya kepada kami.",
+    "hero.subtitle": "Rumah Kanak-Kanak Triniti ialah sebuah rumah kebajikan kanak-kanak di Petaling Jaya, Selangor. Senarai ini dijaga sendiri oleh pengasuh di rumah ini: setiap barangan di bawah ialah keperluan anak-anak sekarang, berserta jumlah yang telah disumbangkan dan jumlah yang masih kurang.",
     "hero.ctaPrimary": "Lihat senarai keperluan",
     "hero.ctaSecondary": "Cara menderma",
 
@@ -281,7 +312,7 @@
     "error.retry": "Cuba lagi",
 
     "donate.title": "Cara menderma",
-    "donate.intro": "Terima kasih kerana membantu. Anda boleh menghantar barangan ke rumah ini, atau memberi sumbangan wang untuk kami membelinya. Apa pun pilihan anda, sila hubungi kami dahulu supaya kami tahu bungkusan akan tiba dan dapat merekodkannya dalam senarai.",
+    "donate.intro": "Terima kasih kerana membantu. Anda boleh menghantar barangan ke rumah ini, atau memberi sumbangan wang dan pengasuh akan membelinya. Apa pun pilihan anda, sila hubungi kami dahulu: ini membolehkan mereka memastikan keperluan itu masih ada dan merekodkan sumbangan anda dalam senarai, supaya halaman ini kekal tepat untuk penderma seterusnya.",
     "donate.step1.title": "Pilih barangan",
     "donate.step1.body": "Pilih sesuatu daripada senarai keperluan. Setiap barangan menunjukkan berapa lagi yang diperlukan, jadi anda boleh lihat di mana bantuan paling diperlukan.",
     "donate.step2.title": "Hubungi kami sebelum membeli",
@@ -294,7 +325,7 @@
     "donate.money.body": "Jika lebih mudah, anda boleh memberi sumbangan wang dan kami akan membeli barangan itu sendiri. Hubungi kami untuk butiran bank terkini; kami tidak menyiarkannya di halaman ini.",
 
     "contact.title": "Hubungi rumah ini",
-    "contact.intro": "Butiran ini disediakan oleh pihak rumah. Sila hubungi kami sebelum melawat atau menghantar apa-apa.",
+    "contact.intro": "Butiran ini disediakan oleh pihak rumah. Sila hubungi kami sebelum melawat atau menghantar apa-apa, supaya ada orang di situ untuk menerimanya.",
     "contact.address": "Alamat",
     "contact.phone": "Telefon",
     "contact.whatsapp": "WhatsApp",
@@ -302,7 +333,7 @@
     "contact.hours": "Waktu melawat",
     "contact.todoNote": "Sesetengah butiran hubungan masih disahkan oleh pihak rumah. Sila hubungi kami sebelum melawat.",
 
-    "footer.builtBy": "Dibina untuk Rumah Kanak-Kanak Triniti oleh sukarelawan.",
+    "footer.builtBy": "Dibina oleh sebelas mahasiswa Ijazah Sarjana Muda Sains Komputer Universiti Malaya untuk Rumah Kanak-Kanak Triniti, dan diserahkan pada 21 November 2026.",
     "footer.lastUpdated": "Kemas kini terakhir",
     "footer.langLabel": "Bahasa",
 
@@ -310,6 +341,20 @@
     "lang.en": "Bahasa Inggeris",
     "lang.zh": "Bahasa Cina Ringkas",
     "lang.ms": "Bahasa Melayu",
+
+    "about.title": "Tentang projek ini",
+    "about.intro": "Halaman ini dibina oleh CodeSparks, sebuah pasukan sebelas mahasiswa Ijazah Sarjana Muda Sains Komputer Universiti Malaya, sebagai sebahagian daripada projek Service Learning Malaysia (SULAM). Ini bahagian jangka panjang sumbangan kami kepada Rumah Kanak-Kanak Triniti: satu alat yang akan terus digunakan oleh pengasuh selepas kami pergi.",
+    "about.workshopTitle": "Bahagian satu lagi: bengkel tanpa komputer",
+    "about.workshopBody": "Pada pagi 21 November, kami menjalankan bengkel pemikiran pengiraan tanpa peranti untuk anak-anak di rumah ini, berusia 7 hingga 16 tahun. Tiada apa yang dipasang pada elektrik. Anak-anak belajar logik pengaturcaraan sebagai barisan pemasangan kilat (pintu masuk, input, proses, pemeriksaan kualiti, output), kemudian melukis pelan mesin, bertukar dengan rakan, dan mencari kesilapan logik satu sama lain dengan pensel merah. Kami memilih bentuk ini kerana anak-anak tiada komputer riba atau Wi-Fi di rumah untuk berlatih: bengkel yang memerlukan komputer berhenti begitu kami beredar. Setiap kanak-kanak membawa pulang carta alir mereka dan sebuah buku panduan CodeSparks berlamina, manakala lembaran kerja induk ditinggalkan di rumah ini untuk kumpulan seterusnya.",
+    "about.wishlistTitle": "Mengapa senarai keperluan, bukan kotak derma",
+    "about.wishlistBody": "Rumah ini memang menerima sumbangan, tetapi bukan selalu barangan yang sedang kekurangan pada bulan itu. Kini pengasuh menaip keperluan ke dalam Google Sheet dan halaman ini membacanya terus: tanpa pengekodan, tanpa pembangun laman web, tanpa bil bulanan. Penderma dapat melihat jumlah tepat yang masih kurang sebelum membeli, jadi tiada barangan yang bertimbun tanpa digunakan sedangkan yang mendesak kehabisan.",
+    "about.course": "Kursus",
+    "about.partner": "Rakan komuniti",
+    "about.lecturer": "Pensyarah",
+    "about.date": "Penyerahan",
+    "about.dateValue": "Sabtu, 21 November 2026",
+    "about.teamTitle": "Pasukan",
+    "about.teamNote": "Sebelas mahasiswa Universiti Malaya. SULAM WIX2001, Kumpulan 4.",
 
     "a11y.skip": "Langkau ke kandungan utama"
   };

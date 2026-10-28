@@ -11,8 +11,9 @@ It is built for two kinds of people. Donors get a clear, honest, fast list that 
 ## What the site does
 
 - **Live needs list** — every item the home needs, one card each, with the quantity still missing.
-- **Progress you can read at a glance** — each item is **Needed**, **Partial** or **Fulfilled**, with a progress bar and an amount such as `12 / 40 bag`. A donor sees instantly what is still short and what is already covered.
+- **Progress you can read at a glance** — each item is **Needed**, **Partial** or **Fulfilled**, with a progress bar and an amount such as `12 / 40 bags`. A donor sees instantly what is still short and what is already covered.
 - **Three languages** — English (default), 简体中文 (Simplified Chinese) and Bahasa Melayu, switched at runtime from the header and remembered in the browser.
+- **An About section** — who built the page, for which course, and the date it was handed over, so the site still explains itself long after the team has graduated.
 - **Zero hosting cost** — plain files on GitHub Pages. No server, no database, no monthly bill.
 - **No build step** — no npm, no bundler, no framework, no CDN, no external fonts. What is in the repository is what the browser runs.
 
@@ -149,6 +150,24 @@ triniti-wishlist/
 
 ## Built by
 
-Built by [TODO: team name] as a student project, and handed over to Rumah Kanak-Kanak Triniti on 21 November.
+**CodeSparks** — SULAM WIX2001 (Occ 5), Group 4, Universiti Malaya. Lecturer: Madam Fazidah Binti Othman. Handed over to Rumah Kanak-Kanak Triniti on Saturday, 21 November 2026.
+
+The eleven members of the team, with matric numbers for verification:
+
+| # | Name | Matric no. |
+|---|------|-----------|
+| 1 | Tan Yun Yu | 24004504 |
+| 2 | Adiva Zainab | 25062742 |
+| 3 | Fathurrahman Alfikri | 25059628 |
+| 4 | Wan Yukai | 25061353 |
+| 5 | Jiang Jun | 25057198 |
+| 6 | Yan Jiayi | 25068600 |
+| 7 | Dong Runshi | 25066079 |
+| 8 | Hong Boyu | 25068514 |
+| 9 | Muhammad Ariq Husein | 25065363 |
+| 10 | Chen Xuanzhu | 25059058 |
+| 11 | Alfiando Ghauzan Athallah | 25063391 |
+
+Names appear on the public page (the About section); matric numbers stay here, in the repository, so the public page carries no student ID numbers.
 
 The site is deliberately boring to maintain: one spreadsheet to edit, one config file to change, no build tools to install.

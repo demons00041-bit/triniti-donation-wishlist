@@ -1118,7 +1118,99 @@ button {
   line-height: 1.4;
 }
 
-/* 13. Footer -------------------------------------------------------------- */
+/* 13. About --------------------------------------------------------------- */
+.about {
+  background-color: var(--surface-alt);
+  border-top: 1px solid var(--line);
+}
+
+.about__facts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0 var(--s-5);
+  margin: 0 0 var(--s-6);
+}
+
+.fact {
+  min-width: 0;
+  padding-block: var(--s-3);
+  border-top: 2px solid var(--line-strong);
+}
+
+.fact__label {
+  margin: 0 0 0.3rem;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+
+.fact__value {
+  margin: 0;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.about__body {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(0.9rem, 1.5vw, 1.25rem);
+}
+
+.about-block {
+  min-width: 0;
+  padding: clamp(1.2rem, 2vw, 1.7rem);
+  background-color: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-xs);
+}
+
+.about-block__title {
+  margin: 0 0 0.6rem;
+  font-size: var(--fs-h3);
+  color: var(--accent-heading);
+}
+
+.about-block__body {
+  margin: 0;
+  font-size: var(--fs-sm);
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+
+.about__team-title {
+  margin: var(--s-6) 0 0.4rem;
+  font-size: var(--fs-h3);
+  color: var(--ink);
+}
+
+.about__team-note {
+  margin: 0 0 var(--s-4);
+  font-size: var(--fs-sm);
+  color: var(--ink-mute);
+}
+
+.team {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.4rem var(--s-4);
+}
+
+.team__member {
+  min-width: 0;
+  padding-block: 0.35rem;
+  border-top: 1px solid var(--line);
+  font-size: var(--fs-sm);
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+/* 14. Footer -------------------------------------------------------------- */
 .site-footer {
   padding-block: var(--s-6) var(--s-5);
   background-color: var(--footer-bg);
@@ -1172,7 +1264,7 @@ button {
   color: var(--footer-fg);
 }
 
-/* 14. Utilities ----------------------------------------------------------- */
+/* 15. Utilities ----------------------------------------------------------- */
 .skip-link {
   position: fixed;
   top: 0.5rem;
@@ -1209,9 +1301,14 @@ button {
   border: 0;
 }
 
-/* 15. Responsive ---------------------------------------------------------- */
+/* 16. Responsive ---------------------------------------------------------- */
 @media (max-width: 1023px) {
   .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .about__facts,
+  .team {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -1297,6 +1394,12 @@ button {
 }
 
 @media (max-width: 767px) {
+  /* The header reaches 124px here in Malay, so the 130px inherited from the
+     1199 block left almost no clearance under a sticky bar. */
+  :root {
+    --anchor-offset: 144px;
+  }
+
   /* Just above 639px the first row is a few pixels short of fitting the brand
      beside the switcher; compacting the switcher keeps the header at two rows
      instead of paying ~23px for a third one. */
@@ -1328,7 +1431,8 @@ button {
 
   .steps,
   .donate__cards,
-  .contact__list {
+  .contact__list,
+  .about__body {
     grid-template-columns: minmax(0, 1fr);
   }
 
@@ -1338,8 +1442,11 @@ button {
 }
 
 @media (max-width: 639px) {
+  /* 401-639px is the tallest header in the project (139px in Malay): the brand
+     row, the switcher row and the nav row all stack. 132px put the anchor
+     target behind the bar, so the offset clears 139px with room to spare. */
   :root {
-    --anchor-offset: 132px;
+    --anchor-offset: 158px;
   }
 
   .grid {
@@ -1407,12 +1514,6 @@ button {
 /* Below 400px the Malay labels are the tightest fit in the project; the row
    sizes are trimmed further so the nav stays on one line there too. */
 @media (max-width: 400px) {
-  /* The 320px header reaches ~111px here, so the offset is raised above the
-     132px used by the rest of the phone range to keep a visible gap. */
-  :root {
-    --anchor-offset: 145px;
-  }
-
   .lang {
     gap: 0.1rem;
     padding: 0.08rem;
@@ -1435,7 +1536,7 @@ button {
   }
 }
 
-/* 16. Reduced motion ------------------------------------------------------ */
+/* 17. Reduced motion ------------------------------------------------------ */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

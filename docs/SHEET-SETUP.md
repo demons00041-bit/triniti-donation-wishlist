@@ -52,9 +52,9 @@ The page does the sum itself. It only needs `quantity_needed` and `quantity_fulf
 
 | quantity_needed | quantity_fulfilled | What donors see |
 | --- | --- | --- |
-| 40 | 0 | Needed — 0%, `0 / 40 bag` |
-| 40 | 12 | Partial — 30%, `12 / 40 bag`, 28 still missing |
-| 40 | 40 | Fulfilled — 100%, `40 / 40 bag` |
+| 40 | 0 | Needed — 0%, `0 / 40 bags` |
+| 40 | 12 | Partial — 30%, `12 / 40 bags`, 28 still missing |
+| 40 | 40 | Fulfilled — 100%, `40 / 40 bags` |
 | 40 | 55 | Fulfilled — still 100%, the extra is capped |
 
 Two more rules worth knowing:
@@ -67,14 +67,14 @@ Two more rules worth knowing:
 Row 2 of a brand-new sheet, filled in as an example (not real data for the home):
 
 ```
-item-012, Rice (10 kg bag), staples, bag, 40, 12, no, Buy the same brand as before, 2025-11-01
+item-012, Rice (10 kg bag), staples, bags, 40, 12, no, Buy the same brand as before, 2025-11-01
 ```
 
 In cells, that is:
 
 | A | B | C | D | E | F | G | H | I |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| item-012 | Rice (10 kg bag) | staples | bag | 40 | 12 | no | Buy the same brand as before | 2025-11-01 |
+| item-012 | Rice (10 kg bag) | staples | bags | 40 | 12 | no | Buy the same brand as before | 2025-11-01 |
 
 If a value itself contains a comma, wrap that value in double quotes: `"Rice, 10 kg bag"`.
 
