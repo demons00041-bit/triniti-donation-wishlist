@@ -1,8 +1,9 @@
-/* Triniti Digital Donation Wishlist - translations and locale switching.
+/* Triniti - translations and locale switching.
  *
- * Contract: docs/BUILD-CONTRACT.md section 3. Classic script, no modules,
- * no dependencies, ES5 syntax so it runs on any 2019 browser.
- * Load order at the end of <body>: config.js -> data.js -> i18n.js -> app.js
+ * Classic script, no modules, no dependencies, ES5 syntax.
+ * Load order at the end of <body>: config.js -> i18n.js -> site.js -> page script.
+ *
+ * Languages: English and Bahasa Melayu. Nothing else.
  *
  * Public API (window.I18N):
  *   locales, defaultLocale, dict, t(key, vars), getLocale(), setLocale(code),
@@ -13,9 +14,9 @@
 
   var STORAGE_KEY = "triniti.lang";
   var DEFAULT_LOCALE = "en";
-  var LOCALES = ["en", "zh", "ms"];
-  var INTL_LOCALES = { en: "en-MY", zh: "zh-CN", ms: "ms-MY" };
-  var HTML_LANGS = { en: "en", zh: "zh-CN", ms: "ms-MY" };
+  var LOCALES = ["en", "ms"];
+  var INTL_LOCALES = { en: "en-MY", ms: "ms-MY" };
+  var HTML_LANGS = { en: "en", ms: "ms" };
   var APPLY_ATTRS = [
     ["data-i18n", "text"],
     ["data-i18n-html", "html"],
@@ -25,27 +26,14 @@
 
   var en = {
     "site.name": "Rumah Kanak-Kanak Triniti",
-    "site.tagline": "A donation wishlist for our children's home",
+    "site.tagline": "A children's home in Malaysia",
+
     "nav.wishlist": "Wishlist",
-    "nav.howToDonate": "How to donate",
-    "nav.contact": "Contact",
     "nav.about": "About",
-
-    "hero.eyebrow": "Donation wishlist",
-    "hero.title": "What our children need right now",
-    "hero.subtitle": "Rumah Kanak-Kanak Triniti is a children's home in Petaling Jaya, Selangor. The caretakers keep this list themselves: each item below is something the children need now, with how much has already been given and how much is still missing.",
-    "hero.ctaPrimary": "See the wishlist",
-    "hero.ctaSecondary": "How to donate",
-
-    "banner.demo": "Sample data: this page is showing example items, not our live list.",
-    "banner.live": "Showing live needs from our spreadsheet.",
-    "banner.updated": "Last synced {time}.",
-    "banner.error": "We could not reach the live spreadsheet, so the sample list is shown below.",
-
-    "stats.items": "Items listed",
-    "stats.remaining": "Still needed",
-    "stats.fulfilled": "Fully donated",
-    "stats.urgent": "Urgent",
+    "nav.getInvolved": "Get involved",
+    "nav.contact": "Contact",
+    "nav.donate": "Donate",
+    "nav.label": "Main",
 
     "controls.searchPlaceholder": "Search items",
     "controls.filterCategory": "Category",
@@ -87,189 +75,113 @@
     "error.body": "Something went wrong on our side. Please try again, or contact us if it keeps happening.",
     "error.retry": "Try again",
 
-    "donate.title": "How to donate",
-    "donate.intro": "Thank you for helping. You can send items to the home, or give money and the caretakers will buy them. Either way, please message us first: it lets them check the need is still there and record your gift against the list, so this page stays accurate for the next donor.",
-    "donate.step1.title": "Choose an item",
-    "donate.step1.body": "Pick something from the wishlist. Each item shows how much is still needed, so you can see where your help matters most.",
-    "donate.step2.title": "Message us before you buy",
-    "donate.step2.body": "Send us a WhatsApp message with the item name and quantity. We will confirm the need and arrange the drop-off or delivery with you.",
-    "donate.step3.title": "Send it or bring it",
-    "donate.step3.body": "Post the items, or bring them to the home during visiting hours. If you post them, send us the tracking number so we can watch for the parcel.",
-    "donate.shipping.title": "Donating by post or in person",
-    "donate.shipping.body": "Any courier can deliver to us. Please write the item name on the label. If you come in person, message us first so someone is there to receive you.",
-    "donate.money.title": "Donating money instead",
-    "donate.money.body": "If money is easier, you can give cash and we will buy the item ourselves. Message us for the current bank details; we do not publish them on this page.",
+    "about.title": "About us",
+    "about.founded": "Founded",
+    "about.serves": "Serves",
 
-    "contact.title": "Contact the home",
-    "contact.intro": "These details are provided by the home. Please message before visiting or sending anything, so someone is there to receive it.",
-    "contact.address": "Address",
-    "contact.phone": "Phone",
-    "contact.whatsapp": "WhatsApp",
-    "contact.email": "Email",
-    "contact.hours": "Visiting hours",
-    "contact.todoNote": "Some contact details are still being confirmed by the home. Please message us before visiting.",
+    "placeholder.todo": "To be filled in",
+    "placeholder.image": "Image",
+    "placeholder.size": "Suggested size {size}",
+    "placeholder.customAmount": "Enter an amount",
+    "placeholder.notSelected": "Not selected",
 
-    "footer.builtBy": "Built by eleven Computer Science undergraduates at Universiti Malaya for Rumah Kanak-Kanak Triniti, and handed over on 21 November 2026.",
+    "card.lendHand": "Lend a Hand",
+    "card.sponsorChild": "Sponsor A Child",
+    "card.volunteer": "Volunteer",
+    "card.giftOfLove": "Gift Of Love",
+    "card.donateForUs": "Donate for us",
+
+    "donate.customAmount": "Other amount",
+    "donate.now": "Donate now",
+
+    "donatePage.title": "Ways to donate",
+    "donatePage.amountLabel": "You are donating",
+    "donatePage.changeAmount": "Change amount",
+
+    "pay.qrTitle": "E-wallet QR",
+    "pay.hostedTitle": "Pay on the bank's page",
+    "pay.hostedCta": "Open the secure payment page ({bank})",
+    "pay.hostedUnavailable": "Not open yet",
+    "pay.afterNote": "After you pay, you can tell us about it below. That part is optional.",
+
+    "otherWays.bankTitle": "Bank transfer",
+    "otherWays.bankName": "Bank",
+    "otherWays.accountName": "Account name",
+    "otherWays.accountNo": "Account number",
+    "otherWays.swift": "SWIFT",
+    "otherWays.copy": "Copy account number",
+    "otherWays.copied": "Copied",
+    "otherWays.itemsTitle": "Donate items instead",
+    "otherWays.map": "Open map",
+    "otherWays.dropoff": "Drop-off address",
+    "otherWays.itemContact": "Contact",
+    "otherWays.itemHours": "Hours",
+    "otherWays.itemList": "What we need",
+
+    "form.summary": "Tell us about your donation (optional)",
+    "form.fullName": "Full name",
+    "form.email": "Email",
+    "form.phone": "Phone",
+    "form.message": "Message",
+    "form.anonymous": "Donate anonymously",
+    "form.anonymousNote": "You chose to stay anonymous. Nothing you type here is sent or stored - not your name, not your email, not even a message. There is no reference number, because no record exists. Please pay with the details above.",
+    "form.agree": "I agree to be contacted about this donation",
+    "form.privacy": "We save the name and contact details you enter here, and use them only to talk to you about this donation.",
+    "form.send": "Send details",
+    "form.sending": "Sending...",
+    "form.success": "Received. Your reference is {ref}.",
+    "form.errRequired": "Please fill in this field.",
+    "form.errEmail": "Please enter a valid email address.",
+    "form.errAgree": "Please tick this box so we may contact you.",
+    "form.errAnonymous": "Nothing is sent while anonymous is ticked.",
+    "form.errRate": "Too many attempts. Please wait a while and try again.",
+    "form.errServer": "We could not save your details. Please try again later.",
+    "form.errNetwork": "We could not reach the server. Check your connection and try again.",
+    "form.errTimeout": "That took too long. Please try again.",
+    "form.backendMissing": "Sending details is not switched on yet. Please pay with the details above.",
+    "form.noDraftNote": "This form is not saved. Refreshing the page clears it.",
+
+    "contactPage.title": "Contact us",
+    "contactPage.address": "Address",
+    "contactPage.phone": "Phone",
+    "contactPage.whatsapp": "WhatsApp",
+    "contactPage.email": "Email",
+    "contactPage.hours": "Visiting hours",
+    "contactPage.col1": "General enquiries",
+    "contactPage.col2": "Donations",
+    "contactPage.col3": "Volunteering",
+    "contactPage.questions": "Questions?",
+    "contactPage.fullPage": "See the full contact page",
+
+    "volunteer.title": "Volunteer with us",
+    "volunteer.role1": "Help at the home",
+    "volunteer.role2": "Share a skill",
+    "volunteer.role3": "Help from a distance",
+    "volunteer.step1": "Get in touch",
+    "volunteer.step2": "Meet the team",
+    "volunteer.step3": "Start helping",
+    "volunteer.ctaButton": "Contact us to volunteer",
+
+    "footer.copyright": "\u00a9 {year} Rumah Kanak-Kanak Triniti",
     "footer.lastUpdated": "Last updated",
-    "footer.langLabel": "Language",
 
     "lang.label": "Change language",
     "lang.en": "English",
-    "lang.zh": "Chinese (Simplified)",
     "lang.ms": "Malay",
-
-    "about.title": "About this project",
-    "about.intro": "This page was built by CodeSparks, a team of eleven Computer Science undergraduates at Universiti Malaya, as part of a Service Learning Malaysia (SULAM) project. It is the long-term half of what we are giving Rumah Kanak-Kanak Triniti: a tool the caretakers keep using after we have gone.",
-    "about.workshopTitle": "The other half: a workshop with no computers",
-    "about.workshopBody": "On the morning of 21 November we run a zero-device computational thinking workshop for the resident children, aged 7 to 16. Nothing gets plugged in. The children learn programming logic as a factory assembly line (gate, input, process, quality check, output), then draw, swap and debug each other's machine blueprints by hand. We chose this format because the children have no laptops or home Wi-Fi to practise on: a workshop that needs a computer stops working the moment we leave. Every child takes home their flowcharts and a laminated CodeSparks handbook, and the master worksheets stay with the home for the next group.",
-    "about.wishlistTitle": "Why a wishlist instead of a donation box",
-    "about.wishlistBody": "The home already received donations, but not always the things it was short of that month. The caretakers now type what they need into a Google Sheet and this page reads it directly: no coding, no web developer, no monthly bill. Donors can see the exact quantity still missing before buying anything, so nothing piles up unused while something urgent runs out.",
-    "about.course": "Course",
-    "about.partner": "Community partner",
-    "about.lecturer": "Lecturer",
-    "about.date": "Handover",
-    "about.dateValue": "Saturday, 21 November 2026",
-    "about.teamTitle": "The team",
-    "about.teamNote": "Eleven undergraduates from Universiti Malaya. SULAM WIX2001, Group 4.",
 
     "a11y.skip": "Skip to main content"
   };
 
-  var zh = {
-    "site.name": "Triniti 儿童之家",
-    "site.tagline": "我们儿童之家的物资心愿单",
-    "nav.wishlist": "心愿单",
-    "nav.howToDonate": "如何捐助",
-    "nav.contact": "联系我们",
-    "nav.about": "关于",
-
-    "hero.eyebrow": "物资心愿单",
-    "hero.title": "孩子们现在需要什么",
-    "hero.subtitle": "Triniti 儿童之家位于雪兰莪州八打灵再也。这份清单由院里的看护人自己维护：下面每一项都是孩子们现在需要的东西，并标明已经收到多少、还差多少。",
-    "hero.ctaPrimary": "查看心愿单",
-    "hero.ctaSecondary": "如何捐助",
-
-    "banner.demo": "这是示范数据：页面显示的是示例物资，不是我们的最新清单。",
-    "banner.live": "正在显示线上表格中的最新需求。",
-    "banner.updated": "最后更新于 {time}。",
-    "banner.error": "我们暂时连不上线上表格，下方显示的是示例清单。",
-
-    "stats.items": "清单物资",
-    "stats.remaining": "尚缺数量",
-    "stats.fulfilled": "已凑足",
-    "stats.urgent": "急需",
-
-    "controls.searchPlaceholder": "搜索物资",
-    "controls.filterCategory": "类别",
-    "controls.filterStatus": "状态",
-    "controls.sort": "排序方式",
-    "controls.results": "共显示 {count} 项",
-
-    "status.needed": "仍然需要",
-    "status.partial": "部分已捐",
-    "status.fulfilled": "已凑足",
-    "status.all": "全部物资",
-
-    "sort.urgency": "最急需优先",
-    "sort.progress": "完成度最低优先",
-    "sort.name": "名称（A 到 Z）",
-
-    "category.staples": "米粮主食",
-    "category.food": "食品",
-    "category.hygiene": "清洁卫生",
-    "category.household": "家居用品",
-    "category.school": "上学用品",
-    "category.baby": "婴儿用品",
-    "category.medical": "医疗用品",
-    "category.other": "其他",
-
-    "item.amount": "已捐 {fulfilled}，共需 {needed} {unit}",
-    "item.notesAria": "物资备注",
-    "item.urgent": "急需",
-    "item.partial": "部分已捐",
-    "item.done": "已凑足",
-    "item.progressAria": "{name}：已捐达所需数量的 {percent}%",
-
-    "empty.title": "没有符合筛选条件的物资",
-    "empty.body": "可以换个搜索词，或者清除筛选，查看清单上的全部物资。",
-    "empty.reset": "清除筛选",
-
-    "loading": "正在加载心愿单……",
-    "error.title": "心愿单加载失败",
-    "error.body": "我们这边出了点问题，请再试一次；如果一直不行，请联系我们。",
-    "error.retry": "再试一次",
-
-    "donate.title": "如何捐助",
-    "donate.intro": "谢谢你的帮忙。你可以把物资寄到院里，也可以捐款让看护人代买。无论哪一种，请先给我们发个信息：这样他们能确认这项需求是否还在，并把你的捐助登记在清单上，下一位捐款人看到的就是准确的。",
-    "donate.step1.title": "挑选物资",
-    "donate.step1.body": "在心愿单上选一样。每一项都会显示还缺多少，你可以看看哪里最需要帮忙。",
-    "donate.step2.title": "购买前先联系我们",
-    "donate.step2.body": "用 WhatsApp 把物资名称和数量告诉我们。我们会确认这项需求，再和你约好送达或收取的方式。",
-    "donate.step3.title": "寄来或送过来",
-    "donate.step3.body": "可以把物资寄来，也可以在探访时间亲自送到院里。如果是邮寄，请把快递单号发给我们，方便我们留意包裹。",
-    "donate.shipping.title": "邮寄或亲自送捐",
-    "donate.shipping.body": "任何快递公司都可以送到。请在包裹上写明物资名称。如果亲自过来，请先给我们发信息，好让我们安排人接收。",
-    "donate.money.title": "改为捐款",
-    "donate.money.body": "如果捐款比较方便，也可以给现金由我们代买。请向我们索取最新的银行账户资料；我们不会在这页面公开。",
-
-    "contact.title": "联系院里",
-    "contact.intro": "以下资料由院里提供。来访或寄送物资之前，请先发个信息，好让有人在场接收。",
-    "contact.address": "地址",
-    "contact.phone": "电话",
-    "contact.whatsapp": "WhatsApp",
-    "contact.email": "电邮",
-    "contact.hours": "探访时间",
-    "contact.todoNote": "部分联系资料仍在由院里确认。来访之前，请先给我们发个信息。",
-
-    "footer.builtBy": "由马来亚大学十一位计算机科学本科生为 Triniti 儿童之家制作，并于 2026 年 11 月 21 日移交。",
-    "footer.lastUpdated": "最后更新",
-    "footer.langLabel": "语言",
-
-    "lang.label": "切换语言",
-    "lang.en": "英文",
-    "lang.zh": "简体中文",
-    "lang.ms": "马来文",
-
-    "about.title": "关于这个项目",
-    "about.intro": "这个页面由 CodeSparks 制作——马来亚大学十一位计算机科学本科生组成的团队，属于马来西亚服务学习计划（SULAM）项目的一部分。这是我们留给 Triniti 儿童之家的长期那一半：一个在我们离开之后，看护人仍然会继续使用的工具。",
-    "about.workshopTitle": "另一半：一场没有电脑的工作坊",
-    "about.workshopBody": "11 月 21 日上午，我们为院里 7 至 16 岁的孩子举办一场完全不用设备的计算思维工作坊。全程不插电。孩子们把编程逻辑理解成一条工厂流水线（闸门、输入、处理、质检、输出），然后手绘机器蓝图，互相交换，用红笔找出对方逻辑里的错误。我们选这个形式，是因为孩子们没有笔记本电脑，家里也没有 Wi-Fi 可以练习：需要电脑的工作坊，在我们离开的那一刻就停了。每个孩子会带走自己画的流程图和一本过胶的 CodeSparks 手册，母版学习单则留在院里，供下一批孩子使用。",
-    "about.wishlistTitle": "为什么是心愿单，而不是捐物箱",
-    "about.wishlistBody": "院里一直都收到捐助，但未必是那个月正好缺的东西。现在看护人把需要的物资打进 Google 表格，这个页面直接读取：不用写程序，不用请网站开发，也没有月费。捐款人在买之前就能看到确切还差多少，于是不会出现某样东西堆着用不完、另一样急需的却断了。",
-    "about.course": "科目",
-    "about.partner": "社区合作机构",
-    "about.lecturer": "讲师",
-    "about.date": "移交日期",
-    "about.dateValue": "2026 年 11 月 21 日（星期六）",
-    "about.teamTitle": "团队成员",
-    "about.teamNote": "马来亚大学十一位本科生。SULAM WIX2001，第 4 组。",
-
-    "a11y.skip": "跳到主要内容"
-  };
-
   var ms = {
     "site.name": "Rumah Kanak-Kanak Triniti",
-    "site.tagline": "Senarai keperluan sumbangan untuk rumah kebajikan kami",
+    "site.tagline": "Sebuah rumah kebajikan kanak-kanak di Malaysia",
+
     "nav.wishlist": "Senarai keperluan",
-    "nav.howToDonate": "Cara menderma",
-    "nav.contact": "Hubungi kami",
     "nav.about": "Tentang",
-
-    "hero.eyebrow": "Senarai keperluan sumbangan",
-    "hero.title": "Apa yang anak-anak kami perlukan sekarang",
-    "hero.subtitle": "Rumah Kanak-Kanak Triniti ialah sebuah rumah kebajikan kanak-kanak di Petaling Jaya, Selangor. Senarai ini dijaga sendiri oleh pengasuh di rumah ini: setiap barangan di bawah ialah keperluan anak-anak sekarang, berserta jumlah yang telah disumbangkan dan jumlah yang masih kurang.",
-    "hero.ctaPrimary": "Lihat senarai keperluan",
-    "hero.ctaSecondary": "Cara menderma",
-
-    "banner.demo": "Ini data contoh: halaman ini memaparkan barangan contoh, bukan senarai sebenar kami.",
-    "banner.live": "Memaparkan keperluan terkini daripada jadual hamparan kami.",
-    "banner.updated": "Dikemas kini pada {time}.",
-    "banner.error": "Kami tidak dapat membaca jadual hamparan, jadi senarai contoh dipaparkan di bawah.",
-
-    "stats.items": "Barangan disenaraikan",
-    "stats.remaining": "Masih diperlukan",
-    "stats.fulfilled": "Sudah cukup",
-    "stats.urgent": "Mendesak",
+    "nav.getInvolved": "Libatkan diri",
+    "nav.contact": "Hubungi",
+    "nav.donate": "Derma",
+    "nav.label": "Utama",
 
     "controls.searchPlaceholder": "Cari barangan",
     "controls.filterCategory": "Kategori",
@@ -311,55 +223,104 @@
     "error.body": "Ada masalah pada pihak kami. Sila cuba lagi, atau hubungi kami jika ia berterusan.",
     "error.retry": "Cuba lagi",
 
-    "donate.title": "Cara menderma",
-    "donate.intro": "Terima kasih kerana membantu. Anda boleh menghantar barangan ke rumah ini, atau memberi sumbangan wang dan pengasuh akan membelinya. Apa pun pilihan anda, sila hubungi kami dahulu: ini membolehkan mereka memastikan keperluan itu masih ada dan merekodkan sumbangan anda dalam senarai, supaya halaman ini kekal tepat untuk penderma seterusnya.",
-    "donate.step1.title": "Pilih barangan",
-    "donate.step1.body": "Pilih sesuatu daripada senarai keperluan. Setiap barangan menunjukkan berapa lagi yang diperlukan, jadi anda boleh lihat di mana bantuan paling diperlukan.",
-    "donate.step2.title": "Hubungi kami sebelum membeli",
-    "donate.step2.body": "Hantar mesej WhatsApp kepada kami dengan nama barangan dan kuantiti. Kami akan sahkan keperluan itu dan mengatur cara penghantaran dengan anda.",
-    "donate.step3.title": "Hantar atau serahkan sendiri",
-    "donate.step3.body": "Pos barangan itu, atau bawa sendiri ke rumah ini pada waktu melawat. Jika anda mengepos, beritahu kami nombor surat cara supaya kami boleh menunggu bungkusan itu.",
-    "donate.shipping.title": "Menderma melalui pos atau secara terus",
-    "donate.shipping.body": "Bungkusan boleh dihantar melalui mana-mana kurier. Sila tulis nama barangan pada label. Jika anda datang sendiri, hubungi kami dahulu supaya ada orang menerima anda.",
-    "donate.money.title": "Menderma dalam bentuk wang",
-    "donate.money.body": "Jika lebih mudah, anda boleh memberi sumbangan wang dan kami akan membeli barangan itu sendiri. Hubungi kami untuk butiran bank terkini; kami tidak menyiarkannya di halaman ini.",
+    "about.title": "Tentang kami",
+    "about.founded": "Ditubuhkan",
+    "about.serves": "Menampung",
 
-    "contact.title": "Hubungi rumah ini",
-    "contact.intro": "Butiran ini disediakan oleh pihak rumah. Sila hubungi kami sebelum melawat atau menghantar apa-apa, supaya ada orang di situ untuk menerimanya.",
-    "contact.address": "Alamat",
-    "contact.phone": "Telefon",
-    "contact.whatsapp": "WhatsApp",
-    "contact.email": "E-mel",
-    "contact.hours": "Waktu melawat",
-    "contact.todoNote": "Sesetengah butiran hubungan masih disahkan oleh pihak rumah. Sila hubungi kami sebelum melawat.",
+    "placeholder.todo": "Akan diisi kemudian",
+    "placeholder.image": "Imej",
+    "placeholder.size": "Saiz disyorkan {size}",
+    "placeholder.customAmount": "Masukkan jumlah",
+    "placeholder.notSelected": "Belum dipilih",
 
-    "footer.builtBy": "Dibina oleh sebelas mahasiswa Ijazah Sarjana Muda Sains Komputer Universiti Malaya untuk Rumah Kanak-Kanak Triniti, dan diserahkan pada 21 November 2026.",
+    "card.lendHand": "Hulurkan Bantuan",
+    "card.sponsorChild": "Taja Seorang Anak",
+    "card.volunteer": "Sukarelawan",
+    "card.giftOfLove": "Hadiah Kasih",
+    "card.donateForUs": "Derma untuk kami",
+
+    "donate.customAmount": "Jumlah lain",
+    "donate.now": "Derma sekarang",
+
+    "donatePage.title": "Cara untuk menderma",
+    "donatePage.amountLabel": "Anda menderma",
+    "donatePage.changeAmount": "Tukar jumlah",
+
+    "pay.qrTitle": "QR e-dompet",
+    "pay.hostedTitle": "Bayar di halaman bank",
+    "pay.hostedCta": "Buka halaman pembayaran yang selamat ({bank})",
+    "pay.hostedUnavailable": "Belum dibuka",
+    "pay.afterNote": "Selepas anda membayar, anda boleh memberitahu kami di bawah. Bahagian itu pilihan.",
+
+    "otherWays.bankTitle": "Pindahan bank",
+    "otherWays.bankName": "Bank",
+    "otherWays.accountName": "Nama akaun",
+    "otherWays.accountNo": "Nombor akaun",
+    "otherWays.swift": "SWIFT",
+    "otherWays.copy": "Salin nombor akaun",
+    "otherWays.copied": "Disalin",
+    "otherWays.itemsTitle": "Derma barangan",
+    "otherWays.map": "Buka peta",
+    "otherWays.dropoff": "Alamat penghantaran",
+    "otherWays.itemContact": "Hubungi",
+    "otherWays.itemHours": "Waktu",
+    "otherWays.itemList": "Apa yang kami perlukan",
+
+    "form.summary": "Beritahu kami tentang derma anda (pilihan)",
+    "form.fullName": "Nama penuh",
+    "form.email": "E-mel",
+    "form.phone": "Telefon",
+    "form.message": "Mesej",
+    "form.anonymous": "Derma tanpa nama",
+    "form.anonymousNote": "Anda memilih untuk kekal tanpa nama. Tiada apa yang anda taip di sini dihantar atau disimpan - bukan nama anda, bukan e-mel anda, bukan juga mesej. Tiada nombor rujukan kerana tiada rekod wujud. Sila bayar dengan butiran di atas.",
+    "form.agree": "Saya bersetuju untuk dihubungi mengenai derma ini",
+    "form.privacy": "Kami menyimpan nama dan butiran hubungan yang anda isi di sini, dan menggunakannya hanya untuk berbual dengan anda tentang derma ini.",
+    "form.send": "Hantar butiran",
+    "form.sending": "Sedang menghantar...",
+    "form.success": "Diterima. Rujukan anda ialah {ref}.",
+    "form.errRequired": "Sila isi ruangan ini.",
+    "form.errEmail": "Sila masukkan alamat e-mel yang sah.",
+    "form.errAgree": "Sila tandakan kotak ini supaya kami boleh menghubungi anda.",
+    "form.errAnonymous": "Tiada apa dihantar semasa tanpa nama ditanda.",
+    "form.errRate": "Terlalu banyak percubaan. Sila tunggu sebentar dan cuba lagi.",
+    "form.errServer": "Kami tidak dapat menyimpan butiran anda. Sila cuba lagi nanti.",
+    "form.errNetwork": "Kami tidak dapat menghubungi pelayan. Semak sambungan anda dan cuba lagi.",
+    "form.errTimeout": "Permintaan itu mengambil masa terlalu lama. Sila cuba lagi.",
+    "form.backendMissing": "Penghantaran butiran belum dihidupkan. Sila bayar dengan butiran di atas.",
+    "form.noDraftNote": "Borang ini tidak disimpan. Memuat semula halaman akan mengosongkannya.",
+
+    "contactPage.title": "Hubungi kami",
+    "contactPage.address": "Alamat",
+    "contactPage.phone": "Telefon",
+    "contactPage.whatsapp": "WhatsApp",
+    "contactPage.email": "E-mel",
+    "contactPage.hours": "Waktu melawat",
+    "contactPage.col1": "Pertanyaan umum",
+    "contactPage.col2": "Sumbangan",
+    "contactPage.col3": "Sukarelawan",
+    "contactPage.questions": "Ada soalan?",
+    "contactPage.fullPage": "Lihat halaman hubungan penuh",
+
+    "volunteer.title": "Sertai kami sebagai sukarelawan",
+    "volunteer.role1": "Membantu di rumah",
+    "volunteer.role2": "Kongsi kemahiran",
+    "volunteer.role3": "Membantu dari jauh",
+    "volunteer.step1": "Hubungi kami",
+    "volunteer.step2": "Berjumpa dengan pasukan",
+    "volunteer.step3": "Mula membantu",
+    "volunteer.ctaButton": "Hubungi kami untuk menjadi sukarelawan",
+
+    "footer.copyright": "\u00a9 {year} Rumah Kanak-Kanak Triniti",
     "footer.lastUpdated": "Kemas kini terakhir",
-    "footer.langLabel": "Bahasa",
 
     "lang.label": "Tukar bahasa",
     "lang.en": "Bahasa Inggeris",
-    "lang.zh": "Bahasa Cina Ringkas",
     "lang.ms": "Bahasa Melayu",
-
-    "about.title": "Tentang projek ini",
-    "about.intro": "Halaman ini dibina oleh CodeSparks, sebuah pasukan sebelas mahasiswa Ijazah Sarjana Muda Sains Komputer Universiti Malaya, sebagai sebahagian daripada projek Service Learning Malaysia (SULAM). Ini bahagian jangka panjang sumbangan kami kepada Rumah Kanak-Kanak Triniti: satu alat yang akan terus digunakan oleh pengasuh selepas kami pergi.",
-    "about.workshopTitle": "Bahagian satu lagi: bengkel tanpa komputer",
-    "about.workshopBody": "Pada pagi 21 November, kami menjalankan bengkel pemikiran pengiraan tanpa peranti untuk anak-anak di rumah ini, berusia 7 hingga 16 tahun. Tiada apa yang dipasang pada elektrik. Anak-anak belajar logik pengaturcaraan sebagai barisan pemasangan kilat (pintu masuk, input, proses, pemeriksaan kualiti, output), kemudian melukis pelan mesin, bertukar dengan rakan, dan mencari kesilapan logik satu sama lain dengan pensel merah. Kami memilih bentuk ini kerana anak-anak tiada komputer riba atau Wi-Fi di rumah untuk berlatih: bengkel yang memerlukan komputer berhenti begitu kami beredar. Setiap kanak-kanak membawa pulang carta alir mereka dan sebuah buku panduan CodeSparks berlamina, manakala lembaran kerja induk ditinggalkan di rumah ini untuk kumpulan seterusnya.",
-    "about.wishlistTitle": "Mengapa senarai keperluan, bukan kotak derma",
-    "about.wishlistBody": "Rumah ini memang menerima sumbangan, tetapi bukan selalu barangan yang sedang kekurangan pada bulan itu. Kini pengasuh menaip keperluan ke dalam Google Sheet dan halaman ini membacanya terus: tanpa pengekodan, tanpa pembangun laman web, tanpa bil bulanan. Penderma dapat melihat jumlah tepat yang masih kurang sebelum membeli, jadi tiada barangan yang bertimbun tanpa digunakan sedangkan yang mendesak kehabisan.",
-    "about.course": "Kursus",
-    "about.partner": "Rakan komuniti",
-    "about.lecturer": "Pensyarah",
-    "about.date": "Penyerahan",
-    "about.dateValue": "Sabtu, 21 November 2026",
-    "about.teamTitle": "Pasukan",
-    "about.teamNote": "Sebelas mahasiswa Universiti Malaya. SULAM WIX2001, Kumpulan 4.",
 
     "a11y.skip": "Langkau ke kandungan utama"
   };
 
-  var dict = { en: en, zh: zh, ms: ms };
+  var dict = { en: en, ms: ms };
   var current = DEFAULT_LOCALE;
   var switcherBound = false;
   var numberFormats = {};
@@ -487,14 +448,27 @@
     }
   }
 
+  function classHas(node, name) {
+    if (!node || !node.className) { return false; }
+    var list = String(node.className).split(/\s+/);
+    for (var i = 0; i < list.length; i++) {
+      if (list[i] === name) { return true; }
+    }
+    return false;
+  }
+
+  /* Every language group on the page, header and footer alike, keeps
+   * aria-pressed on the one button whose locale is current. */
   function markActive() {
-    if (typeof document === "undefined" || !document.getElementById) { return; }
-    var group = document.getElementById("lang-switcher");
-    if (!group || !group.querySelectorAll) { return; }
-    var buttons = group.querySelectorAll("[data-locale]");
-    for (var i = 0; i < buttons.length; i++) {
-      var pressed = buttons[i].getAttribute("data-locale") === current ? "true" : "false";
-      buttons[i].setAttribute("aria-pressed", pressed);
+    if (typeof document === "undefined" || !document.querySelectorAll) { return; }
+    var groups = document.querySelectorAll(".lang");
+    for (var g = 0; g < groups.length; g++) {
+      if (!groups[g].querySelectorAll) { continue; }
+      var buttons = groups[g].querySelectorAll("[data-locale]");
+      for (var i = 0; i < buttons.length; i++) {
+        var pressed = buttons[i].getAttribute("data-locale") === current ? "true" : "false";
+        buttons[i].setAttribute("aria-pressed", pressed);
+      }
     }
   }
 
@@ -547,25 +521,34 @@
       markActive();
     }
     dispatchChanged(current);
+    markActive();
     return current;
   }
 
-  function switcherButton(node, group) {
-    while (node && node !== group) {
-      if (node.getAttribute && node.getAttribute("data-locale")) { return node; }
+  /* Walk up from the click target to a [data-locale] button that sits inside
+   * a .lang group; anything else on the page is ignored. */
+  function switcherButton(target) {
+    var node = target;
+    var button = null;
+    while (node && node !== document) {
+      if (!button && node.getAttribute && node.getAttribute("data-locale")) { button = node; }
+      if (classHas(node, "lang")) { return button; }
       node = node.parentNode;
     }
     return null;
   }
 
+  /* Delegation on document, bound once. Both language groups are re-rendered
+   * from scratch on every locale change, so a listener on the group node would
+   * die with it; document outlives every render. */
   function bindSwitcher() {
-    if (switcherBound || typeof document === "undefined" || !document.getElementById) { return; }
-    var group = document.getElementById("lang-switcher");
-    if (!group || !group.addEventListener) { return; }
-    group.addEventListener("click", function (event) {
-      var button = switcherButton(event.target, group);
+    if (switcherBound || typeof document === "undefined" || !document.addEventListener) { return; }
+    document.addEventListener("click", function (event) {
+      var button = switcherButton(event.target);
       if (!button) { return; }
-      setLocale(button.getAttribute("data-locale"));
+      var code = button.getAttribute("data-locale");
+      if (!isLocale(code)) { return; }
+      setLocale(code);
     });
     switcherBound = true;
   }
@@ -581,14 +564,12 @@
     var list = (navigator && navigator.languages) || [];
     for (var i = 0; i < list.length; i++) {
       var tag = String(list[i]).toLowerCase();
-      if (tag.indexOf("zh") === 0) { return "zh"; }
       if (tag.indexOf("ms") === 0) { return "ms"; }
       if (tag.indexOf("en") === 0) { return "en"; }
     }
 
     var single = (navigator && navigator.language) || "";
     single = String(single).toLowerCase();
-    if (single.indexOf("zh") === 0) { return "zh"; }
     if (single.indexOf("ms") === 0) { return "ms"; }
 
     return DEFAULT_LOCALE;
@@ -604,6 +585,7 @@
 
   function init() {
     if (typeof document === "undefined") { return current; }
+    bindSwitcher();
     setLocale(resolveLocale());
     if (document.readyState === "loading" && document.addEventListener) {
       document.addEventListener("DOMContentLoaded", onReady);

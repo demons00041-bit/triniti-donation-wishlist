@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0a1622" media="(prefers-color-scheme: dark)">
+<title>Ways to donate | Rumah Kanak-Kanak Triniti</title>
+<meta name="description" content="Three ways to give to Rumah Kanak-Kanak Triniti: scan the e-wallet QR, pay on the bank hosted page, or make a direct bank transfer. Nothing has to be filled in to pay.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="donate">
+<a class="skip-link" href="#main" data-i18n="a11y.skip"></a>
+<div id="site-header"></div>
+
+<main id="main" tabindex="-1">
+
+  <section class="page-hero">
+    <div class="shell">
+      <h1 class="page-hero__title" data-i18n="donatePage.title"></h1>
+      <p class="page-hero__subtitle" data-cfg="content.donation.pageSubtitle"></p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="shell">
+
+      <div class="section-head">
+        <div class="amount-bar">
+          <span class="amount-bar__label" data-i18n="donatePage.amountLabel"></span>
+          <p class="amount-bar__value" id="amount-value">
+            <span id="amount-currency" data-cfg="content.donation.currency"></span>
+            <span id="amount-number"></span>
+          </p>
+          <a class="amount-bar__change" href="index.html#donate" data-i18n="donatePage.changeAmount"></a>
+        </div>
+      </div>
+
+      <div class="pay-grid">
+
+        <article class="pay-card">
+          <span class="pay-card__num" aria-hidden="true"></span>
+          <h2 class="pay-card__title" data-i18n="pay.qrTitle"></h2>
+          <div class="qr-slot" data-cfg-img="content.donation.qrImage" data-ph-size="400x400"></div>
+          <p class="qr-caption" data-cfg="content.donation.qrCaption"></p>
+          <p class="ewallet-name" data-cfg="content.donation.ewalletName"></p>
+        </article>
+
+        <article class="pay-card">
+          <span class="pay-card__num" aria-hidden="true"></span>
+          <h2 class="pay-card__title" data-i18n="pay.hostedTitle"></h2>
+          <p class="pay-note" data-cfg="content.donation.onlineLabel"></p>
+          <a class="btn btn--primary btn--block" id="hosted-link" aria-disabled="true" tabindex="-1" data-i18n="pay.hostedCta"></a>
+          <p class="qr-caption" id="hosted-unavailable" data-i18n="pay.hostedUnavailable"></p>
+        </article>
+
+        <article class="pay-card">
+          <span class="pay-card__num" aria-hidden="true"></span>
+          <h2 class="pay-card__title" data-i18n="otherWays.bankTitle"></h2>
+          <div class="bank-table">
+            <div class="bank-row">
+              <span class="bank-label" data-i18n="otherWays.bankName"></span>
+              <span class="bank-value" data-cfg="content.donation.bankName"></span>
+            </div>
+            <div class="bank-row">
+              <span class="bank-label" data-i18n="otherWays.accountName"></span>
+              <span class="bank-value" data-cfg="content.donation.accountName"></span>
+            </div>
+            <div class="bank-row">
+              <span class="bank-label" data-i18n="otherWays.accountNo"></span>
+              <span class="bank-value" data-cfg="content.donation.accountNumber"></span>
+            </div>
+            <div class="bank-row">
+              <span class="bank-label" data-i18n="otherWays.swift"></span>
+              <span class="bank-value" data-cfg="content.donation.swift"></span>
+            </div>
+            <div class="bank-row">
+              <span aria-hidden="true"></span>
+              <button class="copy-btn" type="button" id="copy-account" data-i18n="otherWays.copy" disabled></button>
+            </div>
+          </div>
+          <p class="pay-note" data-i18n="pay.afterNote"></p>
+        </article>
+
+      </div>
+
+      <details class="details-panel">
+        <summary class="details-panel__summary" data-i18n="form.summary"></summary>
+        <form class="form-grid" id="details-form" novalidate>
+          <div class="form-row">
+            <label class="form-row__label" for="f-name" data-i18n="form.fullName"></label>
+            <input class="input form-row__input" id="f-name" name="name" type="text" maxlength="120" autocomplete="name">
+            <p class="form-row__error" id="err-name"></p>
+          </div>
+          <div class="form-row">
+            <label class="form-row__label" for="f-email" data-i18n="form.email"></label>
+            <input class="input form-row__input" id="f-email" name="email" type="email" maxlength="160" autocomplete="email" required>
+            <p class="form-row__error" id="err-email"></p>
+          </div>
+          <div class="form-row">
+            <label class="form-row__label" for="f-phone" data-i18n="form.phone"></label>
+            <input class="input form-row__input" id="f-phone" name="phone" type="tel" maxlength="40" autocomplete="tel">
+            <p class="form-row__error" id="err-phone"></p>
+          </div>
+          <div class="form-row">
+            <label class="form-row__label" for="f-message" data-i18n="form.message"></label>
+            <textarea class="input form-row__input" id="f-message" name="message" rows="4" maxlength="1000"></textarea>
+            <p class="form-row__error" id="err-message"></p>
+          </div>
+          <div class="form-row form-row--wide">
+            <label class="check-row" for="f-agree">
+              <input type="checkbox" id="f-agree" name="agree" required>
+              <span data-i18n="form.agree"></span>
+            </label>
+            <p class="form-row__error" id="err-agree"></p>
+          </div>
+          <p class="pay-note form-row--wide" id="form-privacy" data-i18n="form.privacy"></p>
+          <div class="form-row form-row--wide">
+            <label class="check-row" for="f-anonymous">
+              <input type="checkbox" id="f-anonymous" name="anonymous">
+              <span data-i18n="form.anonymous"></span>
+            </label>
+          </div>
+          <p class="anon-note form-row--wide" id="form-anon-note" data-i18n="form.anonymousNote" hidden></p>
+          <div class="hp-field" aria-hidden="true">
+            <input id="f-hp" name="hp" type="text" tabindex="-1" autocomplete="off">
+          </div>
+          <div class="form-row form-row--wide">
+            <button class="btn btn--primary btn--block" type="submit" id="f-send" name="send" data-i18n="form.send"></button>
+          </div>
+          <p class="form-row--wide" data-i18n="form.noDraftNote"></p>
+          <p class="status status--idle form-row--wide" id="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </details>
+
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="shell">
+      <div class="section-head">
+        <h2 class="section-title" data-i18n="otherWays.itemsTitle"></h2>
+      </div>
+      <div class="items-card">
+        <div class="items-grid">
+          <div>
+            <p><strong data-i18n="otherWays.dropoff"></strong></p>
+            <p data-cfg="content.donation.itemDropoff"></p>
+          </div>
+          <div>
+            <p><strong data-i18n="otherWays.itemContact"></strong></p>
+            <p data-cfg="content.donation.itemContact"></p>
+          </div>
+          <div>
+            <p><strong data-i18n="otherWays.itemHours"></strong></p>
+            <p data-cfg="content.donation.itemHours"></p>
+          </div>
+          <div>
+            <p><strong data-i18n="otherWays.itemList"></strong></p>
+            <p data-cfg="content.donation.itemList"></p>
+          </div>
+          <div>
+            <a class="btn btn--ghost" id="map-link" data-cfg-href="org.mapsUrl" data-i18n="otherWays.map" target="_blank" rel="noopener"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="shell">
+    <div class="contact-strip">
+      <p class="contact-strip__items">
+        <strong data-i18n="contactPage.questions"></strong>
+        <span data-cfg="org.phone"></span>
+        <span data-cfg="org.whatsapp"></span>
+        <span data-cfg="org.email"></span>
+      </p>
+      <a class="btn btn--ghost" href="contact.html" data-i18n="contactPage.fullPage"></a>
+    </div>
+  </div>
+
+</main>
+
+<div id="site-footer"></div>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/i18n.js"></script>
+<script src="assets/js/site.js"></script>
+<script src="assets/js/donate.js"></script>
+</body>
+</html>

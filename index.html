@@ -4,90 +4,129 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light dark">
-<meta name="theme-color" content="#fdfbf6" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0d1714" media="(prefers-color-scheme: dark)">
-<title>Donation Wishlist — Rumah Kanak-Kanak Triniti</title>
-<meta name="description" content="The current needs list for Rumah Kanak-Kanak Triniti: what the children need, what is already covered, and the two simple ways to donate items or money.">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0a1622" media="(prefers-color-scheme: dark)">
+<title>Rumah Kanak-Kanak Triniti - Donation Wishlist</title>
+<meta name="description" content="What the children at Rumah Kanak-Kanak Triniti need right now, and the two simple ways to give: send an item from the list, or donate money.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body>
+<body data-page="index">
 <a class="skip-link" href="#main" data-i18n="a11y.skip"></a>
-
-<header class="site-header">
-  <div class="site-header__inner shell">
-    <a class="brand" href="#main">
-      <svg class="brand__mark" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
-        <path d="M5.5 23 24 7.5 42.5 23" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M10 21.5V38a3.5 3.5 0 0 0 3.5 3.5h21A3.5 3.5 0 0 0 38 38V21.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M24 35.4c-3.7-2.7-6.2-4.9-6.2-7.6a3.5 3.5 0 0 1 6.2-2.1 3.5 3.5 0 0 1 6.2 2.1c0 2.7-2.5 4.9-6.2 7.6Z" fill="currentColor"/>
-      </svg>
-      <span class="brand__text">
-        <span class="brand__name" data-i18n="site.name"></span>
-        <span class="brand__tagline" data-i18n="site.tagline"></span>
-      </span>
-    </a>
-
-    <nav class="site-nav">
-      <ul class="site-nav__list">
-        <li><a href="#wishlist" data-i18n="nav.wishlist"></a></li>
-        <li><a href="#how-to-donate" data-i18n="nav.howToDonate"></a></li>
-        <li><a href="#contact" data-i18n="nav.contact"></a></li>
-        <li><a href="#about" data-i18n="nav.about"></a></li>
-      </ul>
-    </nav>
-
-    <div class="lang" id="lang-switcher" role="group" data-i18n-aria="lang.label">
-      <button class="lang__btn" type="button" data-locale="en" aria-pressed="false" data-i18n="lang.en"></button>
-      <button class="lang__btn" type="button" data-locale="zh" aria-pressed="false" data-i18n="lang.zh"></button>
-      <button class="lang__btn" type="button" data-locale="ms" aria-pressed="false" data-i18n="lang.ms"></button>
-    </div>
-  </div>
-</header>
+<div id="site-header"></div>
 
 <main id="main" tabindex="-1">
 
   <section class="hero">
     <div class="shell">
+      <div class="hero__media">
+        <div class="ph ph--image" data-cfg-img="content.hero.image" data-cfg-alt="content.hero.imageAlt" data-ph-size="1920x1080"></div>
+      </div>
       <div class="hero__content">
-        <p class="hero__eyebrow" data-i18n="hero.eyebrow"></p>
-        <h1 class="hero__title" data-i18n="hero.title"></h1>
-        <p class="hero__subtitle" data-i18n="hero.subtitle"></p>
+        <h1 class="hero__title ph ph--text" data-cfg="content.hero.title"></h1>
+        <p class="hero__subtitle ph ph--text" data-cfg="content.hero.subtitle"></p>
         <div class="hero__actions">
-          <a class="btn btn--primary" href="#wishlist" data-i18n="hero.ctaPrimary"></a>
-          <a class="btn btn--ghost" href="#how-to-donate" data-i18n="hero.ctaSecondary"></a>
+          <a class="btn btn--primary" id="hero-cta" href="donate.html" data-cfg="content.hero.ctaLabel"></a>
         </div>
       </div>
     </div>
   </section>
 
-  <div class="banner" id="status-banner" role="status">
-    <div class="shell banner__inner">
-      <span class="banner__dot" aria-hidden="true"></span>
-      <p class="banner__text" id="banner-text" data-i18n="banner.demo"></p>
-    </div>
-  </div>
+  <section class="cards5">
+    <div class="shell">
+      <div class="cards5__grid">
 
-  <div class="stats" id="stats">
-    <div class="shell stats__grid">
-      <div class="stat">
-        <span class="stat__value" data-stat="items">&#8212;</span>
-        <span class="stat__label" data-i18n="stats.items"></span>
-      </div>
-      <div class="stat">
-        <span class="stat__value" data-stat="remaining">&#8212;</span>
-        <span class="stat__label" data-i18n="stats.remaining"></span>
-      </div>
-      <div class="stat">
-        <span class="stat__value" data-stat="fulfilled">&#8212;</span>
-        <span class="stat__label" data-i18n="stats.fulfilled"></span>
-      </div>
-      <div class="stat">
-        <span class="stat__value" data-stat="urgent">&#8212;</span>
-        <span class="stat__label" data-i18n="stats.urgent"></span>
+        <a class="card-link" data-cfg-href="content.cards.0.href">
+          <span class="card-link__icon" aria-hidden="true"></span>
+          <h2 class="card-link__title" data-i18n="card.lendHand"></h2>
+          <p class="card-link__body ph ph--text" data-cfg="content.cards.0.body"></p>
+        </a>
+
+        <a class="card-link" data-cfg-href="content.cards.1.href">
+          <span class="card-link__icon" aria-hidden="true"></span>
+          <h2 class="card-link__title" data-i18n="card.sponsorChild"></h2>
+          <p class="card-link__body ph ph--text" data-cfg="content.cards.1.body"></p>
+        </a>
+
+        <a class="card-link" data-cfg-href="content.cards.2.href">
+          <span class="card-link__icon" aria-hidden="true"></span>
+          <h2 class="card-link__title" data-i18n="card.volunteer"></h2>
+          <p class="card-link__body ph ph--text" data-cfg="content.cards.2.body"></p>
+        </a>
+
+        <a class="card-link" data-cfg-href="content.cards.3.href">
+          <span class="card-link__icon" aria-hidden="true"></span>
+          <h2 class="card-link__title" data-i18n="card.giftOfLove"></h2>
+          <p class="card-link__body ph ph--text" data-cfg="content.cards.3.body"></p>
+        </a>
+
+        <a class="card-link" data-cfg-href="content.cards.4.href">
+          <span class="card-link__icon" aria-hidden="true"></span>
+          <h2 class="card-link__title" data-i18n="card.donateForUs"></h2>
+          <p class="card-link__body ph ph--text" data-cfg="content.cards.4.body"></p>
+        </a>
+
       </div>
     </div>
-  </div>
+  </section>
+
+  <section class="section" id="about">
+    <div class="shell">
+      <div class="split">
+        <div class="split__media">
+          <div class="ph ph--image" data-cfg-img="content.about.image" data-cfg-alt="content.about.imageAlt" data-ph-size="1200x900"></div>
+        </div>
+        <div class="split__body">
+          <h2 class="section-title" data-i18n="about.title"></h2>
+          <p class="ph ph--text" data-cfg="content.about.body"></p>
+          <div class="facts">
+            <div class="fact">
+              <p class="fact__label" data-i18n="about.founded"></p>
+              <p class="fact__value" data-cfg="content.about.founded"></p>
+            </div>
+            <div class="fact">
+              <p class="fact__label" data-i18n="about.serves"></p>
+              <p class="fact__value" data-cfg="content.about.residents"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="shell">
+      <div class="split">
+        <div class="split__media">
+          <div class="ph ph--image" data-cfg-img="content.programs.0.image" data-cfg-alt="content.programs.0.imageAlt" data-ph-size="1200x900"></div>
+        </div>
+        <div class="split__body">
+          <h2 class="section-title ph ph--text" data-cfg="content.programs.0.title"></h2>
+          <p class="ph ph--text" data-cfg="content.programs.0.body"></p>
+          <p>
+            <a class="btn btn--ghost" data-cfg-href="content.programs.0.linkHref" data-cfg="content.programs.0.linkLabel"></a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="shell">
+      <div class="split split--reverse">
+        <div class="split__media">
+          <div class="ph ph--image" data-cfg-img="content.programs.1.image" data-cfg-alt="content.programs.1.imageAlt" data-ph-size="1200x900"></div>
+        </div>
+        <div class="split__body">
+          <h2 class="section-title ph ph--text" data-cfg="content.programs.1.title"></h2>
+          <p class="ph ph--text" data-cfg="content.programs.1.body"></p>
+          <p>
+            <a class="btn btn--ghost" data-cfg-href="content.programs.1.linkHref" data-cfg="content.programs.1.linkLabel"></a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <section class="section wishlist" id="wishlist">
     <div class="shell">
@@ -146,165 +185,31 @@
     </div>
   </section>
 
-  <section class="section donate" id="how-to-donate">
-    <div class="shell">
-      <div class="section-head">
-        <h2 class="section-title" data-i18n="donate.title"></h2>
-        <p class="section-intro" data-i18n="donate.intro"></p>
+  <section class="donate-band" id="donate">
+    <div class="shell donate-band__inner">
+      <h2 class="donate-band__title ph ph--text" data-cfg="content.donation.title"></h2>
+      <p class="donate-band__intro ph ph--text" data-cfg="content.donation.intro"></p>
+
+      <div id="amounts" class="amounts"></div>
+
+      <div class="other-amount" hidden>
+        <input class="other-amount__field" id="other-amount" type="text" inputmode="numeric" autocomplete="off" data-i18n-aria="placeholder.customAmount" data-i18n-placeholder="placeholder.customAmount">
       </div>
 
-      <ol class="steps">
-        <li class="step">
-          <span class="step__num" aria-hidden="true">1</span>
-          <h3 class="step__title" data-i18n="donate.step1.title"></h3>
-          <p class="step__body" data-i18n="donate.step1.body"></p>
-        </li>
-        <li class="step">
-          <span class="step__num" aria-hidden="true">2</span>
-          <h3 class="step__title" data-i18n="donate.step2.title"></h3>
-          <p class="step__body" data-i18n="donate.step2.body"></p>
-        </li>
-        <li class="step">
-          <span class="step__num" aria-hidden="true">3</span>
-          <h3 class="step__title" data-i18n="donate.step3.title"></h3>
-          <p class="step__body" data-i18n="donate.step3.body"></p>
-        </li>
-      </ol>
-
-      <div class="donate__cards">
-        <article class="donate-card">
-          <h3 class="donate-card__title" data-i18n="donate.shipping.title"></h3>
-          <p class="donate-card__body" data-i18n="donate.shipping.body"></p>
-        </article>
-        <article class="donate-card">
-          <h3 class="donate-card__title" data-i18n="donate.money.title"></h3>
-          <p class="donate-card__body" data-i18n="donate.money.body"></p>
-        </article>
+      <div class="donate-band__cta">
+        <a class="btn btn--on-dark" id="donate-now" href="donate.html?amount=10" data-i18n="donate.now"></a>
       </div>
-    </div>
-  </section>
-
-  <section class="section contact" id="contact">
-    <div class="shell">
-      <div class="section-head">
-        <h2 class="section-title" data-i18n="contact.title"></h2>
-        <p class="section-intro" data-i18n="contact.intro"></p>
-      </div>
-
-      <dl class="contact__list">
-        <div class="contact__group">
-          <dt class="contact__label">
-            <svg class="contact__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 21.2c4.4-4.2 7-8 7-11.1a7 7 0 1 0-14 0c0 3.1 2.6 6.9 7 11.1Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.6" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
-            <span data-i18n="contact.address"></span>
-          </dt>
-          <dd class="contact__value" data-config="org.address"></dd>
-        </div>
-        <div class="contact__group">
-          <dt class="contact__label">
-            <svg class="contact__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.4 3.6h3l1.7 4.2-2.1 1.6a12.4 12.4 0 0 0 5.6 5.6l1.6-2.1 4.2 1.7v3a2.2 2.2 0 0 1-2.4 2.2A17.2 17.2 0 0 1 4.2 6a2.2 2.2 0 0 1 2.2-2.4Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
-            <span data-i18n="contact.phone"></span>
-          </dt>
-          <dd class="contact__value" data-config="org.phone"></dd>
-        </div>
-        <div class="contact__group">
-          <dt class="contact__label">
-            <svg class="contact__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4.4 19.6 6 15.5A7.6 7.6 0 1 1 9.1 18.6Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9.2 9.4c0 3 2.4 5.4 5.4 5.4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
-            <span data-i18n="contact.whatsapp"></span>
-          </dt>
-          <dd class="contact__value" data-config="org.whatsapp"></dd>
-        </div>
-        <div class="contact__group">
-          <dt class="contact__label">
-            <svg class="contact__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="5.4" width="18" height="13.2" rx="2.6" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m4.4 7.2 7.6 5.4 7.6-5.4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span data-i18n="contact.email"></span>
-          </dt>
-          <dd class="contact__value" data-config="org.email"></dd>
-        </div>
-        <div class="contact__group">
-          <dt class="contact__label">
-            <svg class="contact__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="8.4" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 7.6V12l3.1 1.9" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span data-i18n="contact.hours"></span>
-          </dt>
-          <dd class="contact__value" data-config="org.hours"></dd>
-        </div>
-      </dl>
-
-      <p class="contact__note" data-i18n="contact.todoNote"></p>
-    </div>
-  </section>
-
-  <section class="section about" id="about">
-    <div class="shell">
-      <div class="section-head">
-        <h2 class="section-title" data-i18n="about.title"></h2>
-        <p class="section-intro" data-i18n="about.intro"></p>
-      </div>
-
-      <dl class="about__facts">
-        <div class="fact">
-          <dt class="fact__label" data-i18n="about.course"></dt>
-          <dd class="fact__value">SULAM WIX2001 &#183; Group 4</dd>
-        </div>
-        <div class="fact">
-          <dt class="fact__label" data-i18n="about.partner"></dt>
-          <dd class="fact__value">Rumah Kanak-Kanak Triniti, Petaling Jaya</dd>
-        </div>
-        <div class="fact">
-          <dt class="fact__label" data-i18n="about.lecturer"></dt>
-          <dd class="fact__value">Madam Fazidah Binti Othman</dd>
-        </div>
-        <div class="fact">
-          <dt class="fact__label" data-i18n="about.date"></dt>
-          <dd class="fact__value" data-i18n="about.dateValue"></dd>
-        </div>
-      </dl>
-
-      <div class="about__body">
-        <article class="about-block">
-          <h3 class="about-block__title" data-i18n="about.workshopTitle"></h3>
-          <p class="about-block__body" data-i18n="about.workshopBody"></p>
-        </article>
-        <article class="about-block">
-          <h3 class="about-block__title" data-i18n="about.wishlistTitle"></h3>
-          <p class="about-block__body" data-i18n="about.wishlistBody"></p>
-        </article>
-      </div>
-
-      <h3 class="about__team-title" data-i18n="about.teamTitle"></h3>
-      <p class="about__team-note" data-i18n="about.teamNote"></p>
-      <ul class="team">
-        <li class="team__member">Tan Yun Yu</li>
-        <li class="team__member">Adiva Zainab</li>
-        <li class="team__member">Fathurrahman Alfikri</li>
-        <li class="team__member">Wan Yukai</li>
-        <li class="team__member">Jiang Jun</li>
-        <li class="team__member">Yan Jiayi</li>
-        <li class="team__member">Dong Runshi</li>
-        <li class="team__member">Hong Boyu</li>
-        <li class="team__member">Muhammad Ariq Husein</li>
-        <li class="team__member">Chen Xuanzhu</li>
-        <li class="team__member">Alfiando Ghauzan Athallah</li>
-      </ul>
     </div>
   </section>
 
 </main>
 
-<footer class="site-footer">
-  <div class="shell footer__inner">
-    <p class="footer__built" data-i18n="footer.builtBy"></p>
-    <p class="footer__lang" data-i18n="footer.langLabel"></p>
-    <p class="footer__meta">
-      <span class="footer__meta-item"><span data-i18n="footer.lastUpdated"></span> <span id="last-updated"></span></span>
-      <span class="footer__sep" aria-hidden="true">&#183;</span>
-      <span class="footer__meta-item">&#169; <span id="year"></span></span>
-    </p>
-  </div>
-</footer>
+<div id="site-footer"></div>
 
 <script src="assets/js/config.js"></script>
-<script src="assets/js/data.js"></script>
 <script src="assets/js/i18n.js"></script>
+<script src="assets/js/site.js"></script>
+<script src="assets/js/data.js"></script>
 <script src="assets/js/app.js"></script>
 </body>
 </html>

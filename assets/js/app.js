@@ -1,12 +1,12 @@
-/* Triniti Digital Donation Wishlist - view controller.
- * Binds the DOM contract in docs/BUILD-CONTRACT.md to window.Wishlist (data)
- * and window.I18N (translations). No dependencies, no build step.
+/* Triniti Digital Donation Wishlist - index page controller.
+ * Binds the wishlist DOM contract to window.Wishlist (data) and window.I18N
+ * (translations), and builds the donation band on index.html.
+ * No dependencies, no build step, ES5 only.
  */
 (function () {
   "use strict";
 
   var CFG = window.WISHLIST_CONFIG || {};
-  var REVEAL = 150;
   var state = {
     items: [],
     meta: { source: "sample", updatedAt: null, error: null },
@@ -22,6 +22,12 @@
   function t(key, vars) {
     if (window.I18N && typeof window.I18N.t === "function") { return window.I18N.t(key, vars); }
     return key;
+  }
+
+  function applyI18n(node) {
+    if (node && window.I18N && typeof window.I18N.apply === "function") {
+      window.I18N.apply(node);
+    }
   }
 
   function localeTag() {
@@ -188,43 +194,11 @@
     return root;
   }
 
-  function renderStats() {
-    var remaining = 0;
-    var fulfilled = 0;
-    var urgent = 0;
-    state.items.forEach(function (item) {
-      remaining += item.remaining;
-      if (item.status === "fulfilled") { fulfilled += 1; }
-      if (item.urgent && item.status !== "fulfilled") { urgent += 1; }
-    });
-    var map = { items: state.items.length, remaining: remaining, fulfilled: fulfilled, urgent: urgent };
-    var nodes = document.querySelectorAll("[data-stat]");
-    for (var i = 0; i < nodes.length; i += 1) {
-      var key = nodes[i].getAttribute("data-stat");
-      if (map[key] !== undefined) { nodes[i].textContent = fmtNumber(map[key]); }
-    }
-  }
-
-  function renderBanner() {
-    var text = byId("banner-text");
-    var banner = byId("status-banner");
-    if (!text) { return; }
-    var message;
-    if (state.meta.error) { message = t("banner.error"); }
-    else if (state.meta.source === "sheet") { message = t("banner.live"); }
-    else { message = t("banner.demo"); }
-    var when = fmtTime(state.meta.updatedAt);
-    if (when) {
-      var note = t("banner.updated", { time: when });
-      if (note && note !== "banner.updated") { message = message + " " + note; }
-    }
-    text.textContent = message;
-    if (banner) { banner.setAttribute("data-source", state.meta.source); }
-    var stamp = byId("last-updated");
-    if (stamp) { stamp.textContent = when || "\u2014"; }
-  }
-
   function render() {
+    var stamp = byId("last-updated");
+    var when = state.meta && state.meta.updatedAt ? fmtTime(state.meta.updatedAt) : "";
+    if (stamp && when) { stamp.textContent = when; }
+
     var grid = byId("wishlist-grid");
     var empty = byId("empty-state");
     var count = byId("results-count");
@@ -237,8 +211,90 @@
       var label = t("controls.results", { count: list.length });
       count.textContent = label === "controls.results" ? String(list.length) : label;
     }
-    renderStats();
-    renderBanner();
+  }
+
+  /* ---------- donation band ---------- */
+
+  function donationCfg() {
+    return (CFG.content && CFG.content.donation) || {};
+  }
+
+  function tiers() {
+    var list = donationCfg().amounts || [];
+    var out = [];
+    for (var i = 0; i < list.length; i++) {
+      var n = Number(list[i]);
+      if (isFinite(n) && n > 0) { out.push(n); }
+    }
+    return out;
+  }
+
+  function renderAmounts() {
+    var box = byId("amounts");
+    if (!box) { return; }
+    var list = tiers();
+    box.innerHTML = "";
+    for (var i = 0; i < list.length; i++) {
+      var link = el("a", "amount", String(list[i]));
+      link.setAttribute("href", "donate.html?amount=" + String(list[i]));
+      box.appendChild(link);
+    }
+    var toggle = el("button", "amount amount--other");
+    toggle.id = "other-amount-toggle";
+    toggle.setAttribute("type", "button");
+    toggle.setAttribute("data-i18n", "donate.customAmount");
+    toggle.setAttribute("aria-controls", "other-amount");
+    toggle.setAttribute("aria-expanded", "false");
+    box.appendChild(toggle);
+    applyI18n(box);
+  }
+
+  function typedAmount() {
+    var input = byId("other-amount");
+    if (!input) { return 0; }
+    var raw = String(input.value || "").replace(/[^0-9.]/g, "");
+    var n = Number(raw);
+    return isFinite(n) && n > 0 ? n : 0;
+  }
+
+  function updateDonateLink() {
+    var link = byId("donate-now");
+    if (!link) { return; }
+    var list = tiers();
+    var amount = typedAmount() || (list.length ? list[0] : 0);
+    link.setAttribute("href", amount ? "donate.html?amount=" + String(amount) : "donate.html");
+  }
+
+  function wireOtherAmount() {
+    var toggle = byId("other-amount-toggle");
+    var input = byId("other-amount");
+    var box = input ? input.parentNode : null;
+    if (toggle) {
+      toggle.addEventListener("click", function () {
+        var open = box ? !!box.hidden : true;
+        if (box) { box.hidden = !open; }
+        toggle.setAttribute("aria-expanded", open ? "true" : "false");
+        if (open && input && input.focus) { input.focus(); }
+        updateDonateLink();
+      });
+    }
+    if (input) {
+      input.addEventListener("input", updateDonateLink);
+      input.addEventListener("change", updateDonateLink);
+    }
+    updateDonateLink();
+  }
+
+  /* The hero carries exactly one call to action. Its href ships in the markup
+   * as donate.html so the link works before any script runs; a configured
+   * content.hero.ctaHref replaces it when one is given. */
+  function wireHeroCta() {
+    var cta = byId("hero-cta");
+    if (!cta || !window.Site || typeof window.Site.get !== "function") { return; }
+    var href = window.Site.get("content.hero.ctaHref");
+    if (typeof href === "string" && href.replace(/^\s+|\s+$/g, "") !== "") {
+      cta.setAttribute("href", href);
+    }
   }
 
   /* ---------- states ---------- */
@@ -294,39 +350,6 @@
     }, Math.max(60, seconds) * 1000);
   }
 
-  /* ---------- config-driven contact details ---------- */
-
-  function applyOrg() {
-    var org = CFG.org || {};
-    var nodes = document.querySelectorAll("[data-config]");
-    var missing = 0;
-    for (var i = 0; i < nodes.length; i += 1) {
-      var path = nodes[i].getAttribute("data-config") || "";
-      var parts = path.split(".");
-      var value = CFG;
-      for (var p = 0; p < parts.length; p += 1) {
-        value = value ? value[parts[p]] : undefined;
-      }
-      if (typeof value === "string" && value.trim() !== "") {
-        nodes[i].textContent = value;
-        nodes[i].classList.remove("is-missing");
-        if (nodes[i].tagName === "A") {
-          if (path === "org.email") { nodes[i].setAttribute("href", "mailto:" + value); }
-          else if (path === "org.phone" || path === "org.whatsapp") { nodes[i].setAttribute("href", "tel:" + value.replace(/[^0-9+]/g, "")); }
-        }
-      } else {
-        missing += 1;
-        nodes[i].textContent = "\u2014";
-        nodes[i].classList.add("is-missing");
-      }
-    }
-    var note = document.querySelector(".contact__note");
-    if (note) {
-      note.hidden = missing === 0;
-      if (missing === 0) { note.textContent = ""; } else { note.textContent = t("contact.todoNote"); }
-    }
-  }
-
   /* ---------- wiring ---------- */
 
   function on(id, type, handler) {
@@ -373,17 +396,17 @@
     });
     window.addEventListener("i18n:changed", function () {
       fillSelects();
-      applyOrg();
+      applyI18n(byId("amounts"));
       render();
     });
   }
 
   function init() {
-    var year = byId("year");
-    if (year) { year.textContent = String(new Date().getFullYear()); }
-    applyOrg();
     wire();
     fillSort();
+    renderAmounts();
+    wireOtherAmount();
+    wireHeroCta();
     loadData();
   }
 

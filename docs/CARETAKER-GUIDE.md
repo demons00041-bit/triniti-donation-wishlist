@@ -10,7 +10,36 @@ For the people who look after the children's home. No computer knowledge needed.
 
 You open a Google Sheet. You change the numbers. The website reads the sheet and shows the new list.
 
-You never edit the website itself. You do not need to design anything, upload anything or log in to anything else. One spreadsheet, nine columns, from any phone or computer.
+For the list itself you never edit the website. You do not need to design anything, upload anything or log in to anything else. One spreadsheet, nine columns, from any phone or computer.
+
+---
+
+## What is on the site
+
+The site is four pages, in two languages: English and Bahasa Melayu.
+
+| Page | What it is for |
+| --- | --- |
+| `index.html` | The home page. The wish list sits in the middle of it. |
+| `donate.html` | Ways to give: an amount, a QR code, an online payment page, a bank transfer, and what to drop off. |
+| `volunteer.html` | Volunteering: three roles and three steps. |
+| `contact.html` | How to reach the home: address, phone, WhatsApp, email, opening hours. |
+
+The two buttons at the top of every page switch between English and Bahasa Melayu.
+
+---
+
+## Where things are changed
+
+Only three places matter. Nothing else needs touching.
+
+| What you want to change | Where it lives |
+| --- | --- |
+| The wish list — items, quantities, notes | The spreadsheet. That is what this guide teaches. |
+| The home's own facts and pictures — name, address, phone, WhatsApp, email, opening hours, map link, photographs, the About text | `org` and `content` in `assets/js/config.js` |
+| Buttons, headings, status words and form messages | `dict` in `assets/js/i18n.js`, under `en` for English and `ms` for Bahasa Melayu |
+
+An empty value in `config.js` is not a mistake. The page shows a dashed box with the words "To be filled in" where a fact or a picture is still missing, so the gap is visible instead of guessed.
 
 ---
 
@@ -48,7 +77,7 @@ Say this, in your own words:
 >
 > Donors look at this list before they buy anything. So nobody brings us forty bottles of detergent while we have no rice. And nobody has to phone the office to ask what we need this week.
 >
-> The list is available in English, Chinese and Malay — the buttons at the top. Same list, three languages.
+> The list is available in English and Bahasa Melayu — the two buttons at the top. Same list, two languages.
 
 Point at two things only: one progress bar, and the language buttons. Do not explain the design.
 
@@ -104,7 +133,7 @@ Then say the two rules that prevent most mistakes:
 
 Write this on the printed cheat sheet, in front of them:
 
-> Student team contact: **[TODO: student team contact]**
+> Who to call when something breaks: **[TODO: name and phone number]**
 
 Say:
 
@@ -167,7 +196,8 @@ Cut this out or keep it beside the computer.
 | Remove an item for good | Delete the whole row, not just the text in it | 5 minutes |
 | Fix a mistake | Ctrl+Z in the sheet, or type the old value back | 5 minutes |
 | Check the list from my phone | Open the site address in the browser — no app needed | immediately |
-| Change the phone number or the page text | That is a code change. Contact the student team | not automatic |
+| Change the phone number, an address or a picture | `org` or `content` in `assets/js/config.js` — whoever looks after the code does this | when the file is saved and the page reloaded |
+| Change a button label or a status word | `dict` in `assets/js/i18n.js`, under `en` and `ms` | when the file is saved and the page reloaded |
 
 Two rules for every row you touch:
 
@@ -178,6 +208,6 @@ Two rules for every row you touch:
 
 ## If something breaks
 
-**[TODO: student team contact]**
+**[TODO: name and phone number]**
 
 When you write, include: the address of the page, a photo of the screen, and what you typed and when. Three sentences is enough.
