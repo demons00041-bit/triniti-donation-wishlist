@@ -10,10 +10,8 @@
  * No address, phone number, e-mail address or bank account is written here on
  * purpose: those facts belong to the home, not to this repository.
  */
-window.WISHLIST_CONFIG = {
-  sheetCsvUrl: "",
+window.TRINITI_CONFIG = {
   defaultLocale: "en",
-  refreshSeconds: 300,
   org: {
     name: "Rumah Kanak-Kanak Triniti",
     address: "",
@@ -29,6 +27,7 @@ window.WISHLIST_CONFIG = {
   api: {
     baseUrl: "",
     submitPath: "/donations",
+    sponsorPath: "/sponsorships",
     timeoutMs: 8000
   },
 
@@ -54,11 +53,30 @@ window.WISHLIST_CONFIG = {
       { image: "", imageAlt: "", title: "", body: "", linkLabel: "", linkHref: "" }
     ],
     cards: [
-      { icon: "", body: "", href: "" },
-      { icon: "", body: "", href: "" },
+      { icon: "", body: "", href: "sponsor.html" },
       { icon: "", body: "", href: "volunteer.html" },
-      { icon: "", body: "", href: "" },
+      { icon: "", body: "", href: "gift-of-love.html" },
       { icon: "", body: "", href: "donate.html" }
+    ],
+    sponsorPage: {
+      subtitle: "",
+      image: "",
+      imageAlt: "",
+      note: ""
+    },
+    /* Nine gifts for the Gift of Love page. The amount is optional: leave it
+     * empty and the gift links to donate.html; fill it in and the gift links
+     * to donate.html?amount=N. */
+    gifts: [
+      { name: "", image: "", alt: "", amount: "" },
+      { name: "", image: "", alt: "", amount: "" },
+      { name: "", image: "", alt: "", amount: "" },
+      { name: "", image: "", alt: "", amount: "" },
+      { name: "", image: "", alt: "", amount: "" },
+      { name: "", image: "", alt: "", amount: "" },
+      { name: "", image: "", alt: "", amount: "" },
+      { name: "", image: "", alt: "", amount: "" },
+      { name: "", image: "", alt: "", amount: "" }
     ],
     donation: {
       title: "",

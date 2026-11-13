@@ -14,7 +14,7 @@
 (function (window, document) {
   "use strict";
 
-  var cfg = window.WISHLIST_CONFIG || {};
+  var cfg = window.TRINITI_CONFIG || {};
   var PLACEHOLDER_MODE = cfg.placeholders === "blank" ? "blank" : "hint";
 
   /* ---------- small helpers ---------- */

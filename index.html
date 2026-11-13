@@ -6,8 +6,8 @@
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0a1622" media="(prefers-color-scheme: dark)">
-<title>Rumah Kanak-Kanak Triniti - Donation Wishlist</title>
-<meta name="description" content="What the children at Rumah Kanak-Kanak Triniti need right now, and the two simple ways to give: send an item from the list, or donate money.">
+<title>Home - Rumah Kanak-Kanak Triniti</title>
+<meta name="description" content="Rumah Kanak-Kanak Triniti, a children's home in Malaysia, and four ways to lend a hand: sponsor a child, volunteer, give a gift of love, or donate.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
@@ -32,38 +32,33 @@
     </div>
   </section>
 
-  <section class="cards5">
+  <section class="cards4">
     <div class="shell">
-      <div class="cards5__grid">
+      <div class="section-head"><h2 class="section-title" data-i18n="section.lendHand"></h2></div>
+      <div class="cards4__grid">
 
         <a class="card-link" data-cfg-href="content.cards.0.href">
           <span class="card-link__icon" aria-hidden="true"></span>
-          <h2 class="card-link__title" data-i18n="card.lendHand"></h2>
+          <h2 class="card-link__title" data-i18n="card.sponsorChild"></h2>
           <p class="card-link__body ph ph--text" data-cfg="content.cards.0.body"></p>
         </a>
 
         <a class="card-link" data-cfg-href="content.cards.1.href">
           <span class="card-link__icon" aria-hidden="true"></span>
-          <h2 class="card-link__title" data-i18n="card.sponsorChild"></h2>
+          <h2 class="card-link__title" data-i18n="card.volunteer"></h2>
           <p class="card-link__body ph ph--text" data-cfg="content.cards.1.body"></p>
         </a>
 
         <a class="card-link" data-cfg-href="content.cards.2.href">
           <span class="card-link__icon" aria-hidden="true"></span>
-          <h2 class="card-link__title" data-i18n="card.volunteer"></h2>
+          <h2 class="card-link__title" data-i18n="card.giftOfLove"></h2>
           <p class="card-link__body ph ph--text" data-cfg="content.cards.2.body"></p>
         </a>
 
         <a class="card-link" data-cfg-href="content.cards.3.href">
           <span class="card-link__icon" aria-hidden="true"></span>
-          <h2 class="card-link__title" data-i18n="card.giftOfLove"></h2>
-          <p class="card-link__body ph ph--text" data-cfg="content.cards.3.body"></p>
-        </a>
-
-        <a class="card-link" data-cfg-href="content.cards.4.href">
-          <span class="card-link__icon" aria-hidden="true"></span>
           <h2 class="card-link__title" data-i18n="card.donateForUs"></h2>
-          <p class="card-link__body ph ph--text" data-cfg="content.cards.4.body"></p>
+          <p class="card-link__body ph ph--text" data-cfg="content.cards.3.body"></p>
         </a>
 
       </div>
@@ -128,63 +123,6 @@
     </div>
   </section>
 
-  <section class="section wishlist" id="wishlist">
-    <div class="shell">
-      <div class="section-head">
-        <h2 class="section-title" data-i18n="nav.wishlist"></h2>
-      </div>
-
-      <div class="controls">
-        <div class="field">
-          <label class="field__label sr-only" for="search-input" data-i18n="controls.searchPlaceholder"></label>
-          <input class="input" type="search" id="search-input" autocomplete="off" data-i18n-placeholder="controls.searchPlaceholder">
-        </div>
-        <div class="field">
-          <label class="field__label" for="filter-category" data-i18n="controls.filterCategory"></label>
-          <span class="select-wrap">
-            <select class="select" id="filter-category"></select>
-          </span>
-        </div>
-        <div class="field">
-          <label class="field__label" for="filter-status" data-i18n="controls.filterStatus"></label>
-          <span class="select-wrap">
-            <select class="select" id="filter-status"></select>
-          </span>
-        </div>
-        <div class="field">
-          <label class="field__label" for="sort-select" data-i18n="controls.sort"></label>
-          <span class="select-wrap">
-            <select class="select" id="sort-select"></select>
-          </span>
-        </div>
-        <p class="controls__count" id="results-count" aria-live="polite"></p>
-      </div>
-
-      <div id="wishlist-grid" class="grid"></div>
-
-      <div class="state state--loading" id="loading-state">
-        <span class="spinner" aria-hidden="true"></span>
-        <p class="state__body" data-i18n="loading"></p>
-      </div>
-
-      <div class="state" id="empty-state" hidden>
-        <svg class="state__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
-          <path d="M21 6.5h-9A5.5 5.5 0 0 0 6.5 12v9A5.5 5.5 0 0 0 12 26.5h9A5.5 5.5 0 0 0 26.5 21v-9A5.5 5.5 0 0 0 21 6.5Z" fill="none" stroke="currentColor" stroke-width="2.6"/>
-          <path d="M36 22h-9A5.5 5.5 0 0 0 21.5 27.5v9A5.5 5.5 0 0 0 27 42h9a5.5 5.5 0 0 0 5.5-5.5v-9A5.5 5.5 0 0 0 36 22Z" fill="none" stroke="currentColor" stroke-width="2.6"/>
-        </svg>
-        <h3 class="state__title" data-i18n="empty.title"></h3>
-        <p class="state__body" data-i18n="empty.body"></p>
-        <button class="btn btn--ghost" type="button" id="reset-filters" data-i18n="empty.reset"></button>
-      </div>
-
-      <div class="state state--error" id="error-state" hidden>
-        <h3 class="state__title" data-i18n="error.title"></h3>
-        <p class="state__body" id="error-text"></p>
-        <button class="btn btn--primary" type="button" id="retry-button" data-i18n="error.retry"></button>
-      </div>
-    </div>
-  </section>
-
   <section class="donate-band" id="donate">
     <div class="shell donate-band__inner">
       <h2 class="donate-band__title ph ph--text" data-cfg="content.donation.title"></h2>
@@ -209,7 +147,6 @@
 <script src="assets/js/config.js"></script>
 <script src="assets/js/i18n.js"></script>
 <script src="assets/js/site.js"></script>
-<script src="assets/js/data.js"></script>
 <script src="assets/js/app.js"></script>
 </body>
 </html>

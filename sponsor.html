@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0a1622" media="(prefers-color-scheme: dark)">
+  <title>Sponsor a child - Rumah Kanak-Kanak Triniti</title>
+  <meta name="description" content="Sponsor a child at Rumah Kanak-Kanak Triniti. The picture and the wording are filled in by the home; the message box below is optional and nothing typed into it is stored on this page.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="sponsor">
+  <a class="skip-link" href="#main" data-i18n="a11y.skip"></a>
+  <div id="site-header"></div>
+
+  <main id="main" tabindex="-1">
+    <div class="page-hero">
+      <div class="shell">
+        <h1 class="page-hero__title" data-i18n="sponsorPage.title"></h1>
+        <p class="page-hero__subtitle ph ph--text" data-cfg="content.sponsorPage.subtitle"></p>
+      </div>
+    </div>
+
+    <section class="section">
+      <div class="shell">
+        <p class="ph ph--text" data-cfg="content.sponsorPage.note"></p>
+
+        <div class="sponsor">
+          <div class="sponsor__media ph ph--image" data-cfg-img="content.sponsorPage.image" data-cfg-alt="content.sponsorPage.imageAlt" data-ph-size="1200x800"></div>
+
+          <form class="sponsor__form" id="sponsor-form" novalidate>
+            <div class="form-row form-row--wide">
+              <label class="form-row__label" for="sponsor-message" data-i18n="sponsorPage.messageLabel"></label>
+              <textarea class="input form-row__input" id="sponsor-message" name="message" rows="6" maxlength="1000" data-i18n-placeholder="sponsorPage.messagePlaceholder"></textarea>
+            </div>
+
+            <input class="sr-only" id="sponsor-hp" name="hp" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+            <div class="form-row form-row--wide">
+              <button class="btn btn--primary btn--block" id="sponsor-send" name="send" type="submit" data-i18n="sponsorPage.send"></button>
+            </div>
+
+            <p class="status status--idle form-row--wide" id="sponsor-status" role="status" aria-live="polite"></p>
+
+            <p class="sponsor__meta form-row--wide">
+              <span id="sponsor-notconnected" data-i18n="sponsorPage.notConnected"></span>
+              <span data-i18n="sponsorPage.privacy"></span>
+            </p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/site.js"></script>
+  <script src="assets/js/sponsor.js"></script>
+</body>
+</html>

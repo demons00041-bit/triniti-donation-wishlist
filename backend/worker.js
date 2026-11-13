@@ -12,11 +12,17 @@
  * Endpoints:
  *   OPTIONS *        -> 204 + CORS preflight headers
  *   POST    /donations -> 201 {ok:true,ref} | 400 | 429 | 500
+ *   POST    /sponsorships -> 201 {ok:true,ref:"SPN-YYYYMMDD-XXXX"} | 400 | 429 | 500
  *   GET     /donations -> export, only while ADMIN_TOKEN is set and the token matches
  *
+ * /sponsorships shares the CORS handler, the response shape, hashIp and takeRateSlot with
+ * /donations, but counts its own rate budget ("rl:spon:<hash>:<bucket>" instead of
+ * "rl:<hash>:<bucket>"), so one form never spends the other form's quota.
+ *
  * What this file deliberately does NOT do: it never stores a raw IP, it accepts no field
- * beyond the ones documented in docs/REDESIGN-PLAN.md 12.4, and it never writes anything
- * at all for an anonymous submission.
+ * beyond the ones documented in docs/REDESIGN-PLAN.md 12.4 (/donations) and in
+ * docs/BACKEND-SETUP.md section 10 (/sponsorships), and it never writes anything at all
+ * for an anonymous submission.
  */
 
 var RATE_LIMIT = 5;
@@ -44,6 +50,9 @@ export default {
       }
       if (path === "/donations" && method === "GET") {
         return await handleExport(request, env, cors);
+      }
+      if (path === "/sponsorships" && method === "POST") {
+        return await handleSponsorship(request, env, cors);
       }
       return json(404, { ok: false, error: "notfound" }, cors);
     } catch (err) {
@@ -118,6 +127,83 @@ async function handleDonation(request, env, cors) {
   return json(201, { ok: true, ref: ref }, cors);
 }
 
+/* ---------- POST /sponsorships ---------- */
+
+async function handleSponsorship(request, env, cors) {
+  var body = {};
+  try {
+    body = await request.json();
+  } catch (err) {
+    body = {};
+  }
+  if (!body || typeof body !== "object" || Array.isArray(body)) body = {};
+
+  /* 1. Anonymous = zero retention, same rule as /donations. Refused before the
+   * honeypot, before the config guard, before hashing and before any rate debit. */
+  if (body.anonymous === true) {
+    return json(400, { ok: false, error: "anonymous" }, cors);
+  }
+
+  /* 2. Bot trap: look successful, store nothing, spend no quota, mint no reference. */
+  if (typeof body.hp === "string" && body.hp !== "") {
+    return json(201, { ok: true }, cors);
+  }
+
+  /* 3. Config guard: refuse rather than write a record we cannot hash. */
+  if (!env || !env.SALT || !env.DONATIONS) {
+    return json(500, { ok: false, error: "config" }, cors);
+  }
+
+  /* 4. Server-side validation. Never trust the client. */
+  var bad = validateSponsorship(body);
+  if (bad) return json(400, { ok: false, error: bad }, cors);
+
+  /* 5. Hash the IP immediately; the raw value is never stored or logged. */
+  var ip = request.headers.get("CF-Connecting-IP") || "unknown";
+  var ipHash = await hashIp(ip, env.SALT);
+
+  /* 6. Rate limit on the sponsorship bucket: separate from the donation bucket. */
+  var allowed = await takeRateSlot(env, ipHash, "rl:spon");
+  if (!allowed) return json(429, { ok: false, error: "rate" }, cors);
+
+  /* 7. Store. */
+  var now = new Date();
+  var ref = makeSponRef(now);
+  var ts = null;
+  if (typeof body.ts === "number" && isFinite(body.ts)) ts = body.ts;
+  else if (typeof body.ts === "string" && body.ts.trim() !== "") ts = body.ts.trim().slice(0, 40);
+
+  var record = {
+    kind: "sponsorship",
+    message: str(body.message, MAX_MESSAGE),
+    name: str(body.name, MAX_NAME),
+    email: str(body.email, MAX_EMAIL),
+    phone: str(body.phone, MAX_PHONE),
+    locale: str(body.locale, 8),
+    ts: ts,
+    ip_hash: ipHash,
+    created_at: now.toISOString(),
+    id: ref
+  };
+
+  var key = "spon:" + now.toISOString() + "-" + randomHex(4);
+  await env.DONATIONS.put(key, JSON.stringify(record));
+
+  return json(201, { ok: true, ref: ref }, cors);
+}
+
+function validateSponsorship(body) {
+  var message = typeof body.message === "string" ? body.message.trim() : "";
+  if (message === "" || message.length > MAX_MESSAGE) return "message";
+
+  if (typeof body.name === "string" && body.name.trim().length > MAX_NAME) return "email";
+  if (typeof body.phone === "string" && body.phone.trim().length > MAX_PHONE) return "email";
+
+  var email = typeof body.email === "string" ? body.email.trim() : "";
+  if (email !== "" && (!EMAIL_RE.test(email) || email.length > MAX_EMAIL)) return "email";
+  return "";
+}
+
 function validate(body) {
   var email = typeof body.email === "string" ? body.email.trim() : "";
   if (!EMAIL_RE.test(email) || email.length > MAX_EMAIL) return "email";
@@ -134,9 +220,9 @@ function validate(body) {
   return "";
 }
 
-async function takeRateSlot(env, ipHash) {
+async function takeRateSlot(env, ipHash, scope) {
   var bucket = Math.floor(Date.now() / (RATE_WINDOW_SECONDS * 1000));
-  var key = "rl:" + ipHash + ":" + bucket;
+  var key = (scope || "rl") + ":" + ipHash + ":" + bucket;
   var used = parseInt((await env.DONATIONS.get(key)) || "0", 10);
   if (!isFinite(used) || used < 0) used = 0;
   if (used >= RATE_LIMIT) return false;
@@ -218,6 +304,11 @@ function pad2(n) {
 function makeRef(date) {
   var ymd = String(date.getUTCFullYear()) + pad2(date.getUTCMonth() + 1) + pad2(date.getUTCDate());
   return "DON-" + ymd + "-" + randomHex(2).toUpperCase();
+}
+
+function makeSponRef(date) {
+  var ymd = String(date.getUTCFullYear()) + pad2(date.getUTCMonth() + 1) + pad2(date.getUTCDate());
+  return "SPN-" + ymd + "-" + randomHex(2).toUpperCase();
 }
 
 function randomHex(byteCount) {

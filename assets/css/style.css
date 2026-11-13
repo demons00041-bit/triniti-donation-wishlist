@@ -713,14 +713,14 @@ button:disabled {
   margin-top: var(--s-5);
 }
 
-/* 8. Five cards ----------------------------------------------------------- */
-.cards5 {
+/* 8. Four cards ----------------------------------------------------------- */
+.cards4 {
   background-color: var(--ice-50);
 }
 
-.cards5__grid {
+.cards4__grid {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: clamp(0.75rem, 1.2vw, 1.1rem);
   align-items: stretch;
 }
@@ -846,368 +846,143 @@ button:disabled {
   overflow-wrap: anywhere;
 }
 
-/* 10. Wishlist: controls, grid, cards ------------------------------------- */
-.wishlist {
-  background-color: var(--ice-100);
-  border-block: 1px solid var(--line);
-}
-
-.controls {
-  display: grid;
-  grid-template-columns: minmax(0, 1.5fr) repeat(3, minmax(0, 1fr));
-  gap: var(--s-3);
-  align-items: end;
-  padding: var(--s-4);
-  margin-bottom: var(--s-5);
-  background-color: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--r-lg);
-  box-shadow: var(--shadow-xs);
-}
-
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  min-width: 0;
-}
-
-.field__label {
-  font-size: var(--fs-xs);
-  font-weight: 700;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  color: var(--ink-mute);
-}
-
-.controls__count {
-  grid-column: 1 / -1;
-  margin: 0;
-  font-size: var(--fs-sm);
-  color: var(--ink-mute);
-  font-variant-numeric: tabular-nums;
-}
-
-.input,
-.select,
-.form-row__input {
-  width: 100%;
-  min-width: 0;
-  padding: 0.62rem 0.8rem;
-  border: 1.5px solid var(--line-strong);
-  border-radius: var(--r-sm);
-  background-color: var(--surface);
-  color: var(--ink);
-  font-family: inherit;
-  font-size: var(--fs-sm);
-  line-height: 1.3;
-  transition: border-color 0.16s ease, box-shadow 0.16s ease;
-}
-
-.input::placeholder,
-.form-row__input::placeholder {
-  color: var(--ink-mute);
-  opacity: 1;
-}
-
-.input:hover,
-.select:hover,
-.form-row__input:hover {
-  border-color: var(--blue-600);
-}
-
-.input:focus-visible,
-.select:focus-visible,
-.form-row__input:focus-visible {
-  outline: none;
-  border-color: var(--blue-700);
-  box-shadow: 0 0 0 3px var(--blue-100);
-}
-
-.input:disabled,
-.form-row__input:disabled {
-  background-color: var(--surface-sunk);
-  color: var(--ink-mute);
-  cursor: not-allowed;
-}
-
-.select {
-  -webkit-appearance: none;
-  appearance: none;
-  padding-right: 2.2rem;
-  cursor: pointer;
-}
-
-.select-wrap {
-  position: relative;
-  display: block;
-  min-width: 0;
-}
-
-.select-wrap::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  right: 0.9rem;
-  width: 0.48rem;
-  height: 0.48rem;
-  border-right: 2px solid var(--ink-mute);
-  border-bottom: 2px solid var(--ink-mute);
-  transform: translateY(-70%) rotate(45deg);
-  pointer-events: none;
-}
-
-.grid {
+/* 10. Gift of Love grid --------------------------------------------------- */
+/* Nine tiles, three across. Same surface, border, radius and hover motion as
+   .card-link, so the two card families on this site read as one. */
+.gifts__grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(1rem, 1.6vw, 1.4rem);
   align-items: stretch;
 }
 
-.card {
-  position: relative;
+.gift {
   display: flex;
   flex-direction: column;
   gap: 0.55rem;
   min-width: 0;
-  padding: clamp(1.1rem, 1.6vw, 1.4rem);
+  height: 100%;
+  padding: clamp(0.85rem, 1.4vw, 1.15rem);
   background-color: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--r-lg);
   box-shadow: var(--shadow-xs);
+  color: var(--ink);
+  text-decoration: none;
   transition: box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
 }
 
-.card:hover {
+.gift:hover,
+.gift:focus-visible {
+  color: var(--ink);
+  border-color: var(--blue-500);
   box-shadow: var(--shadow-md);
   transform: translateY(-2px);
 }
 
-.card__head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 0.45rem 0.6rem;
-  margin-bottom: auto;
+/* The slot also carries .ph--image, whose clamp(8.5rem, 20vw, 13rem) floor is
+   sized for a half-page picture. Inside a three-column tile that floor is
+   replaced by a 4:3 box; the small min-height is the fallback for a browser
+   without aspect-ratio, and the dashed look still comes from .ph--image. */
+.gift__media {
+  aspect-ratio: 4 / 3;
+  min-height: 5.5rem;
+  padding: clamp(0.3rem, 0.9vw, 0.55rem);
+  gap: 0.2rem;
 }
 
-.card__title {
-  margin: 0;
-  font-size: var(--fs-h3);
+.gift__media .ph__size {
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  line-height: 1.35;
+}
+
+/* Two lines then an ellipsis: a long name can never stretch its row. */
+.gift__name {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  font-size: var(--fs-sm);
   font-weight: 700;
-  line-height: 1.22;
+  line-height: 1.32;
   color: var(--ink);
   overflow-wrap: anywhere;
 }
 
-.card__category {
-  display: block;
+.gift__amount {
   font-size: var(--fs-xs);
-  font-weight: 700;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
+  line-height: 1.4;
   color: var(--ink-mute);
-}
-
-.card__badges {
-  display: flex;
-  flex: none;
-  flex-wrap: wrap;
-  gap: 0.3rem;
-}
-
-.badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.24rem 0.58rem;
-  border: 1px solid transparent;
-  border-radius: var(--r-pill);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  line-height: 1.35;
-  text-transform: uppercase;
-  white-space: nowrap;
-  background-color: var(--surface-sunk);
-  color: var(--ink-soft);
-}
-
-.badge--urgent {
-  background-color: var(--badge-urgent-bg);
-  border-color: var(--badge-urgent-line);
-  color: var(--badge-urgent-fg);
-}
-
-.badge--partial {
-  background-color: var(--badge-warn-bg);
-  border-color: var(--badge-warn-line);
-  color: var(--badge-warn-fg);
-}
-
-.badge--fulfilled,
-.badge--ok {
-  background-color: var(--badge-ok-bg);
-  border-color: var(--badge-ok-line);
-  color: var(--badge-ok-fg);
-}
-
-.badge--warn {
-  background-color: var(--badge-warn-bg);
-  border-color: var(--badge-warn-line);
-  color: var(--badge-warn-fg);
-}
-
-.progress {
-  display: block;
-  height: 0.6rem;
-  margin-top: 0.2rem;
-  border-radius: var(--r-pill);
-  background-color: var(--track);
-  overflow: hidden;
-}
-
-.progress__bar {
-  display: block;
-  width: 100%;
-  height: 100%;
-  border-radius: inherit;
-  background-color: var(--track);
-  overflow: hidden;
-}
-
-.progress__fill {
-  display: block;
-  min-width: 0.2rem;
-  height: 100%;
-  border-radius: inherit;
-  background-image: linear-gradient(
-    90deg,
-    var(--progress-from),
-    var(--progress-to)
-  );
-  transition: width 0.55s cubic-bezier(0.22, 0.8, 0.28, 1);
-}
-
-.progress__fill--done {
-  background-image: linear-gradient(
-    90deg,
-    var(--progress-done-from),
-    var(--progress-done-to)
-  );
-}
-
-.card__amount {
-  margin: 0.1rem 0 0;
-  font-size: var(--fs-sm);
-  color: var(--ink-soft);
-  line-height: 1.45;
   font-variant-numeric: tabular-nums;
 }
 
-.card__notes {
-  margin: 0;
-  font-size: var(--fs-xs);
-  color: var(--ink-mute);
-  line-height: 1.45;
-}
-
-.card--urgent {
-  border-color: var(--badge-urgent-line);
-}
-
-.card--urgent::before {
-  content: "";
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: 4px;
-  border-radius: var(--r-lg) 0 0 var(--r-lg);
-  background-image: linear-gradient(
-    180deg,
-    var(--alert-700) 0%,
-    var(--badge-urgent-fg) 100%
-  );
-}
-
-.card--fulfilled {
-  background-color: var(--surface-alt);
-}
-
-.card--fulfilled .card__title {
-  color: var(--ink-soft);
-}
-
-.card--fulfilled .card__amount {
-  color: var(--ink-mute);
-}
-
-/* states: loading / empty / error */
-.state {
+/* 11. Sponsor page -------------------------------------------------------- */
+/* One centred column: the measure is capped rather than the shell, so the
+   page keeps the site's own padding while the text stays readable. */
+.sponsor {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 0.7rem;
-  padding: clamp(2rem, 5vw, 3.4rem) var(--s-4);
-  border: 1px dashed var(--line-strong);
-  border-radius: var(--r-lg);
-  background-color: var(--surface);
-  color: var(--ink-soft);
-  text-align: center;
+  gap: clamp(1.25rem, 2.6vw, 2rem);
+  width: 100%;
+  max-width: 40rem;
+  margin-inline: auto;
 }
 
-.state__title {
+/* 1200x800 is the size the page declares for this picture. */
+.sponsor__media {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  min-height: 9rem;
+}
+
+.sponsor__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  min-width: 0;
+}
+
+/* The label and its control stay tighter than the gap between rows, so each
+   row still reads as one unit. */
+.sponsor__form .form-row {
+  gap: 0.4rem;
+}
+
+/* rows="6" and the shared textarea rule already size the box and pin resize
+   to the vertical axis; these three keep it inside the column at 375px, where
+   a textarea's intrinsic width would otherwise push the page sideways. */
+.sponsor__form textarea.form-row__input {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  resize: vertical;
+}
+
+/* the status line sits in the column gap, so its own top margin is dropped */
+.sponsor .status {
   margin: 0;
-  font-size: var(--fs-h3);
-  color: var(--ink);
 }
 
-.state__body {
+.sponsor__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
   margin: 0;
-  max-width: 46ch;
-  font-size: var(--fs-sm);
-  line-height: 1.55;
+  font-size: var(--fs-xs);
+  line-height: 1.5;
+  color: var(--ink-mute);
 }
 
-.state__icon {
-  width: 44px;
-  height: 44px;
-  color: var(--line-strong);
+/* The note above the column takes the column's measure, so the page does not
+   stack a full-shell line over a 40rem one. */
+[data-cfg="content.sponsorPage.note"] {
+  max-width: 40rem;
+  margin-inline: auto;
+  margin-block-end: clamp(1.25rem, 2.6vw, 2rem);
 }
 
-.state .btn {
-  margin-top: 0.35rem;
-}
-
-.state--loading {
-  background-color: var(--surface-alt);
-  border-style: solid;
-}
-
-.state--error {
-  border-style: solid;
-  border-color: var(--badge-urgent-line);
-}
-
-.state--error .state__title {
-  color: var(--badge-urgent-fg);
-}
-
-.spinner {
-  width: 26px;
-  height: 26px;
-  border: 3px solid var(--track);
-  border-top-color: var(--blue-600);
-  border-radius: 50%;
-  animation: spin 0.9s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* 11. Donation band — the only large dark block on the page --------------- */
+/* 12. Donation band — the only large dark block on the page --------------- */
 .donate-band {
   padding-block: clamp(2.5rem, 5vw, 4.5rem);
   background-color: var(--navy-900);
@@ -1324,7 +1099,7 @@ button:disabled {
   text-transform: uppercase;
 }
 
-/* 12. Page hero (inner pages) --------------------------------------------- */
+/* 13. Page hero (inner pages) --------------------------------------------- */
 .page-hero {
   padding-block: clamp(2rem, 4vw, 3.25rem) clamp(1.5rem, 3vw, 2.25rem);
   background-color: var(--ice-100);
@@ -1347,7 +1122,7 @@ button:disabled {
   line-height: 1.6;
 }
 
-/* 13. Donate page --------------------------------------------------------- */
+/* 14. Donate page --------------------------------------------------------- */
 .amount-bar {
   display: flex;
   flex-wrap: wrap;
@@ -1805,7 +1580,7 @@ textarea.form-row__input {
   margin-left: auto;
 }
 
-/* 14. Volunteer page ------------------------------------------------------ */
+/* 15. Volunteer page ------------------------------------------------------ */
 .roles {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1944,7 +1719,7 @@ textarea.form-row__input {
   flex: 0 0 auto;
 }
 
-/* 15. Contact page -------------------------------------------------------- */
+/* 16. Contact page -------------------------------------------------------- */
 .contact-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
@@ -2054,7 +1829,7 @@ textarea.form-row__input {
   border-bottom: 0;
 }
 
-/* 16. Footer -------------------------------------------------------------- */
+/* 17. Footer -------------------------------------------------------------- */
 .site-footer {
   padding-block: clamp(2.25rem, 4vw, 3.25rem) var(--s-5);
   background-color: var(--footer-bg);
@@ -2182,7 +1957,7 @@ textarea.form-row__input {
   color: var(--footer-fg);
 }
 
-/* 17. Utilities ----------------------------------------------------------- */
+/* 18. Utilities ----------------------------------------------------------- */
 .skip-link {
   position: fixed;
   top: 0.5rem;
@@ -2219,22 +1994,14 @@ textarea.form-row__input {
   border: 0;
 }
 
-/* 18. Responsive ---------------------------------------------------------- */
+/* 19. Responsive ---------------------------------------------------------- */
 @media (max-width: 1024px) {
   :root {
     --anchor-offset: 132px;
   }
 
-  .grid {
+  .cards4__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .controls {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .cards5__grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .footer__cols {
@@ -2269,6 +2036,10 @@ textarea.form-row__input {
 }
 
 @media (max-width: 900px) {
+  .gifts__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .steps {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -2363,16 +2134,8 @@ textarea.form-row__input {
     --anchor-offset: 156px;
   }
 
-  .grid,
-  .controls {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .controls {
-    gap: var(--s-2);
-  }
-
-  .cards5__grid {
+  .cards4__grid,
+  .gifts__grid {
     grid-template-columns: minmax(0, 1fr);
   }
 
@@ -2508,7 +2271,7 @@ textarea.form-row__input {
   }
 }
 
-/* 19. Reduced motion ------------------------------------------------------ */
+/* 20. Reduced motion ------------------------------------------------------ */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -2524,8 +2287,8 @@ textarea.form-row__input {
     scroll-behavior: auto !important;
   }
 
-  .card:hover,
   .card-link:hover,
+  .gift:hover,
   .btn:hover {
     transform: none;
   }

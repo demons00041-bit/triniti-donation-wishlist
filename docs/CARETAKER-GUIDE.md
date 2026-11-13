@@ -1,208 +1,190 @@
-# Caretaker guide — the Triniti wishlist page
+# Caretaker guide — the Triniti donation site
 
-For the people who look after the children's home. No computer knowledge needed. Written in short sentences, in plain English.
+For the people who look after the children's home. No computer knowledge needed. Short sentences, in plain English.
 
 ---
 
-## The one idea behind this page
+## The one idea behind this site
 
-**The spreadsheet is the website.**
+**The site is a set of finished pages, and nothing on it is typed from the site itself.**
 
-You open a Google Sheet. You change the numbers. The website reads the sheet and shows the new list.
+There is no login, no dashboard and no data-entry screen. Every word, picture and gift comes from one file on the computer that holds the project: `assets/js/config.js`. Someone changes a value in that file, saves it, and the site shows the change the next time a page is loaded.
 
-For the list itself you never edit the website. You do not need to design anything, upload anything or log in to anything else. One spreadsheet, nine columns, from any phone or computer.
+So the caretaker's job is not typing numbers in. It is knowing what the site says, and knowing who to ask when a word, a picture, a phone number or a gift has to change.
 
 ---
 
 ## What is on the site
 
-The site is four pages, in two languages: English and Bahasa Melayu.
+The site is six pages, in two languages: English and Bahasa Melayu.
 
 | Page | What it is for |
 | --- | --- |
-| `index.html` | The home page. The wish list sits in the middle of it. |
+| `index.html` | The home page. A hero picture, a block of four cards under the heading "Lend a Hand", the home's own words, two program sections, and a donation band with preset amounts. |
 | `donate.html` | Ways to give: an amount, a QR code, an online payment page, a bank transfer, and what to drop off. |
 | `volunteer.html` | Volunteering: three roles and three steps. |
 | `contact.html` | How to reach the home: address, phone, WhatsApp, email, opening hours. |
+| `sponsor.html` | Sponsoring a child: one picture, a short note, and a message box. |
+| `gift-of-love.html` | Nine gifts in a grid. Choosing a gift opens the donation page. |
 
-The two buttons at the top of every page switch between English and Bahasa Melayu.
+The four cards on the home page are the way into the rest of the site: **Sponsor A Child**, **Volunteer**, **Gift Of Love**, **Donate for us**. Each one is a link to its own page.
+
+The two buttons at the top of every page switch between English and Bahasa Melayu. They switch the whole page, not only the menu.
 
 ---
 
 ## Where things are changed
 
-Only three places matter. Nothing else needs touching.
+Four places. Nothing else needs touching.
 
 | What you want to change | Where it lives |
 | --- | --- |
-| The wish list — items, quantities, notes | The spreadsheet. That is what this guide teaches. |
 | The home's own facts and pictures — name, address, phone, WhatsApp, email, opening hours, map link, photographs, the About text | `org` and `content` in `assets/js/config.js` |
+| The four Lend a Hand cards — the sentence on each card, and where each one leads | `content.cards` in `assets/js/config.js` |
+| The nine gifts — the name, the picture, the alt text, and the amount each one opens with | `content.gifts` in `assets/js/config.js` |
+| The sponsor page — the subtitle, the big picture, its alt text, the note above the message box | `content.sponsorPage` in `assets/js/config.js` |
 | Buttons, headings, status words and form messages | `dict` in `assets/js/i18n.js`, under `en` for English and `ms` for Bahasa Melayu |
+| What happens when a donor sends the message box or the donation form | `api` in `assets/js/config.js` and `backend/worker.js` — ask whoever looks after the code |
 
-An empty value in `config.js` is not a mistake. The page shows a dashed box with the words "To be filled in" where a fact or a picture is still missing, so the gap is visible instead of guessed.
+An empty value in `config.js` is not a mistake. The page shows a dashed box with the words "To be filled in" where a fact or a picture is still missing, so the gap stays visible instead of being guessed. An empty value never means zero, and never means "not needed".
+
+Each gift is one entry with four parts: name, picture, alt text and amount. Write the amount as plain digits — `50`, not `RM50` — because the currency comes from the donation settings. Leave the amount empty and the gift still works: it opens the donation page without an amount chosen.
 
 ---
 
 ## Before the day — 10 minutes, not part of the script
 
 - Open the site once on the laptop you will use, and once on your phone.
-- Open the spreadsheet once, and find row 2 (the first item).
-- Print the cheat sheet at the end of this guide. One page.
-- Write down the address of the site on the printed sheet.
+- Walk the four cards once. Open the Gift Of Love page on the phone, and choose one gift.
+- Print the one-page card at the end of this guide.
+- Write the address of the site on the printed card.
 
 ---
 
 ## The handover script — 21 November, 10 minutes
 
-Keep to the minutes. Let the caretaker touch the keyboard from 2:00 onwards; watching is not learning.
+Keep to the minutes. Let the caretaker touch the screen from 2:00 onwards; watching is not learning.
 
 | Minutes | Length | What happens |
 | --- | --- | --- |
-| 0–2 | 2 min | What the page is, and why donors need it |
-| 2–5 | 3 min | Editing a quantity and watching the page update |
-| 5–7 | 2 min | Adding a new item |
-| 7–9 | 2 min | Marking something fulfilled, and undoing a mistake |
-| 9–10 | 1 min | Who to contact if something breaks |
+| 0–2 | 2 min | What the site is, and why donors need it |
+| 2–5 | 3 min | The four Lend a Hand cards, and where each one leads |
+| 5–7 | 2 min | The gift grid, and how one gift opens the donation page |
+| 7–9 | 2 min | The sponsor page, and the message box that is switched off for now |
+| 9–10 | 1 min | Who to contact when something is wrong |
 | **Total** | **10 min** | |
 
-### 0–2 min · What the page is, and why donors need it
+### 0–2 min · What the site is, and why donors need it
 
 Open the site on the big screen. Scroll slowly once, top to bottom, then stop.
 
 Say this, in your own words:
 
-> This is the home's wish list. Every card is one thing we need — rice, milk powder, toothpaste.
+> This is the home's page. Four ways to help us sit in the middle of the first screen.
 >
-> The bar shows how much we already have. Green and full means people already donated it. Half full means we still need more.
+> A donor picks one: sponsor a child, volunteer some time, buy one gift, or give money. Each one opens its own page with the details.
 >
-> Donors look at this list before they buy anything. So nobody brings us forty bottles of detergent while we have no rice. And nobody has to phone the office to ask what we need this week.
->
-> The list is available in English and Bahasa Melayu — the two buttons at the top. Same list, two languages.
+> Everything is in English and Bahasa Melayu — the two buttons at the top. The same page, two languages.
 
-Point at two things only: one progress bar, and the language buttons. Do not explain the design.
+Point at two things only: the Lend a Hand heading, and the language buttons. Do not explain the design.
 
-### 2–5 min · Editing a quantity and watching the page update
+### 2–5 min · The four Lend a Hand cards
 
-The caretaker does this, not you. Give over the laptop.
+The caretaker does this, not you. Give over the laptop or the phone.
 
-1. Open the spreadsheet. Find the row for rice.
-2. Tell them: "Someone just donated five bags of rice. Where do you write that?"
-3. They edit `quantity_fulfilled`: from `12` to `17`. Press Enter.
-4. The sheet saves by itself — there is no Save button in Google Sheets.
-5. Say: "Now we wait a few minutes, because Google keeps an old copy for a while. Then we reload the page."
-6. Reload the site. The rice card now reads `17 / 40`, and the bar is longer.
+1. Ask them to read the four card titles out loud: Sponsor A Child, Volunteer, Gift Of Love, Donate for us.
+2. Ask: "A stranger wants to give money and does not know what we need. Which card do you open for them?" Any of them is a fair answer; the point is that each card goes somewhere different.
+3. Let them open **Sponsor A Child**, then come back with the browser's back button.
+4. Open **Volunteer**, and come back the same way.
 
 Then make the point out loud:
 
-> You changed the sheet. You did not touch the website. That is the whole job.
+> Four doors, one page. A donor does not have to phone the office to find out how to help.
 
-### 5–7 min · Adding a new item
+### 5–7 min · The gift grid
 
-Still their keyboard. Add one row at the very bottom of the sheet, and fill all nine columns:
-
-| Column | Example |
-| --- | --- |
-| id | `item-013` |
-| name | `Milk powder (1 kg)` |
-| category | `food` |
-| unit | `tins` |
-| quantity_needed | `30` |
-| quantity_fulfilled | `0` |
-| urgent | `no` |
-| notes | `For the toddlers` |
-| updated | today's date, e.g. `2025-11-21` |
-
-Two warnings while they type:
-
-- `category` must be one of these exact words: `staples`, `food`, `hygiene`, `household`, `school`, `baby`, `medical`, `other`.
-- `quantity_needed` and `quantity_fulfilled` hold plain digits: `30`, never `30 tins`.
-
-### 7–9 min · Marking something fulfilled, and undoing a mistake
-
-**Fulfilled.** Pick an item where people donated everything. Set `quantity_fulfilled` the same as `quantity_needed`. After the next reload the card turns into a full bar and says it is fulfilled.
-
-**Undo.** The fastest fix for any mistake: press **Ctrl+Z** in the spreadsheet (on a Mac, Cmd+Z). That undoes the last change, and the sheet saves the corrected version by itself. If Ctrl+Z has already been pressed too often, just type the right number back into the cell.
-
-Then say the two rules that prevent most mistakes:
-
-> Numbers go in number columns. Words go in the `unit` column, written as a plural: `tins`, not `tin`.
->
-> Never delete the top row. The top row is the names of the columns, and the page uses those names to read the sheet.
-
-### 9–10 min · Who to contact if something breaks
-
-Write this on the printed cheat sheet, in front of them:
-
-> Who to call when something breaks: **[TODO: name and phone number]**
+1. Open **Gift Of Love**. Nine cells sit in a grid.
+2. Choose a gift. The donation page opens, with that gift's amount already chosen when the amount was filled in.
+3. Say: "When a gift has no amount yet, the cell still works. It opens the donation page and the donor chooses the amount."
 
 Say:
 
-> The page looking wrong is almost never an emergency. The sheet is safe — nothing you type can damage it.
+> The gifts are not in a shop and nothing is paid on this page. A gift is a shortcut to the donation page.
+
+### 7–9 min · The sponsor page, and the message box
+
+Open **Sponsor a child**.
+
+1. Point at the big picture, the note, and the box underneath.
+2. Type a few words into the box. Then point at the send button: it is grey and it will not press.
+3. Say: "This is on purpose. Nothing has been connected on the other side yet, so the button is switched off. Nothing you type is saved — leave the page and it is gone."
+4. Reload the page and show that the box is empty again.
+
+Say:
+
+> The grey button means "not connected yet", not "broken".
+
+### 9–10 min · Who to contact when something is wrong
+
+Write this on the printed card, in front of them:
+
+> Who to call when something is wrong: **[TODO: name and phone number]**
+
+Say:
+
+> The page looking odd is almost never an emergency, and nothing a visitor does on the site can damage it.
 >
-> If the page does not change after ten minutes, first reload it once. If it still looks wrong, send a message with three things: the address of the page, a photo of the screen, and what you typed and when.
->
-> If the spreadsheet itself will not open, that is Google, not us — try again in an hour.
+> If the page looks wrong, first reload it once. If it still looks wrong, send a message with three things: the address of the page, a photo of the screen, and what you expected to see.
 
 ---
 
-## Three common mistakes, and the fix
+## Three things that look like mistakes, and are not
 
-### 1. Typing numbers as text
+### 1. A dashed box that says "To be filled in"
 
-**What it looks like:** you type `12 bags` into `quantity_needed`, or `12 pcs` into `quantity_fulfilled`. The card then shows `0 / 40` and looks finished, or shows a full bar when nothing was donated.
+**What it looks like:** a rectangle with a dashed border, on its own or in place of a picture.
 
-**Why:** the page can only count digits. `12 bags` is a word, and a word counts as 0.
+**Why:** that fact or picture has not been supplied yet. The site says so plainly instead of inventing an address or a photograph.
 
-**The fix:** put plain digits in `quantity_needed` and `quantity_fulfilled` — `12` — and put the word in the `unit` column: `bags`. In Google Sheets, a real number sits on the right side of its cell and a text value sits on the left. A quick look at which side is a quick check.
+**What to do:** nothing, until the home has the real value. Then whoever looks after the code fills it in `assets/js/config.js`, and the box turns into the text or the picture.
 
-### 2. Deleting the header row
+### 2. A card or a link that does nothing
 
-**What it looks like:** the whole page goes empty, or falls back to sample items, after someone sorted, deleted or pasted over row 1.
+**What it looks like:** a card that cannot be clicked, or a link that Tab skips over.
 
-**Why:** row 1 is the list of column names. Without it the page cannot tell which column is which.
+**Why:** its address is empty in `config.js`, so the page disabled it on purpose rather than sending a donor to a page that does not exist.
 
-**The fix:** press Ctrl+Z immediately. If that is too late, type the header row back into A1 to I1:
+**What to do:** fill in the address — `sponsor.html`, `volunteer.html`, `gift-of-love.html` or `donate.html` for the four cards.
 
-```
-id, name, category, unit, quantity_needed, quantity_fulfilled, urgent, notes, updated
-```
+### 3. The greyed-out send button on the sponsor page
 
-One value per cell, row 1 only. Then reload the page.
+**What it looks like:** a message box that accepts typing, and a send button that stays grey.
 
-### 3. Renaming a column
+**Why:** no backend is configured, so there is nowhere to send a message. Nothing typed is stored — no cookie, no saved draft, nothing added to the page address.
 
-**What it looks like:** someone "improves" a column name to `How Many Left` or `Qty Required`. That column is then ignored and every card shows 0.
-
-**Why:** the page looks for specific names. A few older spellings still work — `needed`, `fulfilled`, `donated`, `received`, `note`, `remarks`, `priority` — but a brand-new name does not.
-
-**The fix:** press Ctrl+Z, or type the original name back. When in doubt, use the exact header row printed in this guide.
+**What to do:** leave it. Every page and every payment method works without a backend. To switch the box on, follow `docs/BACKEND-SETUP.md`.
 
 ---
 
-## One-page cheat sheet
+## One-page card
 
-Cut this out or keep it beside the computer.
+Keep this beside the computer.
 
-**"About 5 minutes" below means: save the sheet, wait about five minutes, then reload the page.** Reloading on its own never hurts.
-
-| I want to… | Do this | The page updates in about |
+| I want to… | Do this | Who does it |
 | --- | --- | --- |
-| Show that something was donated | Find the row, add the amount to `quantity_fulfilled`, press Enter | 5 minutes |
-| Add a new item we need | Add a row at the bottom, fill all nine columns | 5 minutes |
-| Say an item is finished | Set `quantity_fulfilled` the same as `quantity_needed` | 5 minutes |
-| Make an item stand out | Type `yes` in `urgent` | 5 minutes |
-| Stop asking for an item for a while | Clear the `name` cell — the row is then ignored | 5 minutes |
-| Bring a hidden item back | Type its name in again | 5 minutes |
-| Remove an item for good | Delete the whole row, not just the text in it | 5 minutes |
-| Fix a mistake | Ctrl+Z in the sheet, or type the old value back | 5 minutes |
-| Check the list from my phone | Open the site address in the browser — no app needed | immediately |
-| Change the phone number, an address or a picture | `org` or `content` in `assets/js/config.js` — whoever looks after the code does this | when the file is saved and the page reloaded |
-| Change a button label or a status word | `dict` in `assets/js/i18n.js`, under `en` and `ms` | when the file is saved and the page reloaded |
+| Change a phone number, an address, the opening hours, a picture | `org` or `content` in `assets/js/config.js` | whoever looks after the code |
+| Change the sentence on one of the four cards, or where it leads | `content.cards` in `assets/js/config.js` | whoever looks after the code |
+| Put a gift on the Gift Of Love page | `content.gifts`: name, picture, alt text, amount | whoever looks after the code |
+| Change the sponsor page picture or note | `content.sponsorPage` in `assets/js/config.js` | whoever looks after the code |
+| Change a button label or a form message | `dict` in `assets/js/i18n.js`, under `en` and `ms` | whoever looks after the code |
+| Show the site to someone | open the address in any browser — no app needed, works on a phone | anyone |
+| Switch language | the two buttons at the top of the page | anyone |
+| Check that a gift works | open Gift Of Love, choose the gift, see the amount on the donation page | anyone |
 
-Two rules for every row you touch:
+Two rules for every change:
 
-1. **Digits in number columns.** `12`, never `12 bags`. The word goes in `unit`.
-2. **Never delete the top row.** It holds the column names.
+1. **Digits only in an amount.** `50`, never `RM50`. The currency is set once, in the donation settings.
+2. **A label is changed twice.** Anything that appears in both languages lives in two dictionaries, `en` and `ms`. Change both, or one language keeps the old word.
 
 ---
 
@@ -210,4 +192,4 @@ Two rules for every row you touch:
 
 **[TODO: name and phone number]**
 
-When you write, include: the address of the page, a photo of the screen, and what you typed and when. Three sentences is enough.
+When you write, include: the address of the page, a photo of the screen, and what you expected to see. Three sentences is enough.

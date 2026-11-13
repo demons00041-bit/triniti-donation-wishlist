@@ -23,7 +23,7 @@
       return window.Site.get(path);
     }
     var parts = String(path).split(".");
-    var node = window.WISHLIST_CONFIG || {};
+    var node = window.TRINITI_CONFIG || {};
     var i;
     for (i = 0; i < parts.length; i += 1) {
       if (node === null || typeof node !== "object") { return undefined; }

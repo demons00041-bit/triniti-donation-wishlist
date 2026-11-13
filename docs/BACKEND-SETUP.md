@@ -273,7 +273,112 @@ that there is no trailing slash.
 
 ---
 
+## 10 — The sponsorship message form
+
+`sponsor.html` carries a second optional form: a free-text message from somebody who wants to
+sponsor a child. It posts to `POST /sponsorships` on the same Worker, so there is no second
+deployment, no second KV namespace and no second salt — steps 1 to 5 above already cover it.
+
+**Until `api.baseUrl` in `assets/js/config.js` is filled in (step 6), the sponsor form stays
+disabled and sends nothing at all.** No request leaves the page, nothing is stored, no reference
+number is made. Exactly like the donation form, the page must never pretend a message was
+recorded when nothing was sent anywhere. The address is built from `api.baseUrl` plus
+`api.sponsorPath`, which ships as `"/sponsorships"`.
+
+### The payload
+
+| Field | Required | Rule |
+| --- | --- | --- |
+| `kind` | no | Accepted for readability, ignored: the stored record always says `"sponsorship"`. |
+| `message` | **yes** | Trimmed, must not be empty, at most 1000 characters. |
+| `name` | no | At most 120 characters. |
+| `email` | no | Optional. When present it must look like an address and be at most 254 characters. |
+| `phone` | no | At most 40 characters. |
+| `locale` | no | Page language, stored as sent (8 characters at most). |
+| `ts` | no | The browser's own timestamp, stored beside the server's `created_at` (the page sends an ISO string). |
+| `hp` | no | The hidden trap field. Any non-empty value means "bot". |
+| `anonymous` | no | Never sent by the page. A hand-built request carrying it is refused. |
+
+The page as shipped sends `kind`, `message`, `hp`, `locale` and `ts`. `name`, `email` and
+`phone` are accepted in case the form ever grows a field for them; when they are absent the
+record simply carries empty strings.
+
+### The three error codes
+
+| Status | Body `error` | What happened | What to do |
+| --- | --- | --- | --- |
+| `400` | `message` | `message` is missing, blank, or longer than 1000 characters. | Write a message, shorten it. |
+| `400` | `email` | `email` was filled in but is not an address or is longer than 254 characters; also used when `name` is over 120 or `phone` over 40 characters. | Correct or empty the field. |
+| `429` | `rate` | More than 5 accepted messages from one connection in one hour. | Wait an hour, or write to the home by another route. |
+
+Two more answers exist for the same reasons they exist on `/donations`: `400 anonymous` for a
+hand-built request that claims to be anonymous (nothing stored, no quota spent), and
+`500 config` when `SALT` or the `DONATIONS` binding is missing.
+
+The bot trap answers `201 {"ok":true}` **without** a reference number and stores nothing, so a
+bot learns nothing from the reply. A real submission always carries a `ref`.
+
+### The reference number
+
+`SPN-YYYYMMDD-XXXX`, for example `SPN-20261113-8F3A`: the UTC date plus four random
+hexadecimal characters, the same shape as a donation reference with an `SPN` prefix so the two
+can never be confused. It is also stored in the record as `id`.
+
+### The rate budget is separate
+
+Both routes allow 5 accepted requests per hour per connection, but each counts in its own
+bucket: `rl:<hash>:<hour>` for donations and `rl:spon:<hash>:<hour>` for sponsorships. Five
+sponsorship messages in an hour do not use up the donation form's five, and five donations do
+not use up the sponsor form's.
+
+### The KV key
+
+`spon:<ISO timestamp>-<8 random characters>`, for example
+`spon:2026-11-13T19:51:31.000Z-1f4c9a2b`. Sponsorship records share the one `DONATIONS`
+namespace with the donation records; the prefix is what tells them apart. One stored record
+looks like this (invented values, not a real sponsor):
+
+```json
+{
+  "kind": "sponsorship",
+  "message": "I would like to sponsor a child",
+  "name": "Ali",
+  "email": "ali@example.com",
+  "phone": "",
+  "locale": "en",
+  "ts": "2026-11-13T19:51:30.000Z",
+  "ip_hash": "3f9a1c0d5e7b2a48",
+  "created_at": "2026-11-13T19:51:31.000Z",
+  "id": "SPN-20261113-8F3A"
+}
+```
+
+The same privacy promise applies: no raw IP, no field beyond the list above.
+
+### One curl example
+
+Replace `$URL` with your Worker address (no trailing slash):
+
+```bash
+curl -i -X POST "$URL/sponsorships" \
+  -H "Content-Type: application/json" \
+  -d '{"kind":"sponsorship","message":"I would like to sponsor a child","name":"Ali","email":"ali@example.com","locale":"en"}'
+```
+
+Expect `HTTP/1.1 201` and a body like `{"ok":true,"ref":"SPN-20261113-8F3A"}`. Then look for a
+key starting with `spon:` in the namespace (section 7, option A). A blank message is refused:
+
+```bash
+curl -i -X POST "$URL/sponsorships" -H "Content-Type: application/json" \
+  -d '{"kind":"sponsorship","message":"   "}'
+```
+
+Expect `400 {"ok":false,"error":"message"}`.
+
+---
+
 ## Privacy — what the server receives and stores
+
 
 This table is the whole promise, stated plainly.
 

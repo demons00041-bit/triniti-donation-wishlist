@@ -28,52 +28,11 @@
     "site.name": "Rumah Kanak-Kanak Triniti",
     "site.tagline": "A children's home in Malaysia",
 
-    "nav.wishlist": "Wishlist",
     "nav.about": "About",
     "nav.getInvolved": "Get involved",
     "nav.contact": "Contact",
     "nav.donate": "Donate",
     "nav.label": "Main",
-
-    "controls.searchPlaceholder": "Search items",
-    "controls.filterCategory": "Category",
-    "controls.filterStatus": "Status",
-    "controls.sort": "Sort by",
-    "controls.results": "{count} items shown",
-
-    "status.needed": "Still needed",
-    "status.partial": "Partly donated",
-    "status.fulfilled": "Fully donated",
-    "status.all": "All items",
-
-    "sort.urgency": "Most urgent first",
-    "sort.progress": "Least funded first",
-    "sort.name": "Name (A to Z)",
-
-    "category.staples": "Staples",
-    "category.food": "Food",
-    "category.hygiene": "Hygiene",
-    "category.household": "Household",
-    "category.school": "School",
-    "category.baby": "Baby care",
-    "category.medical": "Medical",
-    "category.other": "Other",
-
-    "item.amount": "{fulfilled} of {needed} {unit} donated",
-    "item.notesAria": "Item notes",
-    "item.urgent": "Urgent",
-    "item.partial": "Partly donated",
-    "item.done": "Fully donated",
-    "item.progressAria": "{name}: {percent}% of the amount needed has been donated",
-
-    "empty.title": "Nothing matches these filters",
-    "empty.body": "Try another search word, or clear the filters to see every item on the list.",
-    "empty.reset": "Clear filters",
-
-    "loading": "Loading the wishlist...",
-    "error.title": "The wishlist could not be loaded",
-    "error.body": "Something went wrong on our side. Please try again, or contact us if it keeps happening.",
-    "error.retry": "Try again",
 
     "about.title": "About us",
     "about.founded": "Founded",
@@ -85,11 +44,22 @@
     "placeholder.customAmount": "Enter an amount",
     "placeholder.notSelected": "Not selected",
 
-    "card.lendHand": "Lend a Hand",
+    "section.lendHand": "Lend a Hand",
     "card.sponsorChild": "Sponsor A Child",
     "card.volunteer": "Volunteer",
     "card.giftOfLove": "Gift Of Love",
     "card.donateForUs": "Donate for us",
+
+    "sponsorPage.title": "Sponsor a Child",
+    "sponsorPage.messageLabel": "Your message",
+    "sponsorPage.messagePlaceholder": "Write your message here",
+    "sponsorPage.send": "Send message",
+    "sponsorPage.notConnected": "This form is not connected yet.",
+    "sponsorPage.privacy": "Nothing you type is saved, and nothing is sent while the form is not connected.",
+    "giftPage.title": "Gift of Love",
+    "giftPage.subtitle": "Choose a gift, then pay on the next page.",
+    "giftPage.item": "Gift {n}",
+    "giftPage.choose": "Choose this gift",
 
     "donate.customAmount": "Other amount",
     "donate.now": "Donate now",
@@ -176,52 +146,11 @@
     "site.name": "Rumah Kanak-Kanak Triniti",
     "site.tagline": "Sebuah rumah kebajikan kanak-kanak di Malaysia",
 
-    "nav.wishlist": "Senarai keperluan",
     "nav.about": "Tentang",
     "nav.getInvolved": "Libatkan diri",
     "nav.contact": "Hubungi",
     "nav.donate": "Derma",
     "nav.label": "Utama",
-
-    "controls.searchPlaceholder": "Cari barangan",
-    "controls.filterCategory": "Kategori",
-    "controls.filterStatus": "Status",
-    "controls.sort": "Susun mengikut",
-    "controls.results": "{count} barangan dipaparkan",
-
-    "status.needed": "Masih diperlukan",
-    "status.partial": "Sebahagian disumbang",
-    "status.fulfilled": "Sudah cukup",
-    "status.all": "Semua barangan",
-
-    "sort.urgency": "Paling mendesak dahulu",
-    "sort.progress": "Paling kurang disumbang dahulu",
-    "sort.name": "Nama (A hingga Z)",
-
-    "category.staples": "Makanan ruji",
-    "category.food": "Makanan",
-    "category.hygiene": "Kebersihan diri",
-    "category.household": "Barang rumah",
-    "category.school": "Peralatan sekolah",
-    "category.baby": "Keperluan bayi",
-    "category.medical": "Perubatan",
-    "category.other": "Lain-lain",
-
-    "item.amount": "{fulfilled} daripada {needed} {unit} telah disumbangkan",
-    "item.notesAria": "Nota barangan",
-    "item.urgent": "Mendesak",
-    "item.partial": "Sebahagian disumbang",
-    "item.done": "Sudah cukup",
-    "item.progressAria": "{name}: {percent}% daripada jumlah yang diperlukan telah disumbangkan",
-
-    "empty.title": "Tiada barangan yang sepadan dengan tapisan ini",
-    "empty.body": "Cuba kata carian lain, atau kosongkan tapisan untuk melihat semua barangan dalam senarai.",
-    "empty.reset": "Kosongkan tapisan",
-
-    "loading": "Sedang memuatkan senarai keperluan...",
-    "error.title": "Senarai keperluan tidak dapat dimuatkan",
-    "error.body": "Ada masalah pada pihak kami. Sila cuba lagi, atau hubungi kami jika ia berterusan.",
-    "error.retry": "Cuba lagi",
 
     "about.title": "Tentang kami",
     "about.founded": "Ditubuhkan",
@@ -233,11 +162,22 @@
     "placeholder.customAmount": "Masukkan jumlah",
     "placeholder.notSelected": "Belum dipilih",
 
-    "card.lendHand": "Hulurkan Bantuan",
+    "section.lendHand": "Hulurkan Bantuan",
     "card.sponsorChild": "Taja Seorang Anak",
     "card.volunteer": "Sukarelawan",
     "card.giftOfLove": "Hadiah Kasih",
     "card.donateForUs": "Derma untuk kami",
+
+    "sponsorPage.title": "Taja Seorang Kanak-Kanak",
+    "sponsorPage.messageLabel": "Mesej anda",
+    "sponsorPage.messagePlaceholder": "Tulis mesej anda di sini",
+    "sponsorPage.send": "Hantar mesej",
+    "sponsorPage.notConnected": "Borang ini belum disambungkan.",
+    "sponsorPage.privacy": "Apa yang anda taip tidak disimpan, dan tiada apa dihantar selagi borang ini belum disambungkan.",
+    "giftPage.title": "Hadiah Kasih",
+    "giftPage.subtitle": "Pilih hadiah, kemudian bayar di halaman seterusnya.",
+    "giftPage.item": "Hadiah {n}",
+    "giftPage.choose": "Pilih hadiah ini",
 
     "donate.customAmount": "Jumlah lain",
     "donate.now": "Derma sekarang",
@@ -557,7 +497,7 @@
     var stored = readStored();
     if (stored) { return stored; }
 
-    var config = window.WISHLIST_CONFIG;
+    var config = window.TRINITI_CONFIG;
     if (config && isLocale(config.defaultLocale)) { return config.defaultLocale; }
 
     var navigator = window.navigator;
