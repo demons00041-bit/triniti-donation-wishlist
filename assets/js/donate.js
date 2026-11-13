@@ -1,7 +1,9 @@
-/* Rumah Kanak-Kanak Triniti - donate page controller.
+/* Rumah Kanak-Kanak Triniti - donate page wizard.
    ES5 on purpose: variables and functions only, so the page runs in any browser
-   from the last decade. Nothing typed into the details form is ever stored:
-   no local storage, no session storage, no cookies, no rewritten URL. */
+   from the last decade. Nothing typed into the details form is kept: no browser
+   storage of any kind, no cookies, no rewritten URL, no history entry. Payment
+   happens on the bank own page or app; this file moves no money and invents no
+   reference number. The page always opens on step one. */
 (function (window, document) {
   "use strict";
 
@@ -10,8 +12,17 @@
   var MAX_NAME = 120;
   var MAX_MESSAGE = 1000;
   var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  var STEPS = ["method", "amount", "info", "pay", "done"];
+  var METHODS = ["qr", "hosted", "transfer"];
+  var PAY_PANELS = ["pay-qr", "pay-hosted", "pay-bank"];
 
-  var amount = null;
+  /* step: the open panel. method: "" until one is chosen. amount: a positive
+     number or null. source: "" | "tier" | "other" - where that amount came
+     from. Nothing here survives a reload on purpose. */
+  var state = { step: "method", method: "", amount: null, source: "" };
+
+  var detailsTried = false;
+  var detailsFailed = false;
   var statusKind = "idle";
   var statusKey = "";
   var statusVars = null;
@@ -39,6 +50,11 @@
   }
 
   function el(id) { return document.getElementById(id); }
+
+  function on(id, type, handler) {
+    var node = el(id);
+    if (node && node.addEventListener) { node.addEventListener(type, handler); }
+  }
 
   function filled(value) {
     return typeof value === "string" && value.replace(/^\s+|\s+$/g, "") !== "";
@@ -68,37 +84,279 @@
     return String(value);
   }
 
-  /* ---------- amount ---------- */
+  /* ---------- amounts ---------- */
 
+  /* The tiers are whatever config.js lists; nothing is added here. */
+  function tiers() {
+    var list = donation().amounts || [];
+    var out = [];
+    var i;
+    for (i = 0; i < list.length; i += 1) {
+      var n = Number(list[i]);
+      if (isFinite(n) && n > 0 && out.indexOf(n) === -1) { out.push(n); }
+    }
+    return out;
+  }
+
+  function parseAmount(text) {
+    var raw = typeof text === "string" ? text.replace(/[^0-9.]/g, "") : "";
+    if (raw === "") { return null; }
+    var n = Number(raw);
+    if (!isFinite(n) || !(n > 0)) { return null; }
+    return n;
+  }
+
+  /* The ?amount= parameter is read once, to seed the wizard. It is never
+     written back, so a reload always starts from nothing. */
   function readAmount() {
     var search = "";
     try { search = window.location.search || ""; } catch (e) { search = ""; }
-    amount = null;
     var hit = /[?&]amount=([^&]*)/.exec(search);
-    if (!hit) { return amount; }
+    if (!hit) { return null; }
     var raw = hit[1].replace(/\+/g, " ");
     var text = raw;
     try { text = decodeURIComponent(raw); } catch (err) { text = raw; }
-    if (text.replace(/\s+/g, "") === "") { return amount; }
-    var parsed = Number(text);
-    if (isFinite(parsed) && parsed > 0) { amount = parsed; }
-    return amount;
+    return parseAmount(text);
   }
 
-  function renderAmountBar() {
-    var wrap = el("amount-value");
-    var node = el("amount-number");
-    var cur = el("amount-currency");
-    var value = readAmount();
-    if (!node) { return; }
-    if (cur) { cur.hidden = !filled(get("content.donation.currency")); }
-    if (value === null) {
-      node.textContent = say("placeholder.notSelected");
-      if (wrap) { wrap.className = "amount-bar__value is-missing"; }
-      return;
+  /* ---------- the wizard ---------- */
+
+  function stepIndex(name) {
+    var i;
+    for (i = 0; i < STEPS.length; i += 1) {
+      if (STEPS[i] === name) { return i; }
     }
-    node.textContent = numberText(value);
-    if (wrap) { wrap.className = "amount-bar__value"; }
+    return -1;
+  }
+
+  function syncPanels() {
+    var i;
+    for (i = 0; i < STEPS.length; i += 1) {
+      var panel = el("panel-" + STEPS[i]);
+      if (panel) { panel.hidden = STEPS[i] !== state.step; }
+    }
+  }
+
+  function syncStepper() {
+    var nav = el("steps-nav");
+    if (!nav || !nav.querySelectorAll) { return; }
+    var items = nav.querySelectorAll(".steps-nav__item");
+    var current = stepIndex(state.step);
+    var i;
+    for (i = 0; i < items.length; i += 1) {
+      var at = stepIndex(items[i].getAttribute("data-step"));
+      var cls = "steps-nav__item";
+      if (at === current) {
+        cls = cls + " is-current";
+        items[i].setAttribute("aria-current", "step");
+      } else {
+        if (at !== -1 && at < current) { cls = cls + " is-done"; }
+        items[i].removeAttribute("aria-current");
+      }
+      items[i].className = cls;
+    }
+  }
+
+  function goStep(name) {
+    if (stepIndex(name) === -1) { return; }
+    state.step = name;
+    syncPanels();
+    syncStepper();
+    renderAmountTexts();
+    if (name === "pay") { renderPay(); }
+    if (name === "done") { renderPay(); maybeSendDetails(); }
+  }
+
+  function completePayment() {
+    goStep("done");
+  }
+
+  /* ---------- step 1: how to give ---------- */
+
+  function methodTitle(key) {
+    if (key === "qr") { return say("pay.qrTitle"); }
+    if (key === "hosted") { return say("pay.hostedTitle"); }
+    if (key === "transfer") { return say("otherWays.bankTitle"); }
+    return "";
+  }
+
+  function syncMethodCards() {
+    if (!document.querySelectorAll) { return; }
+    var cards = document.querySelectorAll(".method-card");
+    var i;
+    for (i = 0; i < cards.length; i += 1) {
+      var key = cards[i].getAttribute("data-method");
+      cards[i].setAttribute("aria-pressed", key === state.method ? "true" : "false");
+    }
+    var next = el("flow-method-next");
+    if (next) { next.disabled = METHODS.indexOf(state.method) === -1; }
+  }
+
+  function selectMethod(key) {
+    if (METHODS.indexOf(key) === -1) { return; }
+    state.method = key;
+    syncMethodCards();
+  }
+
+  function wireMethods() {
+    if (!document.querySelectorAll) { return; }
+    var cards = document.querySelectorAll(".method-card");
+    var i;
+    for (i = 0; i < cards.length; i += 1) {
+      (function (card) {
+        card.addEventListener("click", function () {
+          selectMethod(card.getAttribute("data-method"));
+        });
+      })(cards[i]);
+    }
+  }
+
+  /* ---------- step 2: how much ---------- */
+
+  function syncTierSelection() {
+    var grid = el("tier-grid");
+    if (!grid || !grid.querySelectorAll) { return; }
+    var buttons = grid.querySelectorAll(".tier");
+    var i;
+    for (i = 0; i < buttons.length; i += 1) {
+      var raw = buttons[i].getAttribute("data-tier");
+      var base = "tier";
+      var chosen = false;
+      if (raw === "other") {
+        base = "tier tier--other";
+        chosen = state.source === "other";
+      } else {
+        chosen = state.source === "tier" && state.amount !== null && Number(raw) === state.amount;
+      }
+      buttons[i].setAttribute("aria-pressed", chosen ? "true" : "false");
+      buttons[i].className = chosen ? base + " is-selected" : base;
+    }
+  }
+
+  function syncOtherBox() {
+    var box = el("tier-other");
+    if (box) { box.hidden = state.source !== "other"; }
+  }
+
+  function renderTiers() {
+    var grid = el("tier-grid");
+    if (!grid) { return; }
+    var list = tiers();
+    var i;
+    grid.innerHTML = "";
+    for (i = 0; i < list.length; i += 1) {
+      var button = document.createElement("button");
+      button.className = "tier";
+      button.setAttribute("type", "button");
+      button.setAttribute("data-tier", String(list[i]));
+      button.setAttribute("aria-pressed", "false");
+      button.textContent = numberText(list[i]);
+      grid.appendChild(button);
+    }
+    var other = document.createElement("button");
+    other.className = "tier tier--other";
+    other.setAttribute("type", "button");
+    other.setAttribute("data-tier", "other");
+    other.setAttribute("aria-pressed", "false");
+    other.setAttribute("data-i18n", "donate.other");
+    other.textContent = say("donate.other");
+    grid.appendChild(other);
+    syncTierSelection();
+  }
+
+  function selectTier(raw) {
+    var box = el("tier-other");
+    var input = el("tier-input");
+    if (raw === "other") {
+      state.source = "other";
+      if (box) { box.hidden = false; }
+      state.amount = input ? parseAmount(input.value) : null;
+      if (input && typeof input.focus === "function") { input.focus(); }
+    } else {
+      var n = Number(raw);
+      if (!isFinite(n) || !(n > 0)) { return; }
+      state.source = "tier";
+      state.amount = n;
+      if (box) { box.hidden = true; }
+    }
+    renderAmountTexts();
+    syncTierSelection();
+  }
+
+  function renderAmountTexts() {
+    var cur = el("amount-currency");
+    if (cur) { cur.hidden = !filled(get("content.donation.currency")); }
+    var node = el("amount-number");
+    if (node) {
+      node.textContent = state.amount === null ? say("placeholder.notSelected") : numberText(state.amount);
+    }
+    var next = el("flow-amount-next");
+    if (next) { next.disabled = !(state.amount !== null && state.amount > 0); }
+  }
+
+  /* ?amount=N seeds the step: a known tier is picked, anything else fills the
+     other-amount box. Either way the visitor can change it afterwards. */
+  function applyInitialAmount() {
+    var initial = readAmount();
+    if (initial === null) { return; }
+    var list = tiers();
+    var i;
+    for (i = 0; i < list.length; i += 1) {
+      if (list[i] === initial) {
+        state.amount = initial;
+        state.source = "tier";
+        return;
+      }
+    }
+    state.amount = initial;
+    state.source = "other";
+    var input = el("tier-input");
+    if (input) { input.value = String(initial); }
+  }
+
+  function wireTiers() {
+    var grid = el("tier-grid");
+    if (grid && grid.addEventListener) {
+      grid.addEventListener("click", function (event) {
+        var node = event.target;
+        while (node && node !== grid && !(node.getAttribute && node.getAttribute("data-tier"))) {
+          node = node.parentNode;
+        }
+        if (!node || node === grid || !node.getAttribute) { return; }
+        selectTier(node.getAttribute("data-tier"));
+      });
+    }
+    var input = el("tier-input");
+    if (input && input.addEventListener) {
+      var onTyped = function () {
+        state.source = "other";
+        state.amount = parseAmount(input.value);
+        syncOtherBox();
+        renderAmountTexts();
+        syncTierSelection();
+      };
+      input.addEventListener("input", onTyped);
+      input.addEventListener("change", onTyped);
+    }
+  }
+
+  /* ---------- step 4: the payment panel for the chosen method ---------- */
+
+  function renderPay() {
+    var cur = filled(get("content.donation.currency"));
+    var name = el("pay-method-name");
+    if (name) { name.textContent = methodTitle(state.method); }
+    var payCur = el("pay-currency");
+    if (payCur) { payCur.hidden = !cur; }
+    var number = el("pay-amount-number");
+    if (number) {
+      number.textContent = state.amount === null ? say("placeholder.notSelected") : numberText(state.amount);
+    }
+    var i;
+    for (i = 0; i < PAY_PANELS.length; i += 1) {
+      var panel = el(PAY_PANELS[i]);
+      if (panel) { panel.hidden = METHODS[i] !== state.method; }
+    }
   }
 
   /* ---------- status region ---------- */
@@ -149,7 +407,21 @@
     return "form.errServer";
   }
 
-  /* ---------- hosted bank page card ---------- */
+  function showDoneNote() {
+    var node = el("done-note");
+    if (!node) { return; }
+    node.textContent = say("done.detailsNotSent");
+    node.hidden = false;
+  }
+
+  function hideDoneNote() {
+    var node = el("done-note");
+    if (!node) { return; }
+    node.textContent = "";
+    node.hidden = true;
+  }
+
+  /* ---------- hosted bank page panel ---------- */
 
   function renderHosted() {
     var link = el("hosted-link");
@@ -235,12 +507,12 @@
     });
   }
 
-  /* ---------- the optional details form ---------- */
+  /* ---------- step 3: the optional details ---------- */
 
   function onAnonymousChange(form) {
     var box = field(form, "anonymous");
     var on = !!(box && box.checked);
-    var names = ["name", "email", "phone", "message", "agree", "send"];
+    var names = ["name", "email", "phone", "message", "agree"];
     var clearing = ["name", "email", "phone", "message"];
     var i;
     for (i = 0; i < names.length; i += 1) {
@@ -264,17 +536,13 @@
     if (privacy) { privacy.hidden = on; }
     var anonNote = el("form-anon-note");
     if (anonNote) { anonNote.hidden = !on; }
-    if (!hasBackend()) {
-      var send = field(form, "send");
-      if (send) { send.disabled = true; }
-      if (!on) { note("idle", "form.backendMissing"); }
-    }
+    if (!hasBackend() && !on) { note("idle", "form.backendMissing"); }
   }
 
   function buildPayload(form) {
     var agree = field(form, "agree");
     return {
-      amount: readAmount(),
+      amount: state.amount,
       currency: trimmed(get("content.donation.currency")),
       name: trimmed(valueOf(form, "name")),
       email: trimmed(valueOf(form, "email")),
@@ -362,6 +630,42 @@
     });
   }
 
+  /* The details go out at most once per page load, and only when there is a
+     backend, the visitor is not anonymous and every field checks out. A
+     failure is a note on the thank-you card, never a wall: the wizard still
+     reaches its last step. */
+  function maybeSendDetails() {
+    if (detailsTried) { return; }
+    var form = el("details-form");
+    if (!form) { return; }
+    if (!hasBackend()) { return; }
+    var box = field(form, "anonymous");
+    if (box && box.checked) { return; }
+    clearErrors();
+    var problem = validate(form);
+    if (problem) {
+      if (problem !== "anonymous") { setFieldError(problem, problemKey(problem)); }
+      return;
+    }
+    detailsTried = true;
+    note("busy", "form.sending");
+    submitDetails(buildPayload(form)).then(function (result) {
+      if (result && result.ok) {
+        note("ok", "form.success", { ref: result.ref });
+        return;
+      }
+      detailsFailed = true;
+      if (result && result.error === "email") { setFieldError("email", "form.errEmail"); }
+      note("err", failureKey(result && result.error));
+      showDoneNote();
+    });
+  }
+
+  function advanceFromInfo() {
+    maybeSendDetails();
+    goStep("pay");
+  }
+
   function wireForm() {
     var form = el("details-form");
     if (!form) { return; }
@@ -371,67 +675,56 @@
     }
     form.addEventListener("submit", function (event) {
       if (event && typeof event.preventDefault === "function") { event.preventDefault(); }
-      if (box && box.checked) { return; }
-      if (!hasBackend()) { note("err", "form.backendMissing"); return; }
-      clearErrors();
-      var problem = validate(form);
-      if (problem) {
-        setFieldError(problem, problemKey(problem));
-        note("err", problemKey(problem));
-        var target = el("f-" + problem);
-        if (target && typeof target.focus === "function") { target.focus(); }
-        return;
-      }
-      var payload = buildPayload(form);
-      var send = field(form, "send");
-      if (send) {
-        send.disabled = true;
-        send.textContent = say("form.sending");
-      }
-      note("busy", "form.sending");
-      submitDetails(payload).then(function (result) {
-        if (send) {
-          send.disabled = false;
-          send.textContent = say("form.send");
-        }
-        if (result && result.ok) {
-          form.reset();
-          clearErrors();
-          note("ok", "form.success", { ref: result.ref });
-          return;
-        }
-        if (result && result.error === "email") { setFieldError("email", "form.errEmail"); }
-        note("err", failureKey(result && result.error));
-      });
+      if (state.step === "info") { advanceFromInfo(); }
     });
   }
 
-  /* ---------- locale switch: re-write what came from config ---------- */
+  /* ---------- navigation ---------- */
+
+  function wireFlow() {
+    on("flow-method-next", "click", function () {
+      if (state.method !== "") { goStep("amount"); }
+    });
+    on("flow-amount-back", "click", function () { goStep("method"); });
+    on("flow-amount-next", "click", function () {
+      if (state.amount !== null && state.amount > 0) { goStep("info"); }
+    });
+    on("flow-info-back", "click", function () { goStep("amount"); });
+    on("flow-info-next", "click", advanceFromInfo);
+    on("flow-pay-back", "click", function () { goStep("info"); });
+    on("flow-pay-done", "click", completePayment);
+  }
+
+  /* ---------- locale switch ---------- */
 
   function onLocaleChanged() {
-    renderAmountBar();
+    renderTiers();
+    renderAmountTexts();
+    renderPay();
     renderHosted();
     syncCopy();
+    syncOtherBox();
     setStatus(statusKind, statusKey ? say(statusKey, statusVars || undefined) : "");
+    if (detailsFailed) { showDoneNote(); } else { hideDoneNote(); }
   }
 
   function init() {
-    renderAmountBar();
+    renderTiers();
+    applyInitialAmount();
+    syncOtherBox();
+    syncTierSelection();
+    renderAmountTexts();
+    syncMethodCards();
+    syncPanels();
+    syncStepper();
+    renderPay();
     renderHosted();
     wireCopy();
     wireForm();
-
-    var numbers = document.querySelectorAll(".pay-card__num");
-    var i;
-    for (i = 0; i < numbers.length; i += 1) { numbers[i].textContent = String(i + 1); }
-
-    var form = el("details-form");
-    var send = form ? field(form, "send") : null;
-    if (!hasBackend()) {
-      if (send) { send.disabled = true; }
-      note("idle", "form.backendMissing");
-    }
-
+    wireMethods();
+    wireTiers();
+    wireFlow();
+    if (!hasBackend()) { note("idle", "form.backendMissing"); }
     window.addEventListener("i18n:changed", onLocaleChanged);
   }
 

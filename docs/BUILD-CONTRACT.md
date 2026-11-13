@@ -5,7 +5,7 @@ Repo root: the folder that holds `index.html` and the other five pages.
 
 ## 0. Non-negotiables
 - Pure static site. No build step, no bundler, no frameworks, no CDN, no external fonts, no npm dependencies.
-- Six pages, all at the repository root: `index.html` (hero, the four-card "Lend a Hand" block, about, two program sections, donation band), `donate.html` (amount bar, three payment methods, details form, drop-off), `volunteer.html` (roles, steps, call to action), `contact.html` (address, phone, hours, map slot, two detail rows), `sponsor.html` (subtitle, one 1200x800 picture slot, note, message box), `gift-of-love.html` (nine-cell gift grid).
+- Six pages, all at the repository root: `index.html` (hero, the four-card "Lend a Hand" block, about, two program sections, donation band), `donate.html` (a five-step flow: choose how to give, choose an amount, optional details, pay, thank you), `volunteer.html` (roles, steps, call to action), `contact.html` (address, phone, hours, map slot, two detail rows), `sponsor.html` (subtitle, one 1200x800 picture slot, note, message box), `gift-of-love.html` (nine-cell gift grid).
 - Two UI languages only: English (default) and Bahasa Melayu. Both dictionaries live in `assets/js/i18n.js`; there is no third locale, no locale file on disk, and no language-specific page.
 - No data layer. Nothing is fetched: no JSON data file, no remote list, no polling timer. Every string, image path and the nine gifts come from `assets/js/config.js`.
 - Must work on any static host (GitHub Pages, `main` branch, repository root) and under `python -m http.server`.
@@ -17,7 +17,7 @@ Repo root: the folder that holds `index.html` and the other five pages.
 - assets/js/site.js               -> shared header and footer, declarative content, placeholder rendering
 - assets/js/i18n.js               -> en + ms dictionaries, runtime switching, `document.documentElement.lang`
 - assets/js/app.js                -> the home donation band only: amount tiles, the "Other amount" input, the DONATE NOW link, the hero CTA. No list rendering, no filter, no counter.
-- assets/js/donate.js             -> amount bar, payment cards, copy-to-clipboard, details form
+- assets/js/donate.js             -> the five-step donation flow: step switching, the amount tiers, the payment panels, copy-to-clipboard, the optional details form
 - assets/js/sponsor.js            -> sponsor page picture slot, note, message box, send-button state
 - assets/js/gift.js               -> the nine gift cells, built from `content.gifts`
 - assets/js/config.js             -> every editable string, image and NGO fact (single source of page text)
@@ -54,17 +54,21 @@ Markup hooks read by `site.js`; the value comes from `config.js`:
 ### 2.4 Element ids each page must provide
 - Every page: `#site-header`, `#main`, `#site-footer`, `#year`, `#last-updated`.
 - index.html, bound by app.js: `#hero-cta`, `#donate`, `#amounts`, `#other-amount`, `#donate-now`.
-- donate.html, bound by donate.js: `#amount-value`, `#amount-number`, `#hosted-link`, `#hosted-unavailable`, `#copy-account`, `#details-form` containing `#f-name`, `#f-email`, `#f-phone`, `#f-message`, `#f-agree`, `#f-anonymous`, `#f-hp` (honeypot), `#f-send`, plus `#form-privacy`, `#form-anon-note`, `#form-status`, `#map-link`.
+- donate.html, bound by donate.js: `#donate-flow`, `#steps-nav`, the five panels `#panel-method`, `#panel-amount`, `#panel-info`, `#panel-pay`, `#panel-done`; the step buttons `#flow-method-next`, `#flow-amount-back`, `#flow-amount-next`, `#flow-info-back`, `#flow-info-next`, `#flow-pay-back`, `#flow-pay-done`; `#tier-grid`, `#tier-input`, `#amount-chosen`, `#amount-currency`, `#amount-number`; `#details-form` containing `#f-name`, `#f-email`, `#f-phone`, `#f-message`, `#f-agree`, `#f-anonymous`, `#f-hp` (honeypot), with `#form-privacy`, `#form-anon-note`, `#form-status`; `#pay-method-name`, `#pay-amount`, `#pay-currency`, `#pay-amount-number`, `#pay-qr`, `#pay-hosted`, `#hosted-link`, `#hosted-unavailable`, `#pay-bank`, `#copy-account`, `#done-note`.
 - sponsor.html, bound by sponsor.js: `#sponsor-form`, `#sponsor-message`, `#sponsor-hp` (honeypot), `#sponsor-send`, `#sponsor-status`, `#sponsor-notconnected`, and the picture slot carrying `data-cfg-img="content.sponsorPage.image"` with `data-ph-size="1200x800"`.
 - gift-of-love.html, bound by gift.js: `#gifts-grid` (empty container; the script fills it with nine cells).
 - Content and anchor targets: `#hero-cta` (its `href` ships as donate.html, and `content.hero.ctaHref` replaces it), `#about`, `#donate`.
 
-`donate.html` accepts `?amount=N` and preselects that preset; a gift cell on `gift-of-love.html` uses the same query when that gift's amount is filled in.
+`donate.html` accepts `?amount=N`, fills the amount box with that number and stays on step 1 so the visitor can still change the way they give; the amount stays editable. A gift cell on `gift-of-love.html` uses the same query when that gift's amount is filled in.
 
-### 2.5 Details form behaviour (donate.html)
-- While `api.baseUrl` is empty, the form is visible, `#f-send` is disabled, and `#form-status` shows `form.backendMissing`. Every other part of the site, including all three payment methods, works with no backend.
+### 2.5 The donation flow (donate.html)
+- Five steps in one page: method, amount, info, pay, done. Exactly one `.step-panel` is visible at a time; the rest carry the `hidden` attribute. The rails in `#steps-nav` mark the current step with `.is-current` and `aria-current="step"`, and the steps already behind with `.is-done`.
+- The flow writes nothing to the browser: no `localStorage`, no `sessionStorage`, no cookie, no rewrite of the page address, no history entry. A reload returns to step 1.
+- The pay step shows only the chosen method's own panel (`#pay-qr`, `#pay-hosted` or `#pay-bank`). `#flow-pay-done` ("I have completed the payment") moves to the thank-you step; it does not charge anything, wait for a gateway, or show a reference number.
+- The details form is optional and sits before the pay step. While `api.baseUrl` is empty, the form is visible, its send button is disabled, and `#form-status` shows `form.backendMissing` — the visitor can still continue to pay. Every other part of the site, including all three payment methods, works with no backend.
 - The form writes nothing to the browser: no `localStorage`, no `sessionStorage`, no cookie, no rewrite of the page address.
 - With `#f-anonymous` ticked, every control in the form is disabled and no network request is made at all.
+- Whether or not the details post succeeds, the visitor can reach the thank-you step; a failed post is reported on `#form-status` and never traps them on step 3.
 
 ### 2.6 Message box behaviour (sponsor.html)
 - The box is visible at all times. While `api.baseUrl` is empty, `#sponsor-send` is disabled, `#sponsor-notconnected` is shown with `sponsorPage.notConnected`, and `#sponsor-status` carries the same idle line.
@@ -75,6 +79,8 @@ Markup hooks read by `site.js`; the value comes from `config.js`:
 
 ### 2.7 CSS classes the scripts emit (the shell must style every one)
 `.ph`, `.ph--text`, `.ph--image`, `.ph__size`, `.ph--filled`, `.is-missing`, `.is-disabled`, `.gift`, `.gift__media`, `.gift__name`, `.gift__amount`, `.status` with one of `.status--idle`, `.status--busy`, `.status--ok`, `.status--err`.
+
+The wizard's own classes: `.steps-nav__item` with `.is-current` / `.is-done`, `.tier` with `.is-selected`, `.tier--other`, `.tier-other`, `.method-card` (selected one carries `aria-pressed="true"`), and `.step-panel` (its `hidden` attribute must actually hide it), `.step-title`, `.method-grid`, `.flow-nav`, `.flow-summary`, `.pay-note`, `.done-card`.
 
 Gift cell structure: `a.gift` > `div.gift__media.ph.ph--image` (carrying `data-cfg-img`, `data-cfg-alt`, `data-ph-size="400x300"`) > `div.gift__name` > optional `div.gift__amount`.
 
@@ -93,7 +99,7 @@ Persistence: `localStorage["triniti.lang"]` is the only thing the site stores on
 
 `setLocale` sets `document.documentElement.lang` to `"en"` or `"ms"`, re-applies, then dispatches `window` CustomEvent `"i18n:changed"` with `detail {locale}`.
 
-Key convention: dotted, lowercase-camel segments grouped by owner — `site.*`, `nav.*`, `section.*`, `card.*`, `donatePage.*`, `pay.*`, `otherWays.*`, `form.*`, `contactPage.*`, `volunteer.*`, `sponsorPage.*`, `giftPage.*`, `placeholder.*`, `footer.*`, `lang.*`, `a11y.*`. Either dictionary is the list of record: do not copy a key list into this file, because a copied list drifts from the dictionaries and nobody notices until a label prints its own key.
+Key convention: dotted, lowercase-camel segments grouped by owner — `site.*`, `nav.*`, `section.*`, `card.*`, `donatePage.*`, `step.*`, `method.*`, `tier.*`, `pay.*`, `form.*`, `contactPage.*`, `volunteer.*`, `sponsorPage.*`, `giftPage.*`, `placeholder.*`, `footer.*`, `lang.*`, `a11y.*`. Either dictionary is the list of record: do not copy a key list into this file, because a copied list drifts from the dictionaries and nobody notices until a label prints its own key.
 
 Groups that exist for the restructured pages: `section.lendHand` (the four-card block heading), `card.sponsorChild` / `card.volunteer` / `card.giftOfLove` / `card.donateForUs` (card titles), `sponsorPage.*` (title, subtitle, message label and placeholder, send, notConnected, privacy), `giftPage.*` (title, subtitle, numbered cell label, choose). The retired groups have no counterpart and must not come back: the filter, sort, status, empty-state, error-state, item and category keys belong to a page that no longer exists.
 

@@ -24,70 +24,54 @@
     </div>
   </section>
 
-  <section class="section">
+  <section class="section donate-flow" id="donate-flow">
     <div class="shell">
 
-      <div class="section-head">
-        <div class="amount-bar">
-          <span class="amount-bar__label" data-i18n="donatePage.amountLabel"></span>
-          <p class="amount-bar__value" id="amount-value">
-            <span id="amount-currency" data-cfg="content.donation.currency"></span>
-            <span id="amount-number"></span>
-          </p>
-          <a class="amount-bar__change" href="index.html#donate" data-i18n="donatePage.changeAmount"></a>
+      <ol class="steps-nav" id="steps-nav" data-i18n-aria="steps.navAria">
+        <li class="steps-nav__item is-current" data-step="method" aria-current="step"><span class="steps-nav__num">1</span><span class="steps-nav__label" data-i18n="step.method"></span></li>
+        <li class="steps-nav__item" data-step="amount"><span class="steps-nav__num">2</span><span class="steps-nav__label" data-i18n="step.amount"></span></li>
+        <li class="steps-nav__item" data-step="info"><span class="steps-nav__num">3</span><span class="steps-nav__label" data-i18n="step.info"></span></li>
+        <li class="steps-nav__item" data-step="pay"><span class="steps-nav__num">4</span><span class="steps-nav__label" data-i18n="step.pay"></span></li>
+        <li class="steps-nav__item" data-step="done"><span class="steps-nav__num">5</span><span class="steps-nav__label" data-i18n="step.done"></span></li>
+      </ol>
+
+      <div class="step-panel" data-panel="method" id="panel-method">
+        <h2 class="step-title" data-i18n="step.method"></h2>
+        <div class="method-grid">
+          <button class="method-card" type="button" data-method="qr" aria-pressed="false">
+            <span class="method-card__title" data-i18n="pay.qrTitle"></span>
+            <span class="method-card__note" data-i18n="method.qrNote"></span>
+          </button>
+          <button class="method-card" type="button" data-method="hosted" aria-pressed="false">
+            <span class="method-card__title" data-i18n="pay.hostedTitle"></span>
+            <span class="method-card__note" data-i18n="method.hostedNote"></span>
+          </button>
+          <button class="method-card" type="button" data-method="transfer" aria-pressed="false">
+            <span class="method-card__title" data-i18n="otherWays.bankTitle"></span>
+            <span class="method-card__note" data-i18n="method.transferNote"></span>
+          </button>
+        </div>
+        <div class="flow-nav">
+          <button class="btn btn--primary" type="button" id="flow-method-next" data-i18n="flow.next" disabled></button>
         </div>
       </div>
 
-      <div class="pay-grid">
-
-        <article class="pay-card">
-          <span class="pay-card__num" aria-hidden="true"></span>
-          <h2 class="pay-card__title" data-i18n="pay.qrTitle"></h2>
-          <div class="qr-slot" data-cfg-img="content.donation.qrImage" data-ph-size="400x400"></div>
-          <p class="qr-caption" data-cfg="content.donation.qrCaption"></p>
-          <p class="ewallet-name" data-cfg="content.donation.ewalletName"></p>
-        </article>
-
-        <article class="pay-card">
-          <span class="pay-card__num" aria-hidden="true"></span>
-          <h2 class="pay-card__title" data-i18n="pay.hostedTitle"></h2>
-          <p class="pay-note" data-cfg="content.donation.onlineLabel"></p>
-          <a class="btn btn--primary btn--block" id="hosted-link" aria-disabled="true" tabindex="-1" data-i18n="pay.hostedCta"></a>
-          <p class="qr-caption" id="hosted-unavailable" data-i18n="pay.hostedUnavailable"></p>
-        </article>
-
-        <article class="pay-card">
-          <span class="pay-card__num" aria-hidden="true"></span>
-          <h2 class="pay-card__title" data-i18n="otherWays.bankTitle"></h2>
-          <div class="bank-table">
-            <div class="bank-row">
-              <span class="bank-label" data-i18n="otherWays.bankName"></span>
-              <span class="bank-value" data-cfg="content.donation.bankName"></span>
-            </div>
-            <div class="bank-row">
-              <span class="bank-label" data-i18n="otherWays.accountName"></span>
-              <span class="bank-value" data-cfg="content.donation.accountName"></span>
-            </div>
-            <div class="bank-row">
-              <span class="bank-label" data-i18n="otherWays.accountNo"></span>
-              <span class="bank-value" data-cfg="content.donation.accountNumber"></span>
-            </div>
-            <div class="bank-row">
-              <span class="bank-label" data-i18n="otherWays.swift"></span>
-              <span class="bank-value" data-cfg="content.donation.swift"></span>
-            </div>
-            <div class="bank-row">
-              <span aria-hidden="true"></span>
-              <button class="copy-btn" type="button" id="copy-account" data-i18n="otherWays.copy" disabled></button>
-            </div>
-          </div>
-          <p class="pay-note" data-i18n="pay.afterNote"></p>
-        </article>
-
+      <div class="step-panel" data-panel="amount" id="panel-amount" hidden>
+        <h2 class="step-title" data-i18n="step.amount"></h2>
+        <div class="tier-grid" id="tier-grid"></div>
+        <div class="tier-other" id="tier-other" hidden>
+          <input class="input" id="tier-input" type="text" inputmode="numeric" autocomplete="off" data-i18n-aria="placeholder.customAmount" data-i18n-placeholder="placeholder.customAmount">
+        </div>
+        <p class="flow-summary__value" id="amount-chosen"><span id="amount-currency" data-cfg="content.donation.currency"></span> <span id="amount-number"></span></p>
+        <div class="flow-nav">
+          <button class="btn btn--ghost" type="button" id="flow-amount-back" data-i18n="flow.back"></button>
+          <button class="btn btn--primary" type="button" id="flow-amount-next" data-i18n="flow.next" disabled></button>
+        </div>
       </div>
 
-      <details class="details-panel">
-        <summary class="details-panel__summary" data-i18n="form.summary"></summary>
+      <div class="step-panel" data-panel="info" id="panel-info" hidden>
+        <h2 class="step-title" data-i18n="step.info"></h2>
+        <p class="pay-note" data-i18n="step.infoNote"></p>
         <form class="form-grid" id="details-form" novalidate>
           <div class="form-row">
             <label class="form-row__label" for="f-name" data-i18n="form.fullName"></label>
@@ -127,45 +111,83 @@
           <div class="hp-field" aria-hidden="true">
             <input id="f-hp" name="hp" type="text" tabindex="-1" autocomplete="off">
           </div>
-          <div class="form-row form-row--wide">
-            <button class="btn btn--primary btn--block" type="submit" id="f-send" name="send" data-i18n="form.send"></button>
-          </div>
-          <p class="form-row--wide" data-i18n="form.noDraftNote"></p>
-          <p class="status status--idle form-row--wide" id="form-status" role="status" aria-live="polite"></p>
         </form>
-      </details>
-
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="shell">
-      <div class="section-head">
-        <h2 class="section-title" data-i18n="otherWays.itemsTitle"></h2>
+        <div class="flow-nav">
+          <button class="btn btn--ghost" type="button" id="flow-info-back" data-i18n="flow.back"></button>
+          <button class="btn btn--primary" type="button" id="flow-info-next" data-i18n="flow.next"></button>
+        </div>
+        <p class="status status--idle form-row--wide" id="form-status" role="status" aria-live="polite"></p>
       </div>
-      <div class="items-card">
-        <div class="items-grid">
-          <div>
-            <p><strong data-i18n="otherWays.dropoff"></strong></p>
-            <p data-cfg="content.donation.itemDropoff"></p>
+
+      <div class="step-panel" data-panel="pay" id="panel-pay" hidden>
+        <h2 class="step-title" data-i18n="step.pay"></h2>
+        <div class="flow-summary">
+          <div class="flow-summary__row">
+            <span data-i18n="pay.methodLabel"></span>
+            <span id="pay-method-name"></span>
           </div>
-          <div>
-            <p><strong data-i18n="otherWays.itemContact"></strong></p>
-            <p data-cfg="content.donation.itemContact"></p>
+          <div class="flow-summary__row">
+            <span data-i18n="donatePage.amountLabel"></span>
+            <span id="pay-amount"><span id="pay-currency"></span> <span id="pay-amount-number"></span></span>
           </div>
-          <div>
-            <p><strong data-i18n="otherWays.itemHours"></strong></p>
-            <p data-cfg="content.donation.itemHours"></p>
+        </div>
+
+        <div class="pay-panel" id="pay-qr" hidden>
+          <div class="qr-slot" data-cfg-img="content.donation.qrImage" data-ph-size="400x400"></div>
+          <p class="qr-caption" data-cfg="content.donation.qrCaption"></p>
+          <p class="ewallet-name" data-cfg="content.donation.ewalletName"></p>
+        </div>
+
+        <div class="pay-panel" id="pay-hosted" hidden>
+          <p class="pay-note" data-cfg="content.donation.onlineLabel"></p>
+          <a class="btn btn--primary btn--block" id="hosted-link" aria-disabled="true" tabindex="-1" data-i18n="pay.hostedCta"></a>
+          <p class="qr-caption" id="hosted-unavailable" data-i18n="pay.hostedUnavailable"></p>
+        </div>
+
+        <div class="pay-panel" id="pay-bank" hidden>
+          <div class="bank-table">
+            <div class="bank-row">
+              <span class="bank-label" data-i18n="otherWays.bankName"></span>
+              <span class="bank-value" data-cfg="content.donation.bankName"></span>
+            </div>
+            <div class="bank-row">
+              <span class="bank-label" data-i18n="otherWays.accountName"></span>
+              <span class="bank-value" data-cfg="content.donation.accountName"></span>
+            </div>
+            <div class="bank-row">
+              <span class="bank-label" data-i18n="otherWays.accountNo"></span>
+              <span class="bank-value" data-cfg="content.donation.accountNumber"></span>
+            </div>
+            <div class="bank-row">
+              <span class="bank-label" data-i18n="otherWays.swift"></span>
+              <span class="bank-value" data-cfg="content.donation.swift"></span>
+            </div>
+            <div class="bank-row">
+              <span aria-hidden="true"></span>
+              <button class="copy-btn" type="button" id="copy-account" data-i18n="otherWays.copy" disabled></button>
+            </div>
           </div>
-          <div>
-            <p><strong data-i18n="otherWays.itemList"></strong></p>
-            <p data-cfg="content.donation.itemList"></p>
-          </div>
-          <div>
-            <a class="btn btn--ghost" id="map-link" data-cfg-href="org.mapsUrl" data-i18n="otherWays.map" target="_blank" rel="noopener"></a>
+          <p class="pay-note" data-i18n="pay.afterNote"></p>
+        </div>
+
+        <div class="flow-nav">
+          <button class="btn btn--ghost" type="button" id="flow-pay-back" data-i18n="flow.back"></button>
+          <button class="btn btn--primary" type="button" id="flow-pay-done" data-i18n="pay.paidCta"></button>
+        </div>
+      </div>
+
+      <div class="step-panel" data-panel="done" id="panel-done" hidden>
+        <div class="done-card">
+          <h2 class="done-card__title" data-i18n="done.title"></h2>
+          <p class="done-card__body" data-i18n="done.body"></p>
+          <p class="status status--err" id="done-note" role="status" hidden></p>
+          <div class="flow-nav">
+            <a class="btn btn--primary" href="index.html" data-i18n="done.home"></a>
+            <a class="btn btn--ghost" href="contact.html" data-i18n="done.contact"></a>
           </div>
         </div>
       </div>
+
     </div>
   </section>
 

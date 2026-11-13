@@ -28,7 +28,7 @@ The site is six pages and two languages — English and Bahasa Melayu — and ev
 | Page | What it is for |
 | --- | --- |
 | `index.html` | The home page. A hero, the four *Lend a Hand* cards, an About block, two program blocks, and a donation band with preset amounts. |
-| `donate.html` | Ways to give. An amount bar, three payment methods (QR code, online payment page, bank transfer with a copy button), an optional details form, what to drop off and where, and a contact strip. |
+| `donate.html` | Ways to give, in five steps: choose how to give (QR code, online payment page, bank transfer with a copy button), choose an amount, an optional details form, pay, thank you. A contact strip sits under the last step. |
 | `volunteer.html` | Volunteering. Three roles, three steps, and a call to action. |
 | `contact.html` | How to reach the home. Address, phone, WhatsApp, email, opening hours, a map slot, and two rows of extra details. |
 | `sponsor.html` | Sponsoring a child. A subtitle, one picture slot suggested at 1200x800, a note, and a message box. |
@@ -148,7 +148,7 @@ Notes:
 
 ```
 ├── index.html                   home: hero, four Lend a Hand cards, about, two programs, donation band
-├── donate.html                  ways to give: amounts, payment methods, details form, drop-off, contact strip
+├── donate.html                  ways to give: five steps, payment methods, details form
 ├── volunteer.html               volunteering: three roles, three steps, call to action
 ├── contact.html                 address, phone, email, hours, map slot, two detail rows
 ├── sponsor.html                 sponsoring: one 1200x800 picture slot, a note, a message box
@@ -164,7 +164,7 @@ Notes:
 │       ├── i18n.js              English and Bahasa Melayu dictionaries
 │       ├── site.js              shared header and footer, declarative content
 │       ├── app.js               the home donation band only
-│       ├── donate.js            amount bar, payment cards, copy button, details form
+│       ├── donate.js            the five steps, amount tiers, payment panels, copy button, details form
 │       ├── sponsor.js           the sponsor page picture slot and message box
 │       └── gift.js              the nine gift cells
 ├── backend/

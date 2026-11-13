@@ -21,7 +21,7 @@ The site is six pages, in two languages: English and Bahasa Melayu.
 | Page | What it is for |
 | --- | --- |
 | `index.html` | The home page. A hero picture, a block of four cards under the heading "Lend a Hand", the home's own words, two program sections, and a donation band with preset amounts. |
-| `donate.html` | Ways to give: an amount, a QR code, an online payment page, a bank transfer, and what to drop off. |
+| `donate.html` | Ways to give, in five steps: pick a way to give, pick an amount, fill in details if you want to, pay, then a thank-you page. |
 | `volunteer.html` | Volunteering: three roles and three steps. |
 | `contact.html` | How to reach the home: address, phone, WhatsApp, email, opening hours. |
 | `sponsor.html` | Sponsoring a child: one picture, a short note, and a message box. |
